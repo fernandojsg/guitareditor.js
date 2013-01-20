@@ -1,0 +1,232 @@
+.tabs-editor
+{
+	width: 630px;
+	margin: 0 auto;
+	background-color:#fff;
+}
+
+.button.mini {
+    /* font-size: 11px;*/
+	font-size: 9px;
+    margin: 5px 5px 5px 0;
+    padding: 5px;
+	vertical-align:middle;
+}
+
+.button {
+    background: none repeat scroll 0 0 #EE7E2A;
+    border: medium none;
+    cursor: pointer;
+    display: inline-block;
+    margin: 8px 10px 8px 0;
+    text-shadow: none !important;
+	text-decoration: none;
+	color: #fff;
+}
+
+.buttoncheck:hover,
+.button:hover {
+    background: none repeat scroll 0 0 #ffaa6b;
+}
+
+.buttoncheck.checked
+{
+	background-color:#ffcaa3;
+}
+
+
+body
+{
+	background-color:#eee;
+	font-family:verdana;
+}
+
+.tabblock
+{
+	table-layout: fixed;
+	font-family:verdana;
+	font-size:10px;
+}
+
+table { 
+  border-spacing:0;
+  border-collapse:collapse;
+}
+
+.tabblock td
+{
+	border:none; /*1px solid #aaa;*/
+	cursor:pointer;
+	text-align:center;
+	background: url(../images/cell.gif) repeat-x center center;
+	white-space: nowrap;
+}
+
+.tabblock td.lfinger1
+{
+	background: url(../images/cell.gif) repeat-x center center, 
+				url(../images/1_black.png) no-repeat top right;	
+}
+.tabblock td.lfinger2
+{
+	background: url(../images/cell.gif) repeat-x center center, 
+				url(../images/2_black.png) no-repeat top right;	
+}
+.tabblock td.lfinger3
+{
+	background: url(../images/cell.gif) repeat-x center center, 
+				url(../images/3_black.png) no-repeat top right;	
+}
+.tabblock td.lfinger4
+{
+	background: url(../images/cell.gif) repeat-x center center, 
+				url(../images/4_black.png) no-repeat top right;	
+}
+
+.tabblock td.string-note
+{
+	background: none;
+}
+
+.tabblock td.active_cell.active_column
+{
+	background-color:#ee0;
+}
+
+.tabblock td.active_column
+{
+	background-color:#ff9;
+}
+
+
+.tabsection.hover
+{
+	background-color:#ffe;
+}
+
+.tabsection.active
+{
+	background-color:#ff9;
+}
+
+textarea.tabtext
+{
+	font-family:Courier new;
+	width:100%;
+	
+}
+
+.menu-tabs-text
+{
+	border:2px solid #f99;
+	padding:5px;
+}
+
+
+.tabsection.text
+{
+	padding:10px;
+/*	padding-bottom:33px;*/
+	padding-bottom:32px;
+}	
+
+
+.tabsection
+{
+	padding:5px;
+	padding-bottom:32px;
+}
+
+.tabsection.hover
+{
+	padding-bottom:0px;
+}
+
+
+.button.modifier.mini,
+.button.colmodifier.mini
+{
+	padding:2px;
+}
+
+.tabblock tr.extra td
+{
+	background: none;
+	height:14px;
+}
+
+
+.tabblock tr.extra td.modifier_golpe {
+	background-image:url('../images/golpe_black.png');
+}
+
+.tabblock tr.extra td.modifier_accent {
+	background-image:url('../images/accent_black.png');
+}
+
+.tabblock tr.extra td.modifier_down_arrow {
+	background-image:url('../images/down_arrow_black.png');
+}
+
+.tabblock tr.extra td.modifier_up_arrow {
+	background-image:url('../images/up_arrow_black.png');
+}
+
+.tabblock tr.extra td.modifier_rasgueo {
+	background-image:url('../images/rasgueo_black.png');
+}
+
+.left
+{
+	float:left;
+}
+
+.buttoncheck
+{
+	float:left;
+	display:inline-block;
+	margin:5px 5px 5px 0;
+	font-size: 9px;
+    margin: 0px;
+    padding: 2px;
+	background: none repeat scroll 0 0 #EE7E2A;
+}
+
+.checkgroup
+{
+	display:inline-block;
+	margin: 5px 5px 5px 0;
+	vertical-align:middle;
+}
+
+.ui-dialog
+{
+	font-size:12px;
+}
+
+.pretty-tab
+{
+	margin-bottom:15px;
+}
+
+.pretty-tab div
+{
+	background-color:#fff;
+	font-size:12px;
+	line-height:16px;
+	/*margin-bottom:15px;*/
+	margin:0px;
+	/*border:1px solid #aaa;*/
+}
+
+.pretty-text-block
+{
+	padding: 0px 10px 0px 10px;
+}
+
+.pretty-tab
+{
+	background-color:#fff;
+	width:600px;
+	height:200px;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/style.css" media="screen, projection" />
+
+		<!-- External libs -->
+		<script type="text/javascript" src="js/ext/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="js/ext/jquery-ui-1.9.2.custom.min.js"></script>
+		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>		
+		<script type="text/javascript" src="js/ext/raphael.js"></script>		
+		
+		<!-- KGT -->
+		<script type="text/javascript" src="js/keys.js"></script>
+		<script type="text/javascript" src="js/tabcanvaspainter.js"></script>		
+		<script type="text/javascript" src="js/tabsblock.js"></script>
+		<script type="text/javascript" src="js/textblock.js"></script>		
+		<script type="text/javascript" src="js/tabeditor.js"></script>
+		<script type="text/javascript" src="js/tabparser.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	
+	</head>
+	<body>
+		<table>
+		<tr>
+			<td valign="top">
+				<div id="text-editor" class="tabs-editor">
+					<div id="block" class="menu tabsection tabs" style="display:none">
+						<div id="tabblock" class="" width="100%" style="background-color:#fff;padding:10px;"></div>
+					</div>
+					<div id="block" class="menu tabsection text" style="display:none">
+						<textarea class="tabtext" cols="80" rows="2" style="border:none"></textarea>
+					</div>
+					<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
+						<a id="insert-chords" class="button mini" href="#">Insert chord</a>
+						<select id="chords"></select>
+						<a class="button mini modifier" data-modifier="s" href="#" title="Slide"><img src="images/s.png"/></a>
+						<a class="button mini modifier" data-modifier="^" href="#" title="HammerOf"><img src="images/h.png"/></a>
+						<a class="button mini modifier" data-modifier="v" href="#" title="Vibrato"><img src="images/v.png"/></a>
+						<!-- <a class="button mini modifier" data-modifier="b" href="#" title="Bend"><img src="images/b.png"/></a> -->
+
+						<a class="button mini colmodifier" data-modifier="accent" href="#" title="Accent"><img src="images/accent.png"/></a>
+						<a class="button mini colmodifier" data-modifier="golpe" href="#" title="Golpe"><img src="images/golpe.png"/></a>
+						<a class="button mini colmodifier" data-modifier="up_arrow" href="#" title="Golpe"><img src="images/up_arrow.png"/></a>
+						<a class="button mini colmodifier" data-modifier="down_arrow" href="#" title="Golpe"><img src="images/down_arrow.png"/></a>
+						<a class="button mini colmodifier" data-modifier="rasgueo" href="#" title="Golpe"><img src="images/rasgueo.png"/></a>						
+						<a id="open-tabtext" class="button mini" style="padding:2px" href="#" title="Add text"><img src="images/text.png"/></a>
+
+						<div id="lfingers" class="checkgroup">
+							<a class="buttoncheck" data-modifier="lfinger1" href="#" title="Finger 1 (Alt+1)"><img src="images/1.png"/></a>
+							<a class="buttoncheck" data-modifier="lfinger2" href="#" title="Finger 2 (Alt+2)"><img src="images/2.png"/></a>
+							<a class="buttoncheck" data-modifier="lfinger3" href="#" title="Finger 3 (Alt+3)"><img src="images/3.png"/></a>
+							<a class="buttoncheck" data-modifier="lfinger4" href="#" title="Finger 4 (Alt+4)"><img src="images/4.png"/></a>
+						</div>
+						<div id="rfingers" class="checkgroup">
+							<a class="buttoncheck colmodifier" data-modifier="p" href="#" title="Finger (p)"><img src="images/p.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="i" href="#" title="Finger (i)"><img src="images/i.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="m" href="#" title="Finger (m)"><img src="images/m.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="a" href="#" title="Finger (a)"><img src="images/a.png"/></a>
+						</div>
+					</div>
+					<div id="empty-context-menu" class="tabs-editor-context-menu" style="text-align:right">
+						<a id="add_text" class="button mini" href="#">Add Text</a>
+						<a id="add_tabs" class="button mini" href="#">Add Tabs</a>
+						<a id ="remove_section" style="display:none" class="button mini" href="#">Remove this section</a>
+					</div>
+<!--					
+					<div id="menu-tabs-text" style="display:none">
+						<div class="tabs-editor-tools">
+							<a class="button mini format" data-format="b" href="#"><b>B</b></a>
+							<a class="button mini format" data-format="i" href="#"><i>I</i></a>
+							<a class="button mini format" data-format="u" href="#"><u>U</u></a>
+						</div>
+					</div>
+-->
+				</div>
+			</td>
+			<td>
+				<div style="padding-left:50px">
+					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
+					<b>ASCII TAB</b>
+					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
+					</textarea>
+					<div id="pretty-tab" class="pretty-tab">
+					</div>
+					<!--
+					<b>Vextab</b>
+					<textarea id="vextab" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
+					</textarea> -->
+				</div>
+			</td>
+		</tr>
+		</table>
+	</body>
+	<div id="tabblocktext_dialog" title="Text editor" style="display:none">
+		<p>Insert text:</p>
+		<p><input id="note_text" size="50"/></p>
+	</div>
+</html>
