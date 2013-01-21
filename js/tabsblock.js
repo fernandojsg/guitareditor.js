@@ -38,7 +38,7 @@ KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 				"strings":new Array(tabBlockNumStrings),
 				"colmodifiers":{},
 			};
-
+/*
 	for (var i=0;i<tabBlockNumStrings;i++)
 	{
 		this.data['strings'][i]=new Array(tabBlockLength);
@@ -48,6 +48,7 @@ KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 			this.data['strings'][i][j]=new Array(EMPTY_NOTE,"");
 		}
 	}
+*/
 		
 	for (var i=0;i<topColumnModifiers.length;i++)
 	{
@@ -446,6 +447,7 @@ KORDS.TABS.TabsBlock.prototype =
 			else
 				$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("lfinger"+value);
 		}
+		
 		this.data['strings'][row][col][type]=value;
 	},
 	

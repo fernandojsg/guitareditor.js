@@ -15,6 +15,11 @@ KORDS.TABS.TextBlock.prototype =
 		if (typeof this.tabsEditorInstance.updateText!='undefined')
 			this.tabsEditorInstance.updateText();
 	},
+
+	getData: function()
+	{
+		return this.getText();
+	},
 	
 	getText: function()
 	{

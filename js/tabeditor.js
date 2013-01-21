@@ -7,7 +7,7 @@ KORDS.TABS.TabsInstance=function()
 KORDS.TABS.Tablature=function()
 {
 	this.numSections=0;
-	this.htmlSections=[];
+	this.sections=[];
 }
 
 KORDS.TABS.Tablature.prototype = 
@@ -110,19 +110,21 @@ KORDS.TABS.TabsEditor.prototype =
 {
 	generateFileFormat: function()
 	{
-		var numSections=this.htmlSections.length;
+		var tablature=new KORDS.TABS.Tablature;
 		
-		var file={
-			"numsections":numSections,
-			"sections":[],
-		};
+		tablature.numSections=this.htmlSections.length;
 		
-		for (var i=0;i<numSections;i++)
+		
+		for (var i=0;i<tablature.numSections;i++)
 		{
-			//file['sections']
+			var section={
+				"type":this.htmlSections[i].type,
+				"data":this.htmlSections[i].getData()};
+			tablature.sections.push(section);
 		}
 		
-		console.log(file);
+		console.log(tablature);
+		console.log(JSON.stringify(tablature));
 	},
 
 	loadFromParser: function(sections)
