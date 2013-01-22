@@ -1,4 +1,4 @@
-KORDS.TABS.TabsCanvasPainter=function(parentDiv,tabBlock)
+KORDS.TABSPAINTER.CanvasPainter=function(parentDiv,tabBlock)
 {
 	this.debug=false;
 			
@@ -7,9 +7,7 @@ KORDS.TABS.TabsCanvasPainter=function(parentDiv,tabBlock)
 	this.canvas.setAttribute('height', 10);
 	this.canvas.setAttribute('style', "background-color:#fff");
 		
-	console.log(parentDiv);
 	parentDiv.appendChild(this.canvas);
-	//this.canvas = document.getElementById(id);
 	
 	this.staveHeight=66;
 
@@ -29,10 +27,10 @@ KORDS.TABS.TabsCanvasPainter=function(parentDiv,tabBlock)
 		this.resize();
 	}
 	else
-		alert("BADD!");
+		alert("Can't create Canvas Context!");
 }
 
-KORDS.TABS.TabsCanvasPainter.prototype = 
+KORDS.TABSPAINTER.CanvasPainter.prototype = 
 {
 	resize: function()
 	{
@@ -73,9 +71,6 @@ KORDS.TABS.TabsCanvasPainter.prototype =
 		this.canvasH=this.canvas.height;
 		//this.staveOffsetY=(this.canvasH-this.staveHeight)/2+(this.staveHeight/this.numStrings/2)+this.columnsModifiersMargin;
 		//this.staveOffsetY=(this.canvasH-this.staveHeight)/2+(this.staveHeight/this.numStrings/2)+this.columnsModifiersMargin;
-		
-		console.log(this.canvas.height,this.staveHeight,topModifiersHeight,bottomModifiersHeight,this.staveOffsetY);
-		
 		
 		this.stepX=(this.canvasW-this.noteMargin*2)/tabBlockLength;
 		this.stepY=this.canvasH/6;

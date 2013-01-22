@@ -10,14 +10,24 @@
 		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>		
 		<script type="text/javascript" src="js/ext/raphael.js"></script>		
 		
-		<!-- KGT -->
+		<!-- KGT MAIN -->
+		<script type="text/javascript" src="js/kords.js"></script>
 		<script type="text/javascript" src="js/utils.js"></script>
-		<script type="text/javascript" src="js/keys.js"></script>
-		<script type="text/javascript" src="js/tabcanvaspainter.js"></script>		
-		<script type="text/javascript" src="js/tabsblock.js"></script>
-		<script type="text/javascript" src="js/textblock.js"></script>		
-		<script type="text/javascript" src="js/tabeditor.js"></script>
-		<script type="text/javascript" src="js/tabparser.js"></script>
+
+		<script type="text/javascript" src="js/tabsdata.js"></script>
+
+		<!-- KGT EDITOR -->
+		<script type="text/javascript" src="js/editor/kords.tabseditor.js"></script>
+		<script type="text/javascript" src="js/editor/keys.js"></script>
+		<script type="text/javascript" src="js/editor/tabeditor.js"></script>
+		<script type="text/javascript" src="js/editor/tabsection.js"></script>
+		<script type="text/javascript" src="js/editor/textsection.js"></script>		
+		<script type="text/javascript" src="js/editor/tabparser.js"></script>
+		
+		<!-- KGT PAINTER -->
+		<script type="text/javascript" src="js/painter/kords.tabspainter.js"></script>
+		<script type="text/javascript" src="js/painter/tabcanvaspainter.js"></script>		
+
 		<script type="text/javascript" src="js/main.js"></script>	
 	</head>
 	<body>
@@ -64,7 +74,7 @@
 						<a id="add_tabs" class="button mini" href="#">Add Tabs</a>
 						<a id ="remove_section" style="display:none" class="button mini" href="#">Remove this section</a>
 					</div>
-<!--					
+<!--
 					<div id="menu-tabs-text" style="display:none">
 						<div class="tabs-editor-tools">
 							<a class="button mini format" data-format="b" href="#"><b>B</b></a>
@@ -75,12 +85,13 @@
 -->
 				</div>
 			</td>
-			<td>
+			<td valign="top">
 				<div style="padding-left:50px">
 					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
 					<b>ASCII TAB</b>
 					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
 					</textarea>
+					<b>VECTORIAL TAB</b>
 					<div id="pretty-tab" class="pretty-tab">
 					</div>
 					<!--

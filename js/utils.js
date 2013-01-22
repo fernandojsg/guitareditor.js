@@ -15,3 +15,19 @@ function sortObj(arr){
 	}
 	return sortedObj;
 }
+
+function isNumber(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+String.prototype.removeCharAt = function (index) {
+	return this.substr(0, index) + this.substr(index +1);
+}
+
+String.prototype.replaceAt=function(index, char) {
+      return this.substr(0, index) + char + this.substr(index+char.length);
+}
+
+function isNumber(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}

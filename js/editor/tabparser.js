@@ -1,10 +1,26 @@
-KORDS.TABS.TabParser=function(text)
+function isEmptyCol(lines,i)
+{
+	for (var j=0;j<lines.length;j++)
+		if (lines[j][i]!='-')
+			return false;
+	
+	return true;
+}
+
+function cleanLine(line)
+{
+	line=line.replace(/\|/g,'');
+	line=line.substring(line.indexOf("-"));
+	return line.trim();
+}
+   
+KORDS.TABSEDITOR.TabParser=function(text)
 {
 	this.text=text;
 	this.sections=[];
 }
 
-KORDS.TABS.TabParser.prototype = 
+KORDS.TABSEDITOR.TabParser.prototype = 
 {
 	
 	cleanLine: function (line)

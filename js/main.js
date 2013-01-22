@@ -1,32 +1,3 @@
-if (!String.prototype.trim) {
-	//String.prototype.trim=function(){return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');};
-	//String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
-}
-
-String.prototype.removeCharAt = function (index) {
-	return this.substr(0, index) + this.substr(index +1);
-}
-
-function cleanLine(line)
-{
-	line=line.replace(/\|/g,'');
-	line=line.substring(line.indexOf("-"));
-	return line.trim();
-}
-	
-String.prototype.replaceAt=function(index, char) {
-      return this.substr(0, index) + char + this.substr(index+char.length);
-}
-   
-function isEmptyCol(lines,i)
-{
-	for (var j=0;j<lines.length;j++)
-		if (lines[j][i]!='-')
-			return false;
-	
-	return true;
-}
-	
 var tabsInstance;
 $(document).ready(function(){
 
@@ -76,15 +47,9 @@ $(document).ready(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		tabsInstance.tabsEditor.htmlSections[id].insertColumnModifier($(this).attr("data-modifier"));
 	});
-	/*
-	$(".buttoncheck").click(function(){
-		$(this).toggleClass("checked");
-	});
-	*/
+
 	$("#parse_tab").click(function(){
 		var parser=new KORDS.TABS.TabParser($("#text").val());
 		tabsInstance.tabsEditor.loadFromParser(parser.parse());
 	});
-	
-	
 });

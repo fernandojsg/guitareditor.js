@@ -1,4 +1,4 @@
-var tabBlockLength=40; //@todo Put in php constant
+var tabBlockLength=40;
 var tabBlockText="";
 var tabBlockNotes=["E","B","G","D","A","E"];
 var tabBlockNumStrings=tabBlockNotes.length;
@@ -25,7 +25,7 @@ var chords={
 	"G#":"466544"
 };
 
-KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
+KORDS.TABSEDITOR.TabsSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 {
 	this.htmlNode=htmlNode;
 	
@@ -40,16 +40,7 @@ KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 			};
 
 	for (var i=0;i<tabBlockNumStrings;i++)
-	{
 		this.data['strings'][i]={};
-/*		
-		for (var j=0;j<tabBlockLength;j++)
-		{
-			this.data['strings'][i][j]=new Array(EMPTY_NOTE,"");
-		}
-*/		
-	}
-
 		
 	for (var i=0;i<topColumnModifiers.length;i++)
 	{
@@ -66,12 +57,12 @@ KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 	}
 
 	this.div = prettyHtmlNode;
-	this.canvas=new KORDS.TABS.TabsCanvasPainter(this.div,this);
+	this.canvas=new KORDS.TABSPAINTER.CanvasPainter(this.div,this);
 	
 	this.updateText();
 }
 
-KORDS.TABS.TabsBlock.prototype = 
+KORDS.TABSEDITOR.TabsSection.prototype = 
 {
 	removeHtml: function()
 	{
@@ -156,7 +147,7 @@ KORDS.TABS.TabsBlock.prototype =
 
 	onKeyDown: function (e)
 	{
-		var keys=new KORDS.TABS.Keys(e.keyCode);
+		var keys=new KORDS.TABSEDITOR.Keys(e.keyCode);
 
 		if (!keys.isValidKey())
 			return true;
@@ -433,8 +424,6 @@ KORDS.TABS.TabsBlock.prototype =
 		{
 			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).html(value);
 			
-			console.log(">>>>>>>>",value);
-
 			if (value==EMPTY_NOTE)
 			{
 				console.log("LOL",string,col,value,this.data['strings'][string][col]);
@@ -457,12 +446,12 @@ KORDS.TABS.TabsBlock.prototype =
 			this.data['strings'][string][col].rfinger=value;
 		}
 
-		console.log(JSON.stringify(this.data.strings));
+		//console.log(JSON.stringify(this.data.strings));
 	},
 	
-	//@todo Change it to use the data instead of the html?
 	updateASCIIText: function()
 	{
+		//@todo Change it to use the data instead of the html?
 		var textArray=new Array(tabBlockNumStrings);
 		for (var i=0;i<tabBlockNumStrings;i++)
 			textArray[i]=tabBlockNotes[i]+"|";
@@ -695,7 +684,7 @@ KORDS.TABS.TabsBlock.prototype =
 	}
 }	
 
-KORDS.TABS.TabsBlock.insertTabBlock=function()
+KORDS.TABSEDITOR.TabsSection.insertTabBlock=function()
 {
     var tabBlockHtml='<table width="100%" class="tabblock">';
 

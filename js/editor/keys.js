@@ -1,8 +1,4 @@
-var KORDS= KORDS || {};
-
-KORDS.TABS = KORDS.TABS || {};
-
-KORDS.TABS.Keys=function(keyCode)
+KORDS.TABSEDITOR.Keys=function(keyCode)
 {
 	if (typeof keyCode=='undefined')
 		this.keyCode=-1;
@@ -10,7 +6,7 @@ KORDS.TABS.Keys=function(keyCode)
 		this.keyCode=keyCode;
 }
 
-KORDS.TABS.Keys.prototype = 
+KORDS.TABSEDITOR.Keys.prototype = 
 {
 	getCharValue: function ()
 	{
