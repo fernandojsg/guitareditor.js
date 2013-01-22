@@ -38,17 +38,18 @@ KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
 				"strings":new Array(tabBlockNumStrings),
 				"colmodifiers":{},
 			};
-/*
+
 	for (var i=0;i<tabBlockNumStrings;i++)
 	{
-		this.data['strings'][i]=new Array(tabBlockLength);
-		
+		this.data['strings'][i]={};
+/*		
 		for (var j=0;j<tabBlockLength;j++)
 		{
 			this.data['strings'][i][j]=new Array(EMPTY_NOTE,"");
 		}
+*/		
 	}
-*/
+
 		
 	for (var i=0;i<topColumnModifiers.length;i++)
 	{
@@ -280,8 +281,8 @@ KORDS.TABS.TabsBlock.prototype =
 			
 			//$(".tabblock td.active_cell",this.htmlNode).html(cellVal);
 			this.setStringCellValue(col,row,cellVal,TYPE_NOTE/*,e.shiftKey*/);
-			if (cellVal==EMPTY_NOTE)
-				this.setStringCellValue(col,row,cellVal,TYPE_LFINGER/*,e.shiftKey*/);
+			//if (cellVal==EMPTY_NOTE)
+			//	this.setStringCellValue(col,row,cellVal,TYPE_LFINGER/*,e.shiftKey*/);
 			
 			if (keys.isNoteModifierKey())
 			{
@@ -413,49 +414,57 @@ KORDS.TABS.TabsBlock.prototype =
 		return $(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html();
 	},
 
-	getStringCellValue: function(col,row)
+	getStringCellValue: function(col,string)
 	{
 		var type=TYPE_NOTE;
-		return this.data['strings'][row][col][type];
+		//return this.data['strings'][string][col][type];
+		return this.data['strings'][string][col].note;
 	},
 	
-	setStringCellValue: function (col,row,value,type/*,shift*/)
+	setStringCellValue: function (col,string,value,type/*,shift*/)
 	{
-	/*
-		if (typeof shift == 'undefined')
-			shift=false;
-
-		if (shift)
-		{
-			for (var i=0;i<tabBlockNumStrings;i++)
-				this.setStringCellValue(col,i,value,type,false);
-		}
-	*/	
 		col=parseInt(col);
-		row=parseInt(row);
+		string=parseInt(string);
+
+		if (!this.data['strings'][string][col])	
+			this.data['strings'][string][col]={"note":EMPTY_NOTE,"rfinger":null};
 		
 		if (type==TYPE_NOTE)
-			$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html(value);
+		{
+			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).html(value);
+			
+			console.log(">>>>>>>>",value);
+
+			if (value==EMPTY_NOTE)
+			{
+				console.log("LOL",string,col,value,this.data['strings'][string][col]);
+				delete this.data['strings'][string][col];
+			}
+			else
+				this.data['strings'][string][col].note=value;
+		}
 		else if (type==TYPE_LFINGER)
 		{
-			$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).removeClass (function (index, css) {
+			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).removeClass (function (index, css) {
 				return (css.match (/\blfinger\S+/g) || []).join(' ');
 			});
 			
-			if (this.data['strings'][row][col][type]==value)
+			if (this.data['strings'][string][col][type]==value)
 				value=EMPTY_NOTE;
 			else
-				$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("lfinger"+value);
+				$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).addClass("lfinger"+value);
+			
+			this.data['strings'][string][col].rfinger=value;
 		}
-		
-		this.data['strings'][row][col][type]=value;
+
+		console.log(JSON.stringify(this.data.strings));
 	},
 	
+	//@todo Change it to use the data instead of the html?
 	updateASCIIText: function()
 	{
 		var textArray=new Array(tabBlockNumStrings);
 		for (var i=0;i<tabBlockNumStrings;i++)
-			//textArray=new Array();
 			textArray[i]=tabBlockNotes[i]+"|";
 
 		var lastModifier=false;
@@ -531,12 +540,14 @@ KORDS.TABS.TabsBlock.prototype =
 	
 	updateLFingerButtons: function(col,row)
 	{
+		/*!!!!!!!!!
 		var lfinger=this.data['strings'][row][col][TYPE_LFINGER];
-		
+				
 		$("#lfingers a").removeClass("checked");
 		
 		if (lfinger!=EMPTY_NOTE)
 			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");	
+		*/
 	},
 
 	updateRFingerButtons: function(col)
@@ -686,7 +697,7 @@ KORDS.TABS.TabsBlock.prototype =
 
 KORDS.TABS.TabsBlock.insertTabBlock=function()
 {
-    tabBlockHtml='<table width="100%" class="tabblock">';
+    var tabBlockHtml='<table width="100%" class="tabblock">';
 
 	// top
 	for (var j=0;j<topColumnModifiers.length;j++)

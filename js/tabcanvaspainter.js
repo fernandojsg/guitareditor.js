@@ -333,8 +333,8 @@ KORDS.TABS.TabsCanvasPainter.prototype =
 		
 		if (isNumber(string))
 		{
-			var val0=this.tabArray[string][fromPos][TYPE_NOTE];
-			var val1=this.tabArray[string][toPos][TYPE_NOTE];
+			var val0=this.tabArray[string][fromPos].note;
+			var val1=this.tabArray[string][toPos].note;
 			
 			var cy=string*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
 			this.drawNoteModifier(modifier,cx0,cx1,cy,val0,val1);
@@ -411,12 +411,14 @@ KORDS.TABS.TabsCanvasPainter.prototype =
 			var prevNotePos=0;
 			var onBinaryModifier=false;
 			var prevBinaryModifier="";
+
+			//@fixme Remove this loop
 			for (var i=0;i<tabBlockLength;i++)
 			{
-				
-				var note=this.tabArray[j][i][TYPE_NOTE];
-				if (note!="")
+				if (cell=this.tabArray[j][i])
 				{
+					var note=cell.note;
+
 					if (binaryNoteModifiers.indexOf(note)!=-1)
 					{
 						onBinaryModifier=true;
@@ -427,8 +429,10 @@ KORDS.TABS.TabsCanvasPainter.prototype =
 					else
 					{
 						if (onBinaryModifier)
+						{
+							console.log(prevNotePos,i,j,prevBinaryModifier);
 							this.drawModifier(prevBinaryModifier,prevNotePos,i,j);
-						
+						}
 						var cx=i*this.stepX+this.noteMargin;
 						var cy=j*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
 						
@@ -445,12 +449,12 @@ KORDS.TABS.TabsCanvasPainter.prototype =
 							this.ctx.fillText(number, cx+w, cy-w/1.1);
 						}
 						prevNotePos=i;
-						onBinaryModifier=false;						
+
+						onBinaryModifier=false;
 					}
 				}
 			}
 		}
-		
 	},
 	
 	paint: function ()

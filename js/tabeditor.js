@@ -4,11 +4,26 @@ KORDS.TABS.TabsInstance=function()
 	this.tabsEditor=new KORDS.TABS.TabsEditor;
 }
 
+/*
+KORDS.TABS.TabNote=function()
+{
+	this.note=EMPTY_NOTE;
+	this.lfinger=null;
+}
+
+KORDS.TABS.TabSection=function()
+{
+	this.type=null;
+	this.data=null;
+}
+*/
+
 KORDS.TABS.Tablature=function()
 {
 	this.numSections=0;
 	this.sections=[];
 }
+
 
 KORDS.TABS.Tablature.prototype = 
 {
@@ -27,13 +42,6 @@ KORDS.TABS.Tablature.prototype =
 		
 	}
 }
-
-
-
-
-
-
-
 
 
 //--------------------------------------------------
@@ -233,18 +241,15 @@ KORDS.TABS.TabsEditor.prototype =
 	
 	updateText: function()
 	{
+	
 		text="";
 		for (var i in tabsInstance.tabsEditor.htmlSections)
 			text+=tabsInstance.tabsEditor.htmlSections[i].getText()+"\n";
 		$("#text").val(text);
 
-		//for (var s in tabsInstance.tabsEditor.htmlSections)
-		//	section=tabsInstance.tabsEditor.htmlSections[s].canvas.paint();
-		//this.div
 		for (var s in tabsInstance.tabsEditor.htmlSections)
 			tabsInstance.tabsEditor.htmlSections[s].paint();
-		
-		this.generateFileFormat();
+//		this.generateFileFormat();
 	},
 
 	addSection: function(obj,type)
