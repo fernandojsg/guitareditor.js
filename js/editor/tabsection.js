@@ -32,32 +32,13 @@ KORDS.TABSEDITOR.TabsSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance
 	this.tabsEditorInstance=tabsEditorInstance;
 	
 	this.type="tabs";
-	this.updateText();	
 
-	this.data={
-				"strings":new Array(tabBlockNumStrings),
-				"colmodifiers":{},
-			};
+	this.sectionData=new KORDS.TABSDATA.TabSection;
 
-	for (var i=0;i<tabBlockNumStrings;i++)
-		this.data['strings'][i]={};
-		
-	for (var i=0;i<topColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][topColumnModifiers[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][topColumnModifiers[i]]['values'][j]=null;
-	}
-	
-	for (var i=0;i<bottomColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][bottomColumnModifiers	[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][bottomColumnModifiers	[i]]['values'][j]=null;
-	}
+	this.updateText();
 
 	this.div = prettyHtmlNode;
-	this.canvas=new KORDS.TABSPAINTER.CanvasPainter(this.div,this);
+	this.canvas=new KORDS.TABSPAINTER.CanvasPainter(this.div,this.sectionData);
 	
 	this.updateText();
 }
@@ -72,7 +53,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 	getData: function()
 	{
-		return this.data;
+		return this.sectionData.data;
 	},
 	
 	insertSpaceAtPos: function(col,row)
@@ -301,7 +282,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			"col":col
 		};
 		
-		$("#note_text").val(this.data['colmodifiers']['text']['values'][col]);
+		$("#note_text").val(this.sectionData.data['colmodifiers']['text']['values'][col]);
 		$this=this;
 		
 		this.tabBlockTextDialog=$("#tabblocktext_dialog").dialog({
@@ -370,7 +351,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else
 		{
-			if (this.data['colmodifiers'][group]['values'][col]==value)
+			if (this.sectionData.data['colmodifiers'][group]['values'][col]==value)
 				value=null;
 
 			cell.attr("data-value",value);
@@ -378,18 +359,18 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		
 		if (value==null)
-			this.data['colmodifiers'][group]['nummodifiers']--;
-		else if (this.data['colmodifiers'][group]['values'][col]==null)		
-			this.data['colmodifiers'][group]['nummodifiers']++;
+			this.sectionData.data['colmodifiers'][group]['nummodifiers']--;
+		else if (this.sectionData.data['colmodifiers'][group]['values'][col]==null)		
+			this.sectionData.data['colmodifiers'][group]['nummodifiers']++;
 			
-		//console.log("#",this.data['colmodifiers'][group]['nummodifiers']);
+		//console.log("#",this.sectionData.data['colmodifiers'][group]['nummodifiers']);
 			
-		if (this.data['colmodifiers'][group]['nummodifiers']>0)
+		if (this.sectionData.data['colmodifiers'][group]['nummodifiers']>0)
 			$(".tabblock tr.extra."+group).show();
 		else
 			$(".tabblock tr.extra."+group).hide();
 
-		this.data['colmodifiers'][group]['values'][col]=value;
+		this.sectionData.data['colmodifiers'][group]['values'][col]=value;
 		
 		if (group=="rfingers")
 			this.updateRFingerButtons(col);
@@ -408,8 +389,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	getStringCellValue: function(col,string)
 	{
 		var type=TYPE_NOTE;
-		//return this.data['strings'][string][col][type];
-		return this.data['strings'][string][col].note;
+		//return this.sectionData.data['strings'][string][col][type];
+		return this.sectionData.data['strings'][string][col].note;
 	},
 	
 	setStringCellValue: function (col,string,value,type/*,shift*/)
@@ -417,8 +398,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		col=parseInt(col);
 		string=parseInt(string);
 
-		if (!this.data['strings'][string][col])	
-			this.data['strings'][string][col]={"note":EMPTY_NOTE,"rfinger":null};
+		if (!this.sectionData.data['strings'][string][col])	
+			//this.sectionData.data['strings'][string][col]={"note":EMPTY_NOTE,"lfinger":null};
+			this.sectionData.data['strings'][string][col]=new KORDS.TABSDATA.NoteCell();
 		
 		if (type==TYPE_NOTE)
 		{
@@ -426,11 +408,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			
 			if (value==EMPTY_NOTE)
 			{
-				console.log("LOL",string,col,value,this.data['strings'][string][col]);
-				delete this.data['strings'][string][col];
+				console.log("LOL",string,col,value,this.sectionData.data['strings'][string][col]);
+				delete this.sectionData.data['strings'][string][col];
 			}
 			else
-				this.data['strings'][string][col].note=value;
+				this.sectionData.data['strings'][string][col].note=value;
 		}
 		else if (type==TYPE_LFINGER)
 		{
@@ -438,15 +420,15 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 				return (css.match (/\blfinger\S+/g) || []).join(' ');
 			});
 			
-			if (this.data['strings'][string][col][type]==value)
+			if (this.sectionData.data['strings'][string][col][type]==value)
 				value=EMPTY_NOTE;
 			else
 				$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).addClass("lfinger"+value);
 			
-			this.data['strings'][string][col].rfinger=value;
+			this.sectionData.data['strings'][string][col].lfinger=value;
 		}
 
-		//console.log(JSON.stringify(this.data.strings));
+		//console.log(JSON.stringify(this.sectionData.data.strings));
 	},
 	
 	updateASCIIText: function()
@@ -530,7 +512,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	updateLFingerButtons: function(col,row)
 	{
 		/*!!!!!!!!!
-		var lfinger=this.data['strings'][row][col][TYPE_LFINGER];
+		var lfinger=this.sectionData.data['strings'][row][col][TYPE_LFINGER];
 				
 		$("#lfingers a").removeClass("checked");
 		
@@ -541,7 +523,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 	updateRFingerButtons: function(col)
 	{
-		var rfinger=this.data['colmodifiers']['rfingers']['values'][col];
+		var rfinger=this.sectionData.data['colmodifiers']['rfingers']['values'][col];
 		
 		$("#rfingers a").removeClass("checked");
 		
@@ -590,7 +572,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	
 	accumColModifierValue: function (modifierGroup,col,modifier)
 	{
-		var currentVal=this.data['colmodifiers'][modifierGroup]['values'][col];
+		var currentVal=this.sectionData.data['colmodifiers'][modifierGroup]['values'][col];
 		
 		if (currentVal==null)
 			currentVal=modifier;
@@ -611,7 +593,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			"arrows":["up_arrow","down_arrow","rasgueo",null]
 		};
 				
-		var currentVal=this.data['colmodifiers'][modifierGroup]['values'][col];
+		var currentVal=this.sectionData.data['colmodifiers'][modifierGroup]['values'][col];
 		if (currentVal==null)
 			index=0;
 		else

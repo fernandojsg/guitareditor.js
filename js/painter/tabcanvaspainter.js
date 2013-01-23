@@ -456,7 +456,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 	{
 		this.resize();//!!!!!!!!!
 		
-		var data=this.tabBlock.getData();
+		var data=this.tabBlock.data;
 
 		this.tabArray=data.strings;
 		this.modifiers=data.colmodifiers;
