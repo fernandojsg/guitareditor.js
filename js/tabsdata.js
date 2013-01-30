@@ -30,18 +30,10 @@ KORDS.TABSDATA.TabSection=function()
 		this.data['strings'][i]={};
 		
 	for (var i=0;i<topColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][topColumnModifiers[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][topColumnModifiers[i]]['values'][j]=null;
-	}
+		this.data['colmodifiers'][topColumnModifiers[i]]={};
 	
 	for (var i=0;i<bottomColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][bottomColumnModifiers	[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][bottomColumnModifiers	[i]]['values'][j]=null;
-	}
+		this.data['colmodifiers'][bottomColumnModifiers	[i]]={};
 }
 
 KORDS.TABSDATA.VideoSection=function()
@@ -57,7 +49,6 @@ KORDS.TABSDATA.AudioSection=function()
 
 KORDS.TABSDATA.Song=function()
 {
-	this.numSections=0;
 	//this.sections={};
 	this.sections=[];
 }
@@ -67,17 +58,17 @@ KORDS.TABSDATA.Song.prototype =
 {
 	addSection: function(id,newSection)
 	{
-		this.numSections++;
 		this.sections.splice(id,0,newSection);
 	},
 
 	load: function (data)
 	{
-
+		this.sections=JSON.parse(data);
+		console.log(this);
 	},
 
 	save: function ()
 	{
-
+		return JSON.stringify(this.sections);
 	}
 }

@@ -1,4 +1,4 @@
-KORDS.TABSEDITOR.TextSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
+KORDS.TABSEDITOR.TextSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance,data)
 {
 	this.tabsEditorInstance=tabsEditorInstance;
 	this.htmlNode=htmlNode;
@@ -7,11 +7,21 @@ KORDS.TABSEDITOR.TextSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance
 	this.div=prettyHtmlNode;
 	this.div.setAttribute("class","pretty-text-block");
 
-	this.sectionData=new KORDS.TABSDATA.TextSection;
+	if (typeof data != 'undefined')
+		this.loadData(data);
+	else
+		this.sectionData=new KORDS.TABSDATA.TextSection;
 }
 
 KORDS.TABSEDITOR.TextSection.prototype = 
 {
+	loadData: function(data)
+	{
+		this.sectionData=data;
+		this.htmlNode.find("textarea").val(data.text);
+		console.log("loadinggg",data);
+	},
+
 	onKeyDown: function (keyCode)
 	{
 		if (typeof this.tabsEditorInstance.updateText!='undefined')

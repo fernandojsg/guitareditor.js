@@ -34,7 +34,7 @@
 		<table>
 		<tr>
 			<td valign="top">
-				<div id="text-editor" class="tabs-editor">
+				<div id="text-editor222">
 					<div id="block" class="menu tabsection tabs" style="display:none">
 						<div id="tabblock" class="" width="100%" style="background-color:#fff;padding:10px;"></div>
 					</div>
@@ -83,17 +83,20 @@
 						</div>
 					</div>
 -->
+				<div id="text-editor" class="tabs-editor">
 				</div>
 			</td>
 			<td valign="top">
 				<div style="padding-left:50px">
+					<a id="save_ktb" class="button mini">Save KTB</a>
+					<a id="load_ktb" class="button mini">Load KTB</a>
 					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
+					<b>KTG FILE FORMAT</b>
+					<textarea id="ktg" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">[{"type":"tabs","data":{"strings":[{},{},{"6":{"note":"3","lfinger":null},"11":{"note":"11","lfinger":null},"12":{"note":"1","lfinger":null},"13":{"note":"1","lfinger":null}},{"6":{"note":"3","lfinger":null},"10":{"note":"1","lfinger":null}},{"6":{"note":"3","lfinger":null}},{"6":{"note":"3","lfinger":null},"8":{"note":"2","lfinger":null},"9":{"note":"2","lfinger":null}}],"colmodifiers":{"text":{},"accents":{"12":"golpe"},"arrows":{},"rfingers":{}}}}]</textarea>
 					<b>ASCII TAB</b>
-					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
-					</textarea>
+					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px"></textarea>
 					<b>VECTORIAL TAB</b>
-					<div id="pretty-tab" class="pretty-tab">
-					</div>
+					<div id="pretty-tab" class="pretty-tab"></div>
 					<!--
 					<b>Vextab</b>
 					<textarea id="vextab" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">

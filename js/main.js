@@ -21,7 +21,16 @@ $(document).ready(function(){
 		html+='<option value="'+chord+'">'+chord+'</option>';
 	
 	$("#chords").html(html);
-	
+
+	$("#save_ktb").click(function(){
+		$("#ktg").val(tabsInstance.song.save());
+	});
+
+	$("#load_ktb").click(function(){
+		//tabsInstance.song.load($("#ktg").val());
+		tabsInstance.load($("#ktg").val());
+	});
+
 	$("#insert-chords").click(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		tabsInstance.tabsEditor.htmlSections[id].insertChord($("#chords").val());

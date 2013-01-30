@@ -207,6 +207,7 @@ textarea.tabtext
 .pretty-tab
 {
 	margin-bottom:15px;
+	padding-top:5px;
 }
 
 .pretty-tab div
@@ -216,6 +217,7 @@ textarea.tabtext
 	line-height:16px;
 	/*margin-bottom:15px;*/
 	margin:0px;
+	padding-bottom:15px;
 	/*border:1px solid #aaa;*/
 }
 

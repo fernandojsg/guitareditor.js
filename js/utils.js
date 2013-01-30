@@ -31,3 +31,11 @@ String.prototype.replaceAt=function(index, char) {
 function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+function objectSize (obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};

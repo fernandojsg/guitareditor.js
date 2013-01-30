@@ -4,6 +4,19 @@ KORDS.TABS.TabsInstance=function()
 	this.tabsEditor=new KORDS.TABSEDITOR.Editor(this.song);
 }
 
+KORDS.TABS.TabsInstance.prototype = 
+{
+	load: function(data)
+	{
+		this.song.load(data);
+		if (this.tabsEditor)
+		{
+			this.tabsEditor.load(this.song);
+		}
+	}
+}
+
+
 KORDS.TABSEDITOR.Editor=function(song)
 {
 	this.song=song;
@@ -70,6 +83,95 @@ function getOffsetFromId(id)
 
 KORDS.TABSEDITOR.Editor.prototype = 
 {
+	appendLoadedSection: function(id,type,data)
+	{
+		var newId=id;
+		var prevId=newId-1;
+
+		var typeNode=$("[id='block']."+type);
+		var newNode=typeNode.clone();
+		
+		var newPrettyNode;
+		if (this.numSections==0)
+		{
+			$("#text-editor").append(newNode);
+			newPrettyNode= $('<div data-id="0"></div>');
+ 			$("#pretty-tab").append(newPrettyNode);
+		}
+		else
+		{
+			newPrettyNode=$('<div data-id="'+newId+'"></div>');
+			newPrettyNode.insertAfter($("#pretty-tab div[data-id='"+prevId+"']"));
+			var obj=$("[id='block["+prevId+"]']");
+			newNode.insertAfter(obj);
+		}
+		
+		newPrettyNode=newPrettyNode[0];
+		
+		newNode.attr("id","block["+this.numSections+"]");
+		newNode.attr("data-id",this.numSections);
+		newNode.show();
+		
+		if ($("#empty-context-menu").is(":visible"))
+		{
+			contextMenu=$("#empty-context-menu").clone();
+			contextMenu.attr("id","context-menu");
+			contextMenu.show();
+			$("#empty-context-menu").hide();				
+			contextMenu.find("#remove_section").show();
+		}
+		else
+			contextMenu=$("#context-menu");
+		
+		var td=null;
+		var newSection=null;
+
+		if (type=="text")
+		{
+			newNode.find("textarea").autosize().focus();
+			newSection=new KORDS.TABSEDITOR.TextSection(newNode,newPrettyNode,this,data);
+		}
+		else if (type=="tabs")
+		{
+			contextMenu.find("#add_text").show();
+			newSection=new KORDS.TABSEDITOR.TabsSection(newNode,newPrettyNode,this,data);
+			td=newNode.find("td[data-col='0'][data-row='0']");
+		}
+		else
+		{
+			alert("NO TYPE");
+		}
+		
+		//this.song.addSection(newId,newSection.sectionData);
+		this.htmlSections.splice(newId,0,newSection);
+//		console.log(type,newId,this.htmlSections);
+
+		newNode.append(contextMenu);
+		this.reOrderIds();
+		this.setActiveSection(newNode,td);
+		this.updateText();
+		
+		this.numSections++;
+	},
+
+	load: function(song)
+	{
+		this.numSections=0;	
+		this.htmlSections=[];
+		$("#text-editor").html("");
+		$("#pretty-tab").html("");
+
+		this.song=song;
+		var len=this.song.sections.length;
+		for (var i=0;i<len;i++)
+		{
+			var section=this.song.sections[i];
+			console.log(">>>>>>>>>>>>>>>",section,i);
+			this.appendLoadedSection(i,section.type,section);
+		}
+		console.log("ENDDD");
+	},
+
 	loadFromParser: function(sections)
 	{
 		var prevNode=null;
@@ -170,6 +272,12 @@ KORDS.TABSEDITOR.Editor.prototype =
 		return true;
 	},
 	
+	paint: function()
+	{
+		for (var s in tabsInstance.tabsEditor.htmlSections)
+			tabsInstance.tabsEditor.htmlSections[s].paint();
+	},
+
 	updateText: function()
 	{
 		text="";
@@ -177,17 +285,13 @@ KORDS.TABSEDITOR.Editor.prototype =
 			text+=tabsInstance.tabsEditor.htmlSections[i].getText()+"\n";
 		$("#text").val(text);
 
-		for (var s in tabsInstance.tabsEditor.htmlSections)
-			tabsInstance.tabsEditor.htmlSections[s].paint();
-//		this.generateFileFormat();
-
-		console.log(this.song);
+		this.paint();
 	},
 
 	addSection: function(obj,type)
 	{
 		var parentId=parseInt(obj.attr("data-id"));
-		var newId=parentId?parentId+1:0;
+		var newId=isNumber(parentId)?parentId+1:0;
 
 		var typeNode=$("[id='block']."+type);
 		var newNode=typeNode.clone();
@@ -243,8 +347,8 @@ KORDS.TABSEDITOR.Editor.prototype =
 		}
 		
 		this.song.addSection(newId,newSection.sectionData);
-
 		this.htmlSections.splice(newId,0,newSection);
+		console.log(type,newId,this.htmlSections);
 
 		newNode.append(contextMenu);
 		this.reOrderIds();
@@ -254,7 +358,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 		//newNode[0].scrollIntoView(true);
 		//$("#scroll").scrollTo('100%');
 		//http://plugins.jquery.com/project/ScrollTo
-		$(".hover").removeClass("hover");	
+		$(".hover").removeClass("hover");
 		this.numSections++;
 	},
 	
