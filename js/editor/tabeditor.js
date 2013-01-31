@@ -13,6 +13,12 @@ KORDS.TABS.TabsInstance.prototype =
 		{
 			this.tabsEditor.load(this.song);
 		}
+	},
+
+	reset: function()
+	{
+		this.song=new KORDS.TABSDATA.Song;
+		this.tabsEditor.reset();
 	}
 }
 
@@ -83,6 +89,18 @@ function getOffsetFromId(id)
 
 KORDS.TABSEDITOR.Editor.prototype = 
 {
+	reset: function()
+	{
+		this.numSections=0;	
+		this.htmlSections=[];
+		
+		$("#text-editor-base").append($("#tabs-context-menu").hide());
+		$("#text-editor-base").append($("#empty-context-menu").show());
+
+		$("#text-editor").html("");
+		$("#pretty-tab").html("");
+	},
+
 	appendLoadedSection: function(id,type,data)
 	{
 		var newId=id;
@@ -156,20 +174,15 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 	load: function(song)
 	{
-		this.numSections=0;	
-		this.htmlSections=[];
-		$("#text-editor").html("");
-		$("#pretty-tab").html("");
+		this.reset();
 
 		this.song=song;
 		var len=this.song.sections.length;
 		for (var i=0;i<len;i++)
 		{
 			var section=this.song.sections[i];
-			console.log(">>>>>>>>>>>>>>>",section,i);
 			this.appendLoadedSection(i,section.type,section);
 		}
-		console.log("ENDDD");
 	},
 
 	loadFromParser: function(sections)

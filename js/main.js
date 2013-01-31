@@ -22,8 +22,17 @@ $(document).ready(function(){
 	
 	$("#chords").html(html);
 
+	$("#new_ktb").click(function(){
+		tabsInstance.reset();
+	});
+
 	$("#save_ktb").click(function(){
-		$("#ktg").val(tabsInstance.song.save());
+		var ktg=tabsInstance.song.save();
+		var fileName="test";
+		var blob = new Blob([ktg], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, fileName+".ktg");
+
+		$("#ktg").val(ktg);
 	});
 
 	$("#load_ktb").click(function(){

@@ -51,18 +51,19 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	loadData: function(data)
 	{
 		this.sectionData=data;
-		console.log("---->",this.sectionData.data['strings']);
 		for (var s=0;s<tabBlockNumStrings;s++)
 		{
 			var string=this.sectionData.data['strings'][s];
 			for (var pos in string)
-			{
-				this.setStringCellValue(pos,s,string[pos].note,TYPE_NOTE);
-			}
+			this.setStringCellValue(pos,s,string[pos].note,TYPE_NOTE);
 		}
-		//setStringCellValue(col,string,value,type);
 
-		console.log("loadinggg",data);
+		for (var modifierGroup in this.sectionData.data['colmodifiers'])
+		{
+			var group=this.sectionData.data['colmodifiers'][modifierGroup];
+			for (var col in group)
+				this.setColModifierValue(modifierGroup,col,group[col],true);
+		}
 	},
 	
 	removeHtml: function()
@@ -355,8 +356,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			this.tabsEditorInstance.updateText();
 	},
 
-	setColModifierValue: function (group,col,value)
+	// @absolute Ignore the previous value of the cell (It doesn't toggle it)
+	setColModifierValue: function (group,col,value,absolute)
 	{
+		console.log(">>>>>>>>------->",group,col,value);
+
 		var cell=$(".tabblock tr.extra."+group+" td[data-col='"+col+"']",this.htmlNode);
 		
 		if (group=="text")
@@ -370,9 +374,10 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else
 		{
-			if (this.sectionData.data['colmodifiers'][group][col]==value)
- 				value=null;
-
+			if (typeof absolute == 'undefined' || !absolute)
+				if (this.sectionData.data['colmodifiers'][group][col]==value)
+ 					value=null;
+ 			
 			cell.attr("data-value",value);
 			cell.removeClass().addClass("modifier_"+value);
 		}
@@ -389,6 +394,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 		if (group=="rfingers")
 			this.updateRFingerButtons(col);
+
+		console.log(">>>>>>>>------->",group,col,value,this.sectionData.data['colmodifiers'][group]);
 	},
 	
 	getColModifierValue: function (group,col)

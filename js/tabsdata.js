@@ -6,7 +6,6 @@ KORDS.TABSDATA.NoteCell=function()
 	this.lfinger=null;
 }
 
-
 KORDS.TABSDATA.EmptySection=function()
 {
 	this.type=null;
