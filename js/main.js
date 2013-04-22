@@ -3,6 +3,8 @@ $(document).ready(function(){
 
 	tabsInstance=new KORDS.TABS.TabsInstance();
 
+//	$("#tabs").tabs();
+
 	$("#text").val("");
 
 	$(document).keydown(function(e){
@@ -28,10 +30,12 @@ $(document).ready(function(){
 
 	$("#save_ktb").click(function(){
 		var ktg=tabsInstance.song.save();
-		var fileName="test";
+		console.log(ktg);
+		
+/*		var fileName="test";
 		var blob = new Blob([ktg], {type: "text/plain;charset=utf-8"});
 		saveAs(blob, fileName+".ktg");
-
+*/
 		$("#ktg").val(ktg);
 	});
 

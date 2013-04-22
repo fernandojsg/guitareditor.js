@@ -48,6 +48,12 @@
 					<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
 						<a id="insert-chords" class="button mini" href="#">Insert chord</a>
 						<select id="chords"></select>
+						
+						<a class="button mini colmodifier" data-modifier="bar_line" href="#" title="Separation">|</a>
+						<a class="button mini colmodifier" data-modifier="double_bar_line" href="#" title="Separation">||</a>
+						<a class="button mini colmodifier" data-modifier="repeat_left" href="#" title="Repeat left">|:</a>
+						<a class="button mini colmodifier" data-modifier="repeat_right" href="#" title="Repeat right">:|</a>
+
 						<a class="button mini modifier" data-modifier="s" href="#" title="Slide"><img src="images/s.png"/></a>
 						<a class="button mini modifier" data-modifier="^" href="#" title="HammerOf"><img src="images/h.png"/></a>
 						<a class="button mini modifier" data-modifier="v" href="#" title="Vibrato"><img src="images/v.png"/></a>
@@ -97,9 +103,9 @@
 					<a id="load_ktb" class="button mini">Load KTB</a>
 					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
 					<b>KTG FILE FORMAT</b>
-					<textarea id="ktg" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">[{"type":"tabs","data":{"strings":[{},{},{"6":{"note":"3","lfinger":null},"11":{"note":"11","lfinger":null},"12":{"note":"1","lfinger":null},"13":{"note":"1","lfinger":null}},{"6":{"note":"3","lfinger":null},"10":{"note":"1","lfinger":null}},{"6":{"note":"3","lfinger":null}},{"6":{"note":"3","lfinger":null},"8":{"note":"2","lfinger":null},"9":{"note":"2","lfinger":null}}],"colmodifiers":{"text":{},"accents":{"12":"golpe"},"arrows":{},"rfingers":{}}}}]</textarea>
+					<textarea id="ktg" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px">[{"type":"tabs","data":{"strings":[{"0":{"note":"1","lfinger":null}},{},{"1":{"note":"1","lfinger":"2"}},{"2":{"note":"1","lfinger":"3"}},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}}}}]</textarea>
 					<b>ASCII TAB</b>
-					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px"></textarea>
+					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px"></textarea>
 					<b>VECTORIAL TAB</b>
 					<div id="pretty-tab" class="pretty-tab"></div>
 					<!--

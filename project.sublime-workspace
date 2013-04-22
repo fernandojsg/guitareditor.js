@@ -1,0 +1,598 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"da",
+				"data"
+			],
+			[
+				"fu",
+				"function"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "js/editor/tabsection.js",
+			"settings":
+			{
+				"buffer_size": 18010,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/editor/tabeditor.js",
+			"settings":
+			{
+				"buffer_size": 9980,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 6771,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/main.js",
+			"settings":
+			{
+				"buffer_size": 2062,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/editor/textsection.js",
+			"settings":
+			{
+				"buffer_size": 1121,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/tabsdata.js",
+			"settings":
+			{
+				"buffer_size": 1154,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/painter/tabcanvaspainter.js",
+			"settings":
+			{
+				"buffer_size": 12800,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"stack",
+				"Stackoverflow: Search from Input"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 146.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": false,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/E/xampplite/htdocs/guitareditor.js/js/ext/FileSaver.min.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/utils.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabsdata.js",
+		"/C/Users/kile/AppData/Roaming/Sublime Text 2/Packages/DocBlockr/Base File.sublime-settings",
+		"/E/xampplite/htdocs/guitareditor.js/index.html",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/textsection.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/main.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/painter/tabcanvaspainter.js",
+		"/E/xampplite/htdocs/guitareditor.js/css/style.css",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabeditor.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabsection.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabsdata",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabparser.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabparser.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabeditor.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabsblock.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/textblock.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabcanvaspainter.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/keys.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/keys.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/kords.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/painter/kords.tabspainter.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/kords.tabseditor.js"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"getCellValue",
+			"setStringCellValue",
+			"load",
+			"lfinger",
+			"save",
+			"text",
+			"save",
+			"tabsInstance.song.save()",
+			"save",
+			"append",
+			"appendsto",
+			"rest",
+			"load",
+			"absolute",
+			"typeof",
+			"setColModifierValue",
+			"load(",
+			"text-editor",
+			"setStringCellValue",
+			"appendLoadedSection",
+			"insertafter",
+			"numsections",
+			"paint",
+			"load",
+			"numSections",
+			"parse tab",
+			"stringif",
+			"string",
+			"KORDS.TABS.TabsInstance",
+			"console.log",
+			"nummodif",
+			"setstringcell",
+			"setstr",
+			"'colmodifiers'",
+			"frompos",
+			"addSection",
+			"htmlSections",
+			"tabsdata",
+			".rfinger",
+			"rfinger",
+			"lfinger",
+			"sectiondata",
+			"sectionData",
+			"tabBlock",
+			"KORDS.TABSPAINTER.CanvasPainter",
+			"tab",
+			"this.data",
+			"addsection",
+			"setActiveSection",
+			"this",
+			"KORDS.TABSEDITOR.TextSection",
+			"cleanLine",
+			"isEmptyCol",
+			"KORDS.TABS.TabsEditor",
+			"KORDS.TABS.TabsBlock",
+			"KORDS.TABS.TextBlock",
+			".TextBlock",
+			".keys",
+			"canvaspainter",
+			"tabArray",
+			"this.tabArray",
+			"tabArray",
+			"array",
+			"ASDF",
+			"asdf",
+			"setStringCellValue",
+			"remove",
+			"setStringCellValue",
+			"splice",
+			"setstring",
+			"paint",
+			"tabArray",
+			"paint",
+			"canvas",
+			"this.text",
+			"gettext",
+			"getStringCellValue",
+			"generate",
+			"row",
+			"setStringCellValue",
+			"updatelfinger",
+			"load",
+			"KORDS",
+			"\n			",
+			"			"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"sectionData",
+			"this.sectionData.data",
+			"KORDS.TABSEDITOR.Editor",
+			"KORDS.TABSEDITOR.TabsSection",
+			"KORDS.TABSEDITOR.TextSection",
+			"this.strings",
+			"this.tabBlock.",
+			"string"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "js/editor/tabsection.js",
+					"settings":
+					{
+						"buffer_size": 18010,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										264,
+										264
+									],
+									[
+										1366,
+										1366
+									],
+									[
+										1909,
+										1909
+									],
+									[
+										2026,
+										2026
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								1789,
+								1789
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1539.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/editor/tabeditor.js",
+					"settings":
+					{
+						"buffer_size": 9980,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										317,
+										317
+									],
+									[
+										2317,
+										2317
+									],
+									[
+										4180,
+										4180
+									],
+									[
+										4357,
+										4357
+									],
+									[
+										7339,
+										7339
+									],
+									[
+										8434,
+										8434
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								3704,
+								3715
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2421.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 6771,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2459,
+								2459
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 442.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/main.js",
+					"settings":
+					{
+						"buffer_size": 2062,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								648,
+								648
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/editor/textsection.js",
+					"settings":
+					{
+						"buffer_size": 1121,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13,
+								15
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/tabsdata.js",
+					"settings":
+					{
+						"buffer_size": 1154,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/painter/tabcanvaspainter.js",
+					"settings":
+					{
+						"buffer_size": 12800,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12,
+								14
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"utils",
+				"js/utils.js"
+			],
+			[
+				"index",
+				"index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 193.0,
+	"status_bar_visible": true
+}

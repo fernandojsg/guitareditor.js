@@ -7,6 +7,8 @@ var bottomColumnModifiers=["rfingers"];
 
 var TYPE_NOTE=0;
 var TYPE_LFINGER=1;
+var TYPE_BOTH=2;
+
 var EMPTY_NOTE="";
 var EMPTY_NOTE_HTML="";
 
@@ -55,7 +57,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		{
 			var string=this.sectionData.data['strings'][s];
 			for (var pos in string)
-			this.setStringCellValue(pos,s,string[pos].note,TYPE_NOTE);
+			{
+				this.setStringCellValue(pos,s,string[pos].note,TYPE_NOTE);
+				if (string[pos].lfinger)
+					this.setStringCellValue(pos,s,string[pos].lfinger,TYPE_LFINGER);
+			}
 		}
 
 		for (var modifierGroup in this.sectionData.data['colmodifiers'])
@@ -81,7 +87,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	{
 		for (var i=tabBlockLength-1;i>=col;i--)
 			this.setStringCellValue(i,row,this.getCellValue(i-1,row),TYPE_NOTE);
-		this.setStringCellValue(col,row,EMPTY_NOTE,TYPE_NOTE); //??????????? null
+		//this.setStringCellValue(col,row,EMPTY_NOTE,TYPE_NOTE); //??????????? null
 	},
 	
 	insertSpace: function(wholeColumn)
@@ -214,7 +220,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else if (keys.keyCode==KEY_INSERT)
 		{
-			//console.log("INSERTING");
+			console.log("INSERTING");
 			this.insertSpace(e.shiftKey);
 			return false;
 		}
@@ -356,11 +362,64 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			this.tabsEditorInstance.updateText();
 	},
 
+	setBarLine: function(col,value)
+	{
+		var cell=$(".tabblock tr.string td[data-col='"+col+"']",this.htmlNode);
+
+		// toggle
+		if (this.sectionData.data['barlines'][col]!=null)
+			value=null;
+
+		//
+/*		
+		if (group=="text")
+			cell.html(value);
+		else if (group=="rfingers")
+			cell.html(value.split('').join("<br>"));
+		else
+		{
+			if (typeof absolute == 'undefined' || !absolute)
+				if (this.sectionData.data['colmodifiers'][group][col]==value)
+ 					value=null;
+ 			
+			cell.attr("data-value",value);
+			cell.removeClass().addClass("modifier_"+value);
+		}
+*/		
+		var separations={
+			"bar_line"			:"|",
+			"double_bar_line"	:"||",
+			"separation"		:"|",
+			"repeat_left"		:"]|:",
+			"repeat_right"		:":|[",
+		};
+		
+		console.log(">>>>>>>>>> ",value);
+
+		if (value==null)
+		{
+			delete this.sectionData.data['barlines'][col];
+			//cell.remove('.barline_simple');
+			cell.empty();
+		}
+		else
+		{
+			this.sectionData.data['barlines'][col]=separations[value];
+			cell.append('<div class="barline_simple"></div>');
+		}
+		console.log(this.sectionData.data);
+
+/*
+		if (objectSize(this.sectionData.data['colmodifiers'][group])>0)
+			$(".tabblock tr.extra."+group).show();
+		else
+			$(".tabblock tr.extra."+group).hide();
+*/		
+	},
+
 	// @absolute Ignore the previous value of the cell (It doesn't toggle it)
 	setColModifierValue: function (group,col,value,absolute)
 	{
-		console.log(">>>>>>>>------->",group,col,value);
-
 		var cell=$(".tabblock tr.extra."+group+" td[data-col='"+col+"']",this.htmlNode);
 		
 		if (group=="text")
@@ -394,8 +453,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 		if (group=="rfingers")
 			this.updateRFingerButtons(col);
-
-		console.log(">>>>>>>>------->",group,col,value,this.sectionData.data['colmodifiers'][group]);
 	},
 	
 	getColModifierValue: function (group,col)
@@ -405,7 +462,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	
 	getCellValue: function (col,row)
 	{
-		return $(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html();
+		return this.sectionData.data['strings'][row][col];
+		//return $(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html();
 	},
 
 	getStringCellValue: function(col,string)
@@ -419,6 +477,13 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	{
 		col=parseInt(col);
 		string=parseInt(string);
+
+		if (typeof value == 'undefined')
+			value=EMPTY_NOTE;
+		else if (typeof value=='object')
+			value=value.note;
+
+		console.log(">>>>",col,string,value,type,typeof value);
 
 		if (!this.sectionData.data['strings'][string][col])	
 			//this.sectionData.data['strings'][string][col]={"note":EMPTY_NOTE,"lfinger":null};
@@ -470,20 +535,25 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			
 			for (var j=0;j<tabBlockNumStrings;j++)
 			{
-				var val=$(".tabblock td[data-col='"+i+"'][data-row='"+j+"']",this.htmlNode).html();
-				if (val==EMPTY_NOTE)
-					val="-";
+				if (this.sectionData.data['barlines'][i]!=null)
+					currentCol[j]={"note":"|","two_digits":false};
 				else
 				{
-					emptyCol=false;				
-					isModifier=($.inArray(val, ['h','p','s','^','b','v','/','\\',])!==-1);
-					modifier|=isModifier;
-					if (!isModifier)
-						hasAnyNote=true;
+					var val=$(".tabblock td[data-col='"+i+"'][data-row='"+j+"']",this.htmlNode).html();
+					if (val==EMPTY_NOTE)
+						val="-";
+					else
+					{
+						emptyCol=false;				
+						isModifier=($.inArray(val, ['h','p','s','^','b','v','/','\\',])!==-1);
+						modifier|=isModifier;
+						if (!isModifier)
+							hasAnyNote=true;
+					}
+					
+					currentCol[j]={"note":val,"two_digits":val.length>1};
+					longNote|=currentCol[j].two_digits;
 				}
-				
-				currentCol[j]={"note":val,"two_digits":val.length>1};
-				longNote|=currentCol[j].two_digits;
 			}
 			
 			//if (!modifier && !lastModifier && !emptyCol)
@@ -604,7 +674,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			currentVal=this.resortFingers(currentVal);
 		this.setColModifierValue(modifierGroup,col,currentVal);
 	},
-	
+
 	toggleColumnModifier: function (modifierGroup,col,modifier)
 	{
 		var groupToggles={
@@ -627,7 +697,14 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
 		var col=curCell.attr("data-col");
 		var value=curCell.attr("data-value");
-	
+
+		if (modifier=="bar_line")
+		{
+			this.setBarLine(col,modifier);
+			this.updateText();
+			return;
+		}
+
 		var modifierActions=
 		{
 			"keyboard-accents":	{"type":"toggle","group":"accents"},
@@ -641,10 +718,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			"p":				{"type":"accum","group":"rfingers"},
 			"i":				{"type":"accum","group":"rfingers"},
 			"m":				{"type":"accum","group":"rfingers"},
-			"a":				{"type":"accum","group":"rfingers"}			
+			"a":				{"type":"accum","group":"rfingers"},
 		}
 		
-		console.log(modifier);
 		switch (modifierActions[modifier].type)
 		{
 			case "toggle":

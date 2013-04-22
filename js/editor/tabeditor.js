@@ -22,7 +22,6 @@ KORDS.TABS.TabsInstance.prototype =
 	}
 }
 
-
 KORDS.TABSEDITOR.Editor=function(song)
 {
 	this.song=song;

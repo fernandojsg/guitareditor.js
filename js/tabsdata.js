@@ -23,6 +23,7 @@ KORDS.TABSDATA.TabSection=function()
 	this.data={
 				"strings":new Array(tabBlockNumStrings),
 				"colmodifiers":{},
+				"barlines":{},
 			};
 
 	for (var i=0;i<tabBlockNumStrings;i++)
@@ -63,7 +64,6 @@ KORDS.TABSDATA.Song.prototype =
 	load: function (data)
 	{
 		this.sections=JSON.parse(data);
-		console.log(this);
 	},
 
 	save: function ()

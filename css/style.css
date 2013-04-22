@@ -13,6 +13,11 @@
 	vertical-align:middle;
 }
 
+.barline_simple {
+	background: url('../images/cell.gif') repeat-y center center;
+	height: 12px;
+}
+
 .button {
     background: none repeat scroll 0 0 #EE7E2A;
     border: medium none;
