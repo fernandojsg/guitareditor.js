@@ -19,55 +19,7 @@
 			"file": "js/editor/tabsection.js",
 			"settings":
 			{
-				"buffer_size": 18010,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/editor/tabeditor.js",
-			"settings":
-			{
-				"buffer_size": 9980,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 6771,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/main.js",
-			"settings":
-			{
-				"buffer_size": 2062,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/editor/textsection.js",
-			"settings":
-			{
-				"buffer_size": 1121,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/tabsdata.js",
-			"settings":
-			{
-				"buffer_size": 1154,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/painter/tabcanvaspainter.js",
-			"settings":
-			{
-				"buffer_size": 12800,
+				"buffer_size": 20300,
 				"line_ending": "Windows"
 			}
 		}
@@ -75,9 +27,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 35.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -107,11 +63,14 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 416.0
+		"width": 392.0
 	},
 	"console":
 	{
-		"height": 146.0
+		"height": 146.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -124,16 +83,18 @@
 	},
 	"file_history":
 	[
-		"/E/xampplite/htdocs/guitareditor.js/js/ext/FileSaver.min.js",
-		"/E/xampplite/htdocs/guitareditor.js/js/utils.js",
-		"/E/xampplite/htdocs/guitareditor.js/js/tabsdata.js",
-		"/C/Users/kile/AppData/Roaming/Sublime Text 2/Packages/DocBlockr/Base File.sublime-settings",
+		"/C/Users/kile/AppData/Roaming/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/C/Users/kile/AppData/Roaming/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
 		"/E/xampplite/htdocs/guitareditor.js/index.html",
-		"/E/xampplite/htdocs/guitareditor.js/js/editor/textsection.js",
 		"/E/xampplite/htdocs/guitareditor.js/js/main.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabeditor.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/tabsdata.js",
 		"/E/xampplite/htdocs/guitareditor.js/js/painter/tabcanvaspainter.js",
 		"/E/xampplite/htdocs/guitareditor.js/css/style.css",
-		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabeditor.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/editor/textsection.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/ext/FileSaver.min.js",
+		"/E/xampplite/htdocs/guitareditor.js/js/utils.js",
+		"/C/Users/kile/AppData/Roaming/Sublime Text 2/Packages/DocBlockr/Base File.sublime-settings",
 		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabsection.js",
 		"/E/xampplite/htdocs/guitareditor.js/js/tabsdata",
 		"/E/xampplite/htdocs/guitareditor.js/js/editor/tabparser.js",
@@ -154,7 +115,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
 			""
@@ -165,6 +126,59 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"EMPTY_NOTE",
+			"removeSpaceAt",
+			"setStringLFingerValue",
+			"EMPTY_NOTE",
+			"setStringCellValue",
+			"delete",
+			"setStringCellValue",
+			"setStringCellLFinger",
+			"setStringCellNote",
+			"setstring",
+			"setstringcell",
+			"setStringCellValue",
+			"var tabBlockLength=40;\nvar tabBlockLength=40;\nvar tabBlockLength=40;\n",
+			"var tabBlockLength=40;\nvar tabBlockLength=40;\nsetStringCellValue",
+			"var tabBlockLength=40;\nsetStringCellValue",
+			"setStringCellValue",
+			"getStringCellValue",
+			"getColModifierValue",
+			"getCellValue",
+			"setColModifierValue",
+			"setcol",
+			"undefined",
+			"setStringCellValue",
+			"getCellValue",
+			"insertSpace",
+			"inserting",
+			"ins",
+			"\"|\"",
+			"|",
+			"setbarline",
+			"setBarLine",
+			"drawcolumnmodi",
+			"darwcolumn",
+			"this.modifiers",
+			"this.modifier=",
+			"this.modifier",
+			"modifier=",
+			"modifier",
+			"drawModifier",
+			"drawColumnModifier",
+			"modifier",
+			"modifiers",
+			"KORDS",
+			"colmodifier",
+			"separation\"",
+			"setcolmodifier",
+			"insertColumnModifier",
+			".colmodifier",
+			"topColumnModifiers",
+			"bottomColumnModifiers",
+			"toggleColumnModifier",
+			"insertColumnModifier",
+			"colmodifier",
 			"getCellValue",
 			"setStringCellValue",
 			"load",
@@ -239,17 +253,7 @@
 			"tabArray",
 			"paint",
 			"canvas",
-			"this.text",
-			"gettext",
-			"getStringCellValue",
-			"generate",
-			"row",
-			"setStringCellValue",
-			"updatelfinger",
-			"load",
-			"KORDS",
-			"\n			",
-			"			"
+			"this.text"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -257,6 +261,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"setStringLFingerValue",
+			"setStringNoteValue",
 			"sectionData",
 			"this.sectionData.data",
 			"KORDS.TABSEDITOR.Editor",
@@ -275,15 +281,16 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "js/editor/tabsection.js",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18010,
+						"buffer_size": 20300,
 						"regions":
 						{
 							"bookmarks":
@@ -293,20 +300,44 @@
 								"regions":
 								[
 									[
-										264,
-										264
+										1853,
+										1853
 									],
 									[
-										1366,
-										1366
+										1858,
+										1876
 									],
 									[
-										1909,
-										1909
+										1921,
+										1921
 									],
 									[
-										2026,
-										2026
+										2566,
+										2566
+									],
+									[
+										2567,
+										2567
+									],
+									[
+										2635,
+										2635
+									],
+									[
+										11262,
+										11252
+									],
+									[
+										12046,
+										12046
+									],
+									[
+										13387,
+										13387
+									],
+									[
+										17572,
+										17572
 									]
 								],
 								"scope": "bookmarks"
@@ -315,204 +346,8 @@
 						"selection":
 						[
 							[
-								1789,
-								1789
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1539.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/editor/tabeditor.js",
-					"settings":
-					{
-						"buffer_size": 9980,
-						"regions":
-						{
-							"bookmarks":
-							{
-								"flags": 144,
-								"icon": "bookmark",
-								"regions":
-								[
-									[
-										317,
-										317
-									],
-									[
-										2317,
-										2317
-									],
-									[
-										4180,
-										4180
-									],
-									[
-										4357,
-										4357
-									],
-									[
-										7339,
-										7339
-									],
-									[
-										8434,
-										8434
-									]
-								],
-								"scope": "bookmarks"
-							}
-						},
-						"selection":
-						[
-							[
-								3704,
-								3715
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2421.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "index.html",
-					"settings":
-					{
-						"buffer_size": 6771,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2459,
-								2459
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 442.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "js/main.js",
-					"settings":
-					{
-						"buffer_size": 2062,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								648,
-								648
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "js/editor/textsection.js",
-					"settings":
-					{
-						"buffer_size": 1121,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13,
-								15
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "js/tabsdata.js",
-					"settings":
-					{
-						"buffer_size": 1154,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "js/painter/tabcanvaspainter.js",
-					"settings":
-					{
-						"buffer_size": 12800,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								12,
-								14
+								402,
+								402
 							]
 						],
 						"settings":
@@ -560,6 +395,7 @@
 		]
 	},
 	"menu_visible": true,
+	"project": "project.sublime-project",
 	"replace":
 	{
 		"height": 62.0
@@ -589,10 +425,24 @@
 		],
 		"width": 380.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 193.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
