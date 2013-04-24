@@ -175,7 +175,38 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			}
 		}	
 	},
-	
+
+	paintArrow: function(cx,cy,w,h,dir)
+	{
+		if (dir=="up")
+		{
+			this.ctx.beginPath();
+				this.ctx.moveTo(cx,cy-h);
+				this.ctx.lineTo(cx,cy+h);
+			this.ctx.stroke();
+			
+			this.ctx.beginPath();
+				this.ctx.moveTo(cx-w,cy-h/2);
+				this.ctx.lineTo(cx+w,cy-h/2);
+				this.ctx.lineTo(cx, cy-h);
+				this.ctx.lineTo(cx-w,cy-h/2);
+			this.ctx.fill();
+		}
+		else
+		{
+			this.ctx.beginPath();
+				this.ctx.moveTo(cx,cy-h);
+				this.ctx.lineTo(cx,cy+h);
+			this.ctx.stroke();
+			this.ctx.beginPath();
+				this.ctx.moveTo(cx-w,cy+h/2);
+				this.ctx.lineTo(cx+w,cy+h/2);
+				this.ctx.lineTo(cx, cy+h);
+				this.ctx.lineTo(cx-w,cy+h/2);
+			this.ctx.fill();
+		}
+	},
+
 	drawColumnModifier: function(group,modifier,cx0,cx1,cy,val0,val1)
 	{
 		var w=this.stepX;
@@ -252,35 +283,44 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		else if (modifier=="up_arrow")
 		{
 			var h=this.modifierHeight/2;
-			
-			this.ctx.beginPath();
-				this.ctx.moveTo(cx0,cy-h);
-				this.ctx.lineTo(cx0,cy+h);
-			this.ctx.stroke();
 			w=w/4;
+			this.paintArrow(cx0,cy,w,h,"up");
+		}
+		else if (modifier=="alzapua")
+		{
+			var h=this.modifierHeight/2;
+			w=w/4;
+			var dist=this.stepX/5;
+			this.paintArrow(cx0-dist,cy,w,h,"up");
+			this.paintArrow(cx0+dist,cy,w,h,"down");
+		}
+		else if (modifier=="rasgueo3")
+		{
+			var h=this.modifierHeight/2;
+			w=w/8;
+			var dist=this.stepX/3;
+			this.paintArrow(cx0-dist,cy,w,h,"up");
+			this.paintArrow(cx0,cy,w,h,"up");
+			this.paintArrow(cx0+dist,cy,w,h,"down");
+		}
+		else if (modifier=="rasgueo4")
+		{
+			var h=this.modifierHeight/2;
+			w=this.stepX/8;
+			var dist=this.stepX/4;
 			
-			this.ctx.beginPath();
-				this.ctx.moveTo(cx0-w,cy-h/2);
-				this.ctx.lineTo(cx0+w,cy-h/2);
-				this.ctx.lineTo(cx0, cy-h);
-				this.ctx.lineTo(cx0-w,cy-h/2);
-			this.ctx.fill();
+			var cx0=cx0-1.5*dist;
+
+			this.paintArrow(cx0,cy,w,h,"up");
+			this.paintArrow(cx0+dist,cy,w,h,"up");
+			this.paintArrow(cx0+dist*2,cy,w,h,"up");
+			this.paintArrow(cx0+dist*3,cy,w,h,"down");
 		}
 		else if (modifier=="down_arrow")
 		{
 			var h=this.modifierHeight/2;
-			
-			this.ctx.beginPath();
-				this.ctx.moveTo(cx0,cy-h);
-				this.ctx.lineTo(cx0,cy+h);
-			this.ctx.stroke();
 			w=w/4;
-			this.ctx.beginPath();
-				this.ctx.moveTo(cx0-w,cy+h/2);
-				this.ctx.lineTo(cx0+w,cy+h/2);
-				this.ctx.lineTo(cx0, cy+h);
-				this.ctx.lineTo(cx0-w,cy+h/2);
-			this.ctx.fill();
+			this.paintArrow(cx0,cy,w,h,"down");
 		}
 		else if (modifier=="rasgueo")
 		{

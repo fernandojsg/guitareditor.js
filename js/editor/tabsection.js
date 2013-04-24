@@ -70,6 +70,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			for (var col in group)
 				this.setColModifierValue(modifierGroup,col,group[col],true);
 		}
+
+		for (var col in this.sectionData.data['barlines'])
+		{
+			this.setBarLine(col,this.sectionData.data['barlines'][col]);
+		}
 	},
 	
 	removeHtml: function()
@@ -118,6 +123,10 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		curModifiers.removeClass (function (index, css) {
     		return (css.match (/\bmodifier_\S+/g) || []).join(' ');
 		});
+
+		// Barlines
+	//	for (var i=tabBlockLength-1;i>col;i--)
+	//		this.setBarLine(i,this.getBarLine(i-1));
 	},
 	
 	insertSpace: function(wholeColumn)
@@ -400,21 +409,15 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			this.setStringCellValue(col,i,null);
 	},
 
+	getBarLine: function(col)
+	{
+		var val=this.sectionData.data['barlines'][col];
+		return (typeof val == 'undefined')?null:val;
+	},
+
 	setBarLine: function(col,value)
 	{
 		var cell=$(".tabblock tr.string td[data-col='"+col+"']",this.htmlNode);
-
-		// toggle
-		/* if (this.sectionData.data['barlines'][col]!=null)
-			value=null;
-		*/
-		var separations={
-			"bar_line"			:"|",
-			"double_bar_line"	:"||",
-			"separation"		:"|",
-			"repeat_left"		:"]|:",
-			"repeat_right"		:":|[",
-		};
 		
 		console.log(">>>>>>>>>> ",value);
 
@@ -427,8 +430,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		else
 		{
 			this.emptyStringCol(col);
-			this.sectionData.data['barlines'][col]=separations[value];
+			this.sectionData.data['barlines'][col]=value;
 			cell.append('<div class="barline_simple"></div>');
+			//cell.addClass("barline_simple");
 		}
 	},
 
@@ -726,11 +730,24 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		this.setColModifierValue(modifierGroup,col,currentVal);
 	},
 
+	toggleBarLine: function(col)
+	{
+		var lineToggles=["|",null];
+
+		var currentVal=this.getBarLine(col);
+		if (currentVal==null)
+			index=0;
+		else
+			index=(lineToggles.indexOf(currentVal)+1)%lineToggles.length;
+
+		this.setBarLine(col,lineToggles[index]);
+	},
+
 	toggleColumnModifier: function (modifierGroup,col,modifier)
 	{
 		var groupToggles={
 			"accents":["golpe","accent",null],
-			"arrows":["up_arrow","down_arrow","rasgueo",null]
+			"arrows":["up_arrow","down_arrow","rasgueo","alzapua","rasgueo3","rasgueo4",null]
 		};
 				
 		var currentVal=this.sectionData.data['colmodifiers'][modifierGroup][col];
@@ -749,9 +766,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		var col=curCell.attr("data-col");
 		var value=curCell.attr("data-value");
 
-		if (modifier=="bar_line")
+		if (modifier=="barline_simple")
 		{
-			this.setBarLine(col,modifier);
+			this.toggleBarLine(col);
 			this.updateText();
 			return;
 		}
@@ -764,6 +781,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			"accent":			{"type":"set","group":"accents"},
 			"down_arrow":		{"type":"set","group":"arrows"},
 			"up_arrow":			{"type":"set","group":"arrows"},
+			"alzapua": 			{"type":"set","group":"arrows"},
+			"rasgueo3": 		{"type":"set","group":"arrows"},
+				"rasgueo4": 		{"type":"set","group":"arrows"},
 			"rasgueo":			{"type":"set","group":"arrows"},
 			"text":				{"type":"set","group":"text"},
 			"p":				{"type":"accum","group":"rfingers"},

@@ -8,15 +8,12 @@
 .button.mini {
     /* font-size: 11px;*/
 	font-size: 9px;
-    margin: 5px 5px 5px 0;
+    /* margin: 5px 5px 5px 0;*/
+    margin:0px;
     padding: 5px;
 	vertical-align:middle;
 }
 
-.barline_simple {
-	background: url('../images/cell.gif') repeat-y center center;
-	height: 12px;
-}
 
 .button {
     background: none repeat scroll 0 0 #EE7E2A;
@@ -58,34 +55,70 @@ table {
   border-collapse:collapse;
 }
 
+
 .tabblock td
 {
 	border:none; /*1px solid #aaa;*/
 	cursor:pointer;
 	text-align:center;
-	background: url(../images/cell.gif) repeat-x center center;
+	background: url('../images/cell.gif') repeat-x center center;
 	white-space: nowrap;
 }
 
+.barline_simple
+{
+	background: url('../images/barline_simple_black.png') repeat-x center center;
+	height:12px;
+}
+/*
+.barline_double
+{
+	background: url('../images/barline_double.png') repeat-x center center;
+	height:12px;
+}
+
+.barline_repeat_left0
+{
+	background: url('../images/barline_double.png') repeat-x center center;
+	height:12px;
+}
+.barline_repeat_left1
+{
+	background: url('../images/barline_double.png') repeat-x center center;
+	height:12px;
+}
+
+.barline_repeat_right0
+{
+	background: url('../images/barline_double.png') repeat-x center center;
+	height:12px;
+}
+.barline_repeat_right1
+{
+	background: url('../images/barline_double.png') repeat-x center center;
+	height:12px;
+}
+*/
+
 .tabblock td.lfinger1
 {
-	background: url(../images/cell.gif) repeat-x center center, 
-				url(../images/1_black.png) no-repeat top right;	
+	background: url('../images/cell.gif') repeat-x center center, 
+				url('../images/1_black.png') no-repeat top right;	
 }
 .tabblock td.lfinger2
 {
-	background: url(../images/cell.gif) repeat-x center center, 
-				url(../images/2_black.png) no-repeat top right;	
+	background: url('../images/cell.gif') repeat-x center center, 
+				url('../images/2_black.png') no-repeat top right;	
 }
 .tabblock td.lfinger3
 {
-	background: url(../images/cell.gif) repeat-x center center, 
-				url(../images/3_black.png) no-repeat top right;	
+	background: url('../images/cell.gif') repeat-x center center, 
+				url('../images/3_black.png') no-repeat top right;	
 }
 .tabblock td.lfinger4
 {
-	background: url(../images/cell.gif) repeat-x center center, 
-				url(../images/4_black.png) no-repeat top right;	
+	background: url('../images/cell.gif') repeat-x center center, 
+				url('../images/4_black.png') no-repeat top right;	
 }
 
 .tabblock td.string-note
@@ -181,6 +214,20 @@ textarea.tabtext
 	background-image:url('../images/rasgueo_black.png');
 }
 
+.tabblock tr.extra td.modifier_alzapua {
+	background-image:url('../images/alzapua_black.png');
+}
+
+.tabblock tr.extra td.modifier_rasgueo3 {
+	background-image:url('../images/rasgueo3_black.png');
+}
+
+.tabblock tr.extra td.modifier_rasgueo4 {
+	background-image:url('../images/rasgueo4_black.png');
+}
+
+
+
 .left
 {
 	float:left;
@@ -190,9 +237,9 @@ textarea.tabtext
 {
 	float:left;
 	display:inline-block;
-	margin:5px 5px 5px 0;
 	font-size: 9px;
-    margin: 0px;
+    /* margin: 0px;*/
+    margin:0px 0px 0px 1px;
     padding: 2px;
 	background: none repeat scroll 0 0 #EE7E2A;
 }
