@@ -408,6 +408,9 @@ KORDS.TABSEDITOR.Editor.prototype =
 		obj.remove();
 		this.reOrderIds();
 		this.updateText();
+
+		if (this.numSections==0)
+			$("#empty-context-menu").show();
 	},
 	
 	reOrderIds: function ()

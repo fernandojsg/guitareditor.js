@@ -453,6 +453,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			//value="amip";
 			if (value)
 				cell.html(value.split('').join("<br>"));
+			else
+			{
+				cell.empty();
+				value=null;//@fixme
+			}
 		}
 		else
 		{
@@ -648,21 +653,24 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		
 		$(".tabblock td[data-col='"+col+"']",this.htmlNode).addClass("active_column");
 		$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("active_cell");
-		
-		this.updateLFingerButtons(col,row);
+	
+		this.updateNoteButtons(col,row);
 		this.updateRFingerButtons(col);
 	},
-	
-	updateLFingerButtons: function(col,row)
+
+	updateNoteButtons: function(col,row)
 	{
-		/*!!!!!!!!!
-		var lfinger=this.sectionData.data['strings'][row][col][TYPE_LFINGER];
-				
+		//@fixme get value
+		note=this.sectionData.data['strings'][row][col];
+		if (typeof note == 'undefined' ||note==null)
+			return;
+
+		var lfinger=this.sectionData.data['strings'][row][col].lfinger;
 		$("#lfingers a").removeClass("checked");
-		
 		if (lfinger!=EMPTY_NOTE)
 			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");	
-		*/
+
+		//@todo Update checked for note and col modifier
 	},
 
 	updateRFingerButtons: function(col)
