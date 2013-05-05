@@ -1,3 +1,8 @@
+.tabs-editor-tools
+{
+	padding-left:5px;
+}
+
 .tabs-editor
 {
 	width: 630px;
@@ -40,6 +45,7 @@
     background: none repeat scroll 0 0 #ffaa6b;
 }
 
+.button.mini.checked,
 .buttoncheck.checked
 {
 	background-color:#ffcaa3;

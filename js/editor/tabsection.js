@@ -13,18 +13,33 @@ var EMPTY_NOTE="";
 var EMPTY_NOTE_HTML="";
 
 var chords={
-	"A": "002220",
-	"A#":"688766",
-	"B": "799877",
-	"C": "032010",
-	"C#":"99ABB9",
-	"D": "XX0232",
-	"D#":"BBCDDB",
-	"E": "022100",
-	"F": "133211",
-	"F#":"244322",
-	"G": "320003",
-	"G#":"466544"
+	"Major":{
+		"A": "002220",
+		"A#":"688766",
+		"B": "799877",
+		"C": "032010",
+		"C#":"99ABB9",
+		"D": "XX0232",
+		"D#":"BBCDDB",
+		"E": "022100",
+		"F": "133211",
+		"F#":"244322",
+		"G": "320003",
+	},
+	"Minor":{
+		"Am": "002210",
+		"Am#":"X13321",
+		"Bm": "X24432",
+		"Cm": "XX5543",
+		"Cm#":"X46654",
+		"Dm": "XX0231",
+		"Dm#":"2X134X",
+		"Em": "022000",
+		"Fm": "XX3111",
+		"Fm#":"244222",
+		"Gm": "XX5333",
+		"Gm#":"X21144"
+	}
 };
 
 KORDS.TABSEDITOR.TabsSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance,data)
@@ -112,7 +127,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			for (var i=tabBlockLength-1;i>col;i--)
 			{
 				var modVal=this.getColModifierValue(groupId,i-1);
-				console.log(">>>>>>>>",modVal);
 				this.setColModifierValue(groupId,i,modVal);
 			}
 			delete this.sectionData.data['colmodifiers'][groupId][col];
@@ -171,7 +185,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		{
 			this.setStringLFingerValue(col,row,value);
 			this.updateText();
-			this.updateLFingerButtons(col,row);
+			this.updateCurrentCursor(col,row);	// ¿?¿?¿?¿?¿?
 		}
 	},
 
@@ -201,8 +215,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			return true;
 
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
-		var col=curCell.attr("data-col");
-		var row=curCell.attr("data-row");
+		var col=parseInt(curCell.attr("data-col"));
+		var row=parseInt(curCell.attr("data-row"));
 	
 		if (keys.cursorMoveKey())
 		{
@@ -419,8 +433,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	{
 		var cell=$(".tabblock tr.string td[data-col='"+col+"']",this.htmlNode);
 		
-		console.log(">>>>>>>>>> ",value);
-
 		if (value==null)
 		{
 			delete this.sectionData.data['barlines'][col];
@@ -654,21 +666,61 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		$(".tabblock td[data-col='"+col+"']",this.htmlNode).addClass("active_column");
 		$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("active_cell");
 	
+		this.updateButtons(col,row);
+	},
+
+	updateButtons: function(col,row)
+	{
 		this.updateNoteButtons(col,row);
+		this.updateColumnModifiersButtons(col);
 		this.updateRFingerButtons(col);
+	},
+
+	updateColumnModifiersButtons: function(col)
+	{
+		$("#tabs-context-menu .colmodifier,#open-tabtext").removeClass("checked");
+
+		for (colmod in this.sectionData.data['colmodifiers'])
+		{
+			var val=this.sectionData.data['colmodifiers'][colmod][col];
+			if (val)
+			{
+				if (colmod=="text")
+					val="text";
+				$("#tabs-context-menu a[data-modifier='"+val+"']").addClass("checked");
+			}
+		}
+		/*
+		note=this.sectionData.data['strings'][row][col];
+		
+		$("#lfingers a[data-modifier^='lfinger']").removeClass("checked");
+		
+		if (typeof note == 'undefined' ||note==null)
+			return;
+
+		var lfinger=this.sectionData.data['strings'][row][col].lfinger;
+
+		$("#lfingers a").removeClass("checked");
+		if (lfinger!=EMPTY_NOTE)
+			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");
+		*/
 	},
 
 	updateNoteButtons: function(col,row)
 	{
 		//@fixme get value
 		note=this.sectionData.data['strings'][row][col];
+		
+		$("#lfingers a[data-modifier^='lfinger']").removeClass("checked");
+		
 		if (typeof note == 'undefined' ||note==null)
 			return;
 
 		var lfinger=this.sectionData.data['strings'][row][col].lfinger;
+
 		$("#lfingers a").removeClass("checked");
 		if (lfinger!=EMPTY_NOTE)
-			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");	
+			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");
 
 		//@todo Update checked for note and col modifier
 	},
@@ -687,9 +739,9 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 	},
 	
-	insertChord: function (chordId)
+	insertChord: function (chordId,mode)
 	{
-		var chordDiagram=chords[chordId];
+		var chordDiagram=chords[mode][chordId];
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
 		var col=curCell.attr("data-col");
 		

@@ -19,9 +19,13 @@ $(document).ready(function(){
 	
 	// Insert chords
 	html="";
-	for (var chord in chords)
-		html+='<option value="'+chord+'">'+chord+'</option>';
-	
+	for (var mode in chords)
+	{
+		html+='<optgroup label="'+mode+'"/>';
+		for (var chord in chords[mode])
+			html+='<option mode="'+mode+'" value="'+chord+'">'+chord+'</option>';
+	}
+
 	$("#chords").html(html);
 
 	$("#new_ktb").click(function(){
@@ -46,12 +50,15 @@ $(document).ready(function(){
 
 	$("#insert-chords").click(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
-		tabsInstance.tabsEditor.htmlSections[id].insertChord($("#chords").val());
+		var selected=$("#chords").find(":selected");
+		//tabsInstance.tabsEditor.htmlSections[id].insertChord($("#chords").val());
+		tabsInstance.tabsEditor.htmlSections[id].insertChord(selected.attr("value"),selected.attr("mode"));
 	});
 	
 	$(".modifier").click(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		tabsInstance.tabsEditor.htmlSections[id].insertModifier($(this).attr("data-modifier"));
+		return false;
 	});
 	
 	$("#lfingers a").click(function(){
@@ -68,6 +75,7 @@ $(document).ready(function(){
 	$(".colmodifier").click(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		tabsInstance.tabsEditor.htmlSections[id].insertColumnModifier($(this).attr("data-modifier"));
+		return false;
 	});
 
 	$("#parse_tab").click(function(){

@@ -1,0 +1,21 @@
+BUGS:
+
+MINORBUGS:
+ ✔ LFingers button active/deactive @done (13-05-05 16:51)
+ ✔ Column modifiers button active/deactive @done (13-05-05 17:57)
+ ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
+ ☐ Update buttons while entering values
+ 
+
+TODO:
+  GENERAL:
+  ☐ Chords
+  SHORTCUTS:
+    ☐ Up arrow
+    ☐ Down arrow
+    ☐ Rasgueo
+    ☐ Alzapua
+    ☐ Rasgueo3
+    ☐ Rasgueo4
+    ☐ BarLine simple
+
