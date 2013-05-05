@@ -94,7 +94,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	
 	removeHtml: function()
 	{
-		console.log("removing html");
 		this.div.parentNode.removeChild(this.div);
 	},
 
@@ -115,12 +114,11 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	{
 		// Tabs
 		for (var i=0;i<tabBlockNumStrings;i++)
+		{
 			this.insertSpaceAtStringPos(col,i);
+			this.setStringCellValue(col,i,EMPTY_NOTE);
+		}
 		
-		var curCol=$("tr.string td[data-col="+col+"]",this.htmlNode);
-		curCol.html(EMPTY_NOTE_HTML);
-		console.log(this.sectionData.data);
-
 		// Column modifiers
 		for (var groupId in this.sectionData.data.colmodifiers)
 		{
@@ -156,7 +154,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		else
 		{
 			this.insertSpaceAtStringPos(col,row);
-			curCell.html(EMPTY_NOTE_HTML);
+			this.setStringCellValue(col,row,EMPTY_NOTE);
+			//curCell.html(EMPTY_NOTE_HTML);
 		}
 		this.updateText();
 	},
@@ -274,7 +273,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else if (keys.keyCode==KEY_INSERT)
 		{
-			console.log("INSERTING");
 			this.insertSpace(e.shiftKey);
 			return false;
 		}
@@ -525,7 +523,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 		if (this.sectionData.data['strings'][string][col].lfinger==value)
 			value=EMPTY_NOTE;
-		else
+		else if (value!=EMPTY_NOTE)
 			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).addClass("lfinger"+value);
 		
 		this.sectionData.data['strings'][string][col].lfinger=value;
@@ -538,6 +536,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 		if (value==EMPTY_NOTE)
 		{
+			this.setStringLFingerValue(col,string,value); // Delete LFingers
 			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).html(value);
 			delete this.sectionData.data['strings'][string][col];
 		}
@@ -570,21 +569,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			this.setStringNoteValue(col,string,EMPTY_NOTE);
 			this.setStringLFingerValue(col,string,EMPTY_NOTE);
 		}
-/*
-//		else if (typeof value=='object')
-//			value=value.note;
-
-		console.log(">>>>",col,string,value,type,typeof value);
-
-		if (!this.sectionData.data['strings'][string][col])	
-			//this.sectionData.data['strings'][string][col]={"note":EMPTY_NOTE,"lfinger":null};
-			this.sectionData.data['strings'][string][col]=new KORDS.TABSDATA.NoteCell();
-		
-		if (type==TYPE_NOTE)
-			this.setStringNoteValue(col,string,value);
-		else if (type==TYPE_LFINGER)
-			this.setStringLFingerValue(col,string,value);
-*/		
 	},
 	
 	updateASCIIText: function()
@@ -753,7 +737,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			else
 				fret=parseInt(fret,16);
 			
-			console.log(fret);
 			this.setStringNoteValue(col,i,fret.toString()); //???
 		}
 

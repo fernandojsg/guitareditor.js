@@ -1,11 +1,9 @@
 BUGS:
 
 MINORBUGS:
- ✔ LFingers button active/deactive @done (13-05-05 16:51)
- ✔ Column modifiers button active/deactive @done (13-05-05 17:57)
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
  ☐ Update buttons while entering values
- 
+ ☐ Left finger number with 2 digits fret
 
 TODO:
   GENERAL:
@@ -18,4 +16,9 @@ TODO:
     ☐ Rasgueo3
     ☐ Rasgueo4
     ☐ BarLine simple
-
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ LFingers button active/deactive @done (13-05-05 16:51)
+ ✔ Column modifiers button active/deactive @done (13-05-05 17:57)
+ ✔ Del/Ins with LFinger (Delete just the note) @done (13-05-05 21:18)
+ ✔ Ins with LFinger over the cursor @done (13-05-05 23:40)
