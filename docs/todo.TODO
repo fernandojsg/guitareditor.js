@@ -4,6 +4,8 @@ MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
  ☐ Update buttons while entering values
  ☐ Left finger number with 2 digits fret
+ ☐ Shift+Insert colmodifier
+ ☐ Shift+Del colmodifier
 
 TODO:
   GENERAL:

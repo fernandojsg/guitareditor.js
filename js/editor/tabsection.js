@@ -110,6 +110,38 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		delete this.sectionData.data['strings'][row][col];
 	},
 
+	removeSpaceAtCol: function(col)
+	{
+		for (var i=0;i<tabBlockNumStrings;i++)
+			this.removeSpaceAt(col,i);
+
+		// Column modifiers
+		for (var groupId in this.sectionData.data.colmodifiers)
+		{
+			//for (var i=tabBlockLength-1;i>col;i--)
+			for (var i=col+1;i<tabBlockLength;i++)
+			{
+				var modVal=this.getColModifierValue(groupId,i);
+				this.setColModifierValue(groupId,i-1,modVal);
+			}
+			//delete this.sectionData.data['colmodifiers'][groupId][col];
+		}
+/*
+		for (var i=col+1;i<tabBlockLength;i++)
+			this.setStringCellValue(i-1,row,this.getStringCellValue(i,row));
+
+		this.setStringCellValue(tabBlockLength-1,row,null);
+*/
+
+/*
+		var curModifiers=$("tr.extra td[data-col="+col+"]",this.htmlNode);
+		curModifiers.html("");
+		curModifiers.removeClass (function (index, css) {
+    		return (css.match (/\bmodifier_\S+/g) || []).join(' ');
+		});
+*/		
+	},
+
 	insertSpaceAtCol: function(col)
 	{
 		// Tabs
@@ -118,25 +150,28 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			this.insertSpaceAtStringPos(col,i);
 			this.setStringCellValue(col,i,EMPTY_NOTE);
 		}
-		
+
 		// Column modifiers
 		for (var groupId in this.sectionData.data.colmodifiers)
 		{
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",groupId);
 			for (var i=tabBlockLength-1;i>col;i--)
 			{
 				var modVal=this.getColModifierValue(groupId,i-1);
+				console.log(modVal,i-1,"=>",i);
 				this.setColModifierValue(groupId,i,modVal);
 			}
-			delete this.sectionData.data['colmodifiers'][groupId][col];
+			//delete this.sectionData.data['colmodifiers'][groupId][col];
 		}
-
+/*
 		var curModifiers=$("tr.extra td[data-col="+col+"]",this.htmlNode);
 		curModifiers.html("");
 		curModifiers.removeClass (function (index, css) {
     		return (css.match (/\bmodifier_\S+/g) || []).join(' ');
 		});
+*/
 
-		// Barlines
+	// Barlines
 	//	for (var i=tabBlockLength-1;i>col;i--)
 	//		this.setBarLine(i,this.getBarLine(i-1));
 	},
@@ -195,8 +230,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		var row=parseInt(curCell.attr("data-row"));
 		if (wholeColumn)
 		{
-			for (var i=0;i<tabBlockNumStrings;i++)
-				this.removeSpaceAt(col,i);
+			this.removeSpaceAtCol(col);
 		}
 		else
 		{
