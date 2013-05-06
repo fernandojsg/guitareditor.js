@@ -2,10 +2,11 @@ BUGS:
 
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
- ☐ Update buttons while entering values
- ☐ Left finger number with 2 digits fret
- ☐ Shift+Insert colmodifier
- ☐ Shift+Del colmodifier
+ ☐ Update buttons while entering column modifiers
+ ☐ Left finger number with 2 digits fret render
+ ☐ Ins/Del with barline
+ ☐ Shift Ins/Del with barline
+
 
 TODO:
   GENERAL:
@@ -20,6 +21,8 @@ TODO:
     ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Shift+Insert colmodifier @done (13-05-07 00:10)
+ ✔ Shift+Del colmodifier @done (13-05-07 00:37)
  ✔ LFingers button active/deactive @done (13-05-05 16:51)
  ✔ Column modifiers button active/deactive @done (13-05-05 17:57)
  ✔ Del/Ins with LFinger (Delete just the note) @done (13-05-05 21:18)

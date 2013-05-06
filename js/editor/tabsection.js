@@ -118,20 +118,18 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		// Column modifiers
 		for (var groupId in this.sectionData.data.colmodifiers)
 		{
-			//for (var i=tabBlockLength-1;i>col;i--)
+/*			for (var i=col+1;i<tabBlockLength;i++)
+				this.setStringCellValue(i-1,row,this.getStringCellValue(i,row));
+
+			this.setStringCellValue(tabBlockLength-1,row,null);
+*/
 			for (var i=col+1;i<tabBlockLength;i++)
 			{
 				var modVal=this.getColModifierValue(groupId,i);
-				this.setColModifierValue(groupId,i-1,modVal);
+				this.setColModifierValue(groupId,i-1,modVal,true);
 			}
-			//delete this.sectionData.data['colmodifiers'][groupId][col];
+			this.setColModifierValue(groupId,tabBlockLength-1,null,true);
 		}
-/*
-		for (var i=col+1;i<tabBlockLength;i++)
-			this.setStringCellValue(i-1,row,this.getStringCellValue(i,row));
-
-		this.setStringCellValue(tabBlockLength-1,row,null);
-*/
 
 /*
 		var curModifiers=$("tr.extra td[data-col="+col+"]",this.htmlNode);
@@ -154,26 +152,17 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		// Column modifiers
 		for (var groupId in this.sectionData.data.colmodifiers)
 		{
-			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",groupId);
 			for (var i=tabBlockLength-1;i>col;i--)
 			{
 				var modVal=this.getColModifierValue(groupId,i-1);
-				console.log(modVal,i-1,"=>",i);
-				this.setColModifierValue(groupId,i,modVal);
+				this.setColModifierValue(groupId,i,modVal,true);
 			}
-			//delete this.sectionData.data['colmodifiers'][groupId][col];
+			this.setColModifierValue(groupId,col,null,true);
 		}
-/*
-		var curModifiers=$("tr.extra td[data-col="+col+"]",this.htmlNode);
-		curModifiers.html("");
-		curModifiers.removeClass (function (index, css) {
-    		return (css.match (/\bmodifier_\S+/g) || []).join(' ');
-		});
-*/
 
-	// Barlines
-	//	for (var i=tabBlockLength-1;i>col;i--)
-	//		this.setBarLine(i,this.getBarLine(i-1));
+		// Barlines
+		//	for (var i=tabBlockLength-1;i>col;i--)
+		//		this.setBarLine(i,this.getBarLine(i-1));
 	},
 	
 	insertSpace: function(wholeColumn)
