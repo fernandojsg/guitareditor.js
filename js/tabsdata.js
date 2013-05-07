@@ -21,6 +21,8 @@ KORDS.TABSDATA.TabSection=function()
 {
 	this.type="tabs";
 	this.data={
+				"numstrings":tabBlockNumStrings,
+				"numcolumns":tabBlockLength,
 				"strings":new Array(tabBlockNumStrings),
 				"colmodifiers":{},
 				"barlines":{},

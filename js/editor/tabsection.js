@@ -1,4 +1,7 @@
-var tabBlockLength=40;
+//var tabBlockLength=40;
+var defaultNumMeasuresPerStave=4;
+var defaultNumNotesPerMeasure=12;
+var tabBlockLength=defaultNumNotesPerMeasure*defaultNumMeasuresPerStave+defaultNumMeasuresPerStave-1; // Num notes per stave + barlines$.parseXML('XML');
 var tabBlockText="";
 var tabBlockNotes=["E","B","G","D","A","E"];
 var tabBlockNumStrings=tabBlockNotes.length;
@@ -103,10 +106,15 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	},
 	
 	insertSpaceAtStringPos: function(col,row)
-	{
+ 	{
 		for (var i=tabBlockLength-1;i>col;i--)
-			this.setStringCellValue(i,row,this.getStringCellValue(i-1,row));
-
+		{
+			var value=this.getStringCellValue(i-1,row);
+			if (this.getBarLine(i))
+				this.setStringCellValue(i+1,row,value);
+			else
+				this.setStringCellValue(i,row,value);
+		}
 		delete this.sectionData.data['strings'][row][col];
 	},
 
@@ -118,26 +126,16 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		// Column modifiers
 		for (var groupId in this.sectionData.data.colmodifiers)
 		{
-/*			for (var i=col+1;i<tabBlockLength;i++)
-				this.setStringCellValue(i-1,row,this.getStringCellValue(i,row));
-
-			this.setStringCellValue(tabBlockLength-1,row,null);
-*/
 			for (var i=col+1;i<tabBlockLength;i++)
 			{
 				var modVal=this.getColModifierValue(groupId,i);
-				this.setColModifierValue(groupId,i-1,modVal,true);
+				if (this.getBarLine(i))
+					this.setColModifierValue(groupId,i-2,modVal,true);
+				else
+					this.setColModifierValue(groupId,i-1,modVal,true);
 			}
 			this.setColModifierValue(groupId,tabBlockLength-1,null,true);
 		}
-
-/*
-		var curModifiers=$("tr.extra td[data-col="+col+"]",this.htmlNode);
-		curModifiers.html("");
-		curModifiers.removeClass (function (index, css) {
-    		return (css.match (/\bmodifier_\S+/g) || []).join(' ');
-		});
-*/		
 	},
 
 	insertSpaceAtCol: function(col)
@@ -155,14 +153,17 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			for (var i=tabBlockLength-1;i>col;i--)
 			{
 				var modVal=this.getColModifierValue(groupId,i-1);
-				this.setColModifierValue(groupId,i,modVal,true);
+				if (this.getBarLine(i))
+					this.setColModifierValue(groupId,i+1,modVal,true);
+				else
+					this.setColModifierValue(groupId,i,modVal,true);
 			}
 			this.setColModifierValue(groupId,col,null,true);
 		}
 
 		// Barlines
-		//	for (var i=tabBlockLength-1;i>col;i--)
-		//		this.setBarLine(i,this.getBarLine(i-1));
+		//for (var i=tabBlockLength-1;i>col;i--)
+		//	this.setBarLine(i,this.getBarLine(i-1));
 	},
 	
 	insertSpace: function(wholeColumn)
@@ -179,7 +180,6 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		{
 			this.insertSpaceAtStringPos(col,row);
 			this.setStringCellValue(col,row,EMPTY_NOTE);
-			//curCell.html(EMPTY_NOTE_HTML);
 		}
 		this.updateText();
 	},
@@ -187,8 +187,13 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	removeSpaceAt: function (col,row)
 	{
 		for (var i=col+1;i<tabBlockLength;i++)
-			this.setStringCellValue(i-1,row,this.getStringCellValue(i,row));
-
+		{
+			var val=this.getStringCellValue(i,row);
+			if (this.getBarLine(i-1))
+				this.setStringCellValue(i-2,row,val);
+			else
+				this.setStringCellValue(i-1,row,val);
+		}
 		this.setStringCellValue(tabBlockLength-1,row,null);
 
 		//this.setStringNoteValue(tabBlockLength-1,row,EMPTY_NOTE);
@@ -232,7 +237,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 	onKeyDown: function (e)
 	{
 		var keys=new KORDS.TABSEDITOR.Keys(e.keyCode);
-
+		console.log(e.keyCode);
 		if (!keys.isValidKey())
 			return true;
 
@@ -319,7 +324,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else if (keys.isColumnModifierKey())
 		{
-			var modifiersMatch={"g":"keyboard-accents","a":"keyboard-arrows"};
+			var modifiersMatch={"g":"keyboard-accents","a":"keyboard-arrows","-":"barline_simple"};
+			console.log(keys.getCharValue());
 			this.insertColumnModifier(modifiersMatch[keys.getCharValue()]);
 			return false;
 		}
@@ -333,7 +339,13 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			var cellVal=$(".tabblock td.active_cell",this.htmlNode).html();
 			if (keys.keyCode==KEY_DELETE)
 			{
-				if (cellVal==EMPTY_NOTE_HTML)
+				if (this.getBarLine(col))
+				{
+					this.setBarLine(col,null);
+					this.updateText();
+					return false;
+				}
+				else if (cellVal==EMPTY_NOTE_HTML)
 				{
 					this.removeSpace(e.shiftKey);
 					return false;

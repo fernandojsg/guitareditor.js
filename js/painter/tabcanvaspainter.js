@@ -3,7 +3,7 @@ KORDS.TABSPAINTER.CanvasPainter=function(parentDiv,tabBlock)
 	this.debug=false;
 			
 	this.canvas = document.createElement('canvas');
-	this.canvas.setAttribute('width', 600);
+	this.canvas.setAttribute('width', 800);
 	this.canvas.setAttribute('height', 10);
 	this.canvas.setAttribute('style', "background-color:#fff");
 		

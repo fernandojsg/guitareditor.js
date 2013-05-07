@@ -5,7 +5,7 @@
 
 .tabs-editor
 {
-	width: 630px;
+	width: 830px;
 	margin: 0 auto;
 	background-color:#fff;
 }
@@ -296,6 +296,6 @@ textarea.tabtext
 .pretty-tab
 {
 	background-color:#fff;
-	width:600px;
+	width:800px;
 	height:200px;
 }

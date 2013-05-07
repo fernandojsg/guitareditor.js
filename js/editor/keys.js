@@ -44,7 +44,7 @@ KORDS.TABSEDITOR.Keys.prototype =
 			[
 				KEY_A,
 				KEY_G,
-
+				KEY_LINE,
 			])!==-1;
 	},
 			
@@ -124,12 +124,15 @@ KORDS.TABSEDITOR.Keys.prototype =
 				KEY_HOME,
 				KEY_END,
 				KEY_AVPAG,
-				KEY_REPAG
+				KEY_REPAG,
+
+				KEY_LINE,
 				
 			])!==-1;
 	}
 }
 
+var KEY_LINE=189;
 
 var KEY_LEFT=37;
 var KEY_UP=38;

@@ -1,26 +1,38 @@
 BUGS:
+ ☐ Ins/Del with barline
+ ☐ Shift Ins/Del with barline
+ ☐ Barline last col and del
 
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
  ☐ Update buttons while entering column modifiers
  ☐ Left finger number with 2 digits fret render
- ☐ Ins/Del with barline
- ☐ Shift Ins/Del with barline
-
+ ☐ Select tabs
+   ☐ Select a region in the table
+   ☐ Delete the selected region
+   ☐ Cut/Copy the selection
+   ☐ Paste the selection
+     ☐ Overwrite
+     ☐ Move it
 
 TODO:
   GENERAL:
   ☐ Chords
+  ☐ Center per barline
+  ☐ Default barlines
+  ☐ Custom block size per tabsection
+  ☐ If lfinger = null -> not appear in JSON 
   SHORTCUTS:
-    ☐ Up arrow
-    ☐ Down arrow
-    ☐ Rasgueo
-    ☐ Alzapua
-    ☐ Rasgueo3
-    ☐ Rasgueo4
-    ☐ BarLine simple
+  ☐ Up arrow
+  ☐ Down arrow
+  ☐ Rasgueo
+  ☐ Alzapua
+  ☐ Rasgueo3
+  ☐ Rasgueo4
+  ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Del over barline @done (13-05-07 23:35)
  ✔ Shift+Insert colmodifier @done (13-05-07 00:10)
  ✔ Shift+Del colmodifier @done (13-05-07 00:37)
  ✔ LFingers button active/deactive @done (13-05-05 16:51)
