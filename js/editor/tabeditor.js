@@ -1,48 +1,30 @@
 KORDS.TABS.TabsInstance=function()
 {
-	this.tablature=new KORDS.TABS.Tablature;
-	this.tabsEditor=new KORDS.TABS.TabsEditor;
+	this.song=new KORDS.TABSDATA.Song;
+	this.tabsEditor=new KORDS.TABSEDITOR.Editor(this.song);
 }
 
-KORDS.TABS.Tablature=function()
+KORDS.TABS.TabsInstance.prototype = 
 {
-	this.numSections=0;
-	this.htmlSections=[];
-}
+	load: function(data)
+	{
+		this.song.load(data);
+		if (this.tabsEditor)
+		{
+			this.tabsEditor.load(this.song);
+		}
+	},
 
-KORDS.TABS.Tablature.prototype = 
-{
-	load: function()
+	reset: function()
 	{
-	
-	},
-	
-	save: function()
-	{
-	
-	},
-	
-	addSection: function(newId,type)
-	{
-		
+		this.song=new KORDS.TABSDATA.Song;
+		this.tabsEditor.reset();
 	}
 }
 
-
-
-
-
-
-
-
-
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-KORDS.TABS.TabsEditor=function()
+KORDS.TABSEDITOR.Editor=function(song)
 {
-//	this.tablature=new KORDS.TABS.Tablature;
-	
+	this.song=song;
 	this.numSections=0;	
 	this.htmlSections=[];
 	
@@ -50,10 +32,8 @@ KORDS.TABS.TabsEditor=function()
 	this.prettyDivId="pretty-tab";
 	this.prettyTabsDiv=document.getElementById(this.prettyDivId);
 	
-	KORDS.TABS.TabsBlock.insertTabBlock();
+	KORDS.TABSEDITOR.TabsSection.insertTabBlock();
     
-	//$('#text').autosize();
-	
 	$("#add_text").live("click",function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'text');
 	});
@@ -106,23 +86,102 @@ function getOffsetFromId(id)
 	return -1;
 }
 
-KORDS.TABS.TabsEditor.prototype = 
+KORDS.TABSEDITOR.Editor.prototype = 
 {
-	generateFileFormat: function()
+	reset: function()
 	{
-		var numSections=this.htmlSections.length;
+		this.numSections=0;	
+		this.htmlSections=[];
 		
-		var file={
-			"numsections":numSections,
-			"sections":[],
-		};
+		$("#text-editor-base").append($("#tabs-context-menu").hide());
+		$("#text-editor-base").append($("#empty-context-menu").show());
+
+		$("#text-editor").html("");
+		$("#pretty-tab").html("");
+	},
+
+	appendLoadedSection: function(id,type,data)
+	{
+		var newId=id;
+		var prevId=newId-1;
+
+		var typeNode=$("[id='block']."+type);
+		var newNode=typeNode.clone();
 		
-		for (var i=0;i<numSections;i++)
+		var newPrettyNode;
+		if (this.numSections==0)
 		{
-			//file['sections']
+			$("#text-editor").append(newNode);
+			newPrettyNode= $('<div data-id="0"></div>');
+ 			$("#pretty-tab").append(newPrettyNode);
+		}
+		else
+		{
+			newPrettyNode=$('<div data-id="'+newId+'"></div>');
+			newPrettyNode.insertAfter($("#pretty-tab div[data-id='"+prevId+"']"));
+			var obj=$("[id='block["+prevId+"]']");
+			newNode.insertAfter(obj);
 		}
 		
-		console.log(file);
+		newPrettyNode=newPrettyNode[0];
+		
+		newNode.attr("id","block["+this.numSections+"]");
+		newNode.attr("data-id",this.numSections);
+		newNode.show();
+		
+		if ($("#empty-context-menu").is(":visible"))
+		{
+			contextMenu=$("#empty-context-menu").clone();
+			contextMenu.attr("id","context-menu");
+			contextMenu.show();
+			$("#empty-context-menu").hide();				
+			contextMenu.find("#remove_section").show();
+		}
+		else
+			contextMenu=$("#context-menu");
+		
+		var td=null;
+		var newSection=null;
+
+		if (type=="text")
+		{
+			newNode.find("textarea").autosize().focus();
+			newSection=new KORDS.TABSEDITOR.TextSection(newNode,newPrettyNode,this,data);
+		}
+		else if (type=="tabs")
+		{
+			contextMenu.find("#add_text").show();
+			newSection=new KORDS.TABSEDITOR.TabsSection(newNode,newPrettyNode,this,data);
+			td=newNode.find("td[data-col='0'][data-row='0']");
+		}
+		else
+		{
+			alert("NO TYPE");
+		}
+		
+		//this.song.addSection(newId,newSection.sectionData);
+		this.htmlSections.splice(newId,0,newSection);
+//		console.log(type,newId,this.htmlSections);
+
+		newNode.append(contextMenu);
+		this.reOrderIds();
+		this.setActiveSection(newNode,td);
+		this.updateText();
+		
+		this.numSections++;
+	},
+
+	load: function(song)
+	{
+		this.reset();
+
+		this.song=song;
+		var len=this.song.sections.length;
+		for (var i=0;i<len;i++)
+		{
+			var section=this.song.sections[i];
+			this.appendLoadedSection(i,section.type,section);
+		}
 	},
 
 	loadFromParser: function(sections)
@@ -158,7 +217,7 @@ KORDS.TABS.TabsEditor.prototype =
 			if (sections[i].type=="text")
 			{
 				newNode.find("textarea").val(sections[i].val).autosize();
-				this.htmlSections.push(new KORDS.TABS.TextBlock(newNode,this.updateText));
+				this.htmlSections.push(new KORDS.TABSEDITOR.TextSection(newNode,this.updateText));
 			}
 			else
 			{
@@ -186,7 +245,7 @@ KORDS.TABS.TabsEditor.prototype =
 						}
 					}					
 				}
-				this.htmlSections.push(new KORDS.TABS.TabsBlock(newNode,this));
+				this.htmlSections.push(new KORDS.TABSEDITOR.TabsSection(newNode,this));
 			}
 			this.numSections++;
 		}
@@ -203,20 +262,16 @@ KORDS.TABS.TabsEditor.prototype =
 		$("#menu-tabs-text").insertBefore(sectionHtml);
 		$("#menu-tabs-text").show();	
 				
-		if (typeof td != 'undefined')
+		if (td)
 		{
 			var id=sectionHtml.attr("data-id");
 			tabsInstance.tabsEditor.htmlSections[id].updateCurrentCursor(td.attr("data-col"),td.attr("data-row"));
 		}
 		
 		if (sectionHtml.hasClass("tabs"))
-		{
 			$("#tabs-context-menu").show().insertBefore(sectionHtml);
-		}
 		else
-		{
 			$("#tabs-context-menu").hide();
-		}
 	},
 	
 	onKeyDown: function (e)
@@ -229,6 +284,12 @@ KORDS.TABS.TabsEditor.prototype =
 		return true;
 	},
 	
+	paint: function()
+	{
+		for (var s in tabsInstance.tabsEditor.htmlSections)
+			tabsInstance.tabsEditor.htmlSections[s].paint();
+	},
+
 	updateText: function()
 	{
 		text="";
@@ -236,20 +297,14 @@ KORDS.TABS.TabsEditor.prototype =
 			text+=tabsInstance.tabsEditor.htmlSections[i].getText()+"\n";
 		$("#text").val(text);
 
-		//for (var s in tabsInstance.tabsEditor.htmlSections)
-		//	section=tabsInstance.tabsEditor.htmlSections[s].canvas.paint();
-		//this.div
-		for (var s in tabsInstance.tabsEditor.htmlSections)
-			tabsInstance.tabsEditor.htmlSections[s].paint();
-		
-		this.generateFileFormat();
+		this.paint();
 	},
 
 	addSection: function(obj,type)
 	{
 		var parentId=parseInt(obj.attr("data-id"));
-		var newId=parentId+1;
-		
+		var newId=isNumber(parentId)?parentId+1:0;
+
 		var typeNode=$("[id='block']."+type);
 		var newNode=typeNode.clone();
 		
@@ -267,7 +322,6 @@ KORDS.TABS.TabsEditor.prototype =
 			newNode.insertAfter(obj);
 		}
 		
-		console.log(newPrettyNode[0]);
 		newPrettyNode=newPrettyNode[0];
 		
 		newNode.attr("id","block["+this.numSections+"]");
@@ -285,29 +339,38 @@ KORDS.TABS.TabsEditor.prototype =
 		else
 			contextMenu=$("#context-menu");
 		
-		// var tablatureSection=this.tablature.addSection(newId,type);
+		var td=null;
+		var newSection=null;
 
 		if (type=="text")
 		{
 			newNode.find("textarea").autosize().focus();
-			this.htmlSections.splice(newId,0,new KORDS.TABS.TextBlock(newNode,newPrettyNode,this));
-			newNode.append(contextMenu);
-			this.reOrderIds();
-			this.setActiveSection(newNode);
+			newSection=new KORDS.TABSEDITOR.TextSection(newNode,newPrettyNode,this);
+		}
+		else if (type=="tabs")
+		{
+			contextMenu.find("#add_text").show();
+			newSection=new KORDS.TABSEDITOR.TabsSection(newNode,newPrettyNode,this);
+			td=newNode.find("td[data-col='0'][data-row='0']");
 		}
 		else
 		{
-			contextMenu.find("#add_text").show();
-			this.htmlSections.splice(newId,0,new KORDS.TABS.TabsBlock(newNode,newPrettyNode,this));
-			newNode.append(contextMenu);
-			this.reOrderIds();
-			this.setActiveSection(newNode,newNode.find("td[data-col='0'][data-row='0']"));
-			this.updateText();
+			alert("NO TYPE");
 		}
+		
+		this.song.addSection(newId,newSection.sectionData);
+		this.htmlSections.splice(newId,0,newSection);
+		console.log(type,newId,this.htmlSections);
+
+		newNode.append(contextMenu);
+		this.reOrderIds();
+		this.setActiveSection(newNode,td);
+		this.updateText();
+
 		//newNode[0].scrollIntoView(true);
 		//$("#scroll").scrollTo('100%');
 		//http://plugins.jquery.com/project/ScrollTo
-		$(".hover").removeClass("hover");	
+		$(".hover").removeClass("hover");
 		this.numSections++;
 	},
 	
@@ -345,6 +408,9 @@ KORDS.TABS.TabsEditor.prototype =
 		obj.remove();
 		this.reOrderIds();
 		this.updateText();
+
+		if (this.numSections==0)
+			$("#empty-context-menu").show();
 	},
 	
 	reOrderIds: function ()
@@ -352,11 +418,7 @@ KORDS.TABS.TabsEditor.prototype =
 		$(".tabsection:visible").each(function(index,element){
 			$(element).attr("id","block["+index+"]");
 			$(element).attr("data-id",index);
-			//$(element).find(".id").html(index);
 		});
 	}
 }
 
-function isNumber(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n);
-}

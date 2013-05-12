@@ -1,0 +1,3 @@
+var KORDS= KORDS || {};
+
+KORDS.TABS = KORDS.TABS || {};
