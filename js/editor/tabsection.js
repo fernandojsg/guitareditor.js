@@ -1,4 +1,7 @@
-var tabBlockLength=40; //@todo Put in php constant
+//var tabBlockLength=40;
+var defaultNumMeasuresPerStave=4;
+var defaultNumNotesPerMeasure=12;
+var tabBlockLength=defaultNumNotesPerMeasure*defaultNumMeasuresPerStave+defaultNumMeasuresPerStave-1; // Num notes per stave + barlines$.parseXML('XML');
 var tabBlockText="";
 var tabBlockNotes=["E","B","G","D","A","E"];
 var tabBlockNumStrings=tabBlockNotes.length;
@@ -7,86 +10,160 @@ var bottomColumnModifiers=["rfingers"];
 
 var TYPE_NOTE=0;
 var TYPE_LFINGER=1;
+var TYPE_BOTH=2;
+
 var EMPTY_NOTE="";
 var EMPTY_NOTE_HTML="";
 
 var chords={
-	"A": "002220",
-	"A#":"688766",
-	"B": "799877",
-	"C": "032010",
-	"C#":"99ABB9",
-	"D": "XX0232",
-	"D#":"BBCDDB",
-	"E": "022100",
-	"F": "133211",
-	"F#":"244322",
-	"G": "320003",
-	"G#":"466544"
+	"Major":{
+		"A": "002220",
+		"A#":"688766",
+		"B": "799877",
+		"C": "032010",
+		"C#":"99ABB9",
+		"D": "XX0232",
+		"D#":"BBCDDB",
+		"E": "022100",
+		"F": "133211",
+		"F#":"244322",
+		"G": "320003",
+	},
+	"Minor":{
+		"Am": "002210",
+		"Am#":"X13321",
+		"Bm": "X24432",
+		"Cm": "XX5543",
+		"Cm#":"X46654",
+		"Dm": "XX0231",
+		"Dm#":"2X134X",
+		"Em": "022000",
+		"Fm": "XX3111",
+		"Fm#":"244222",
+		"Gm": "XX5333",
+		"Gm#":"X21144"
+	}
 };
 
-KORDS.TABS.TabsBlock=function(htmlNode,prettyHtmlNode,tabsEditorInstance)
+KORDS.TABSEDITOR.TabsSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance,data)
 {
 	this.htmlNode=htmlNode;
 	
 	this.tabsEditorInstance=tabsEditorInstance;
 	
 	this.type="tabs";
-	this.updateText();	
 
-	this.data={
-				"strings":new Array(tabBlockNumStrings),
-				"colmodifiers":{},
-			};
+	if (typeof data != 'undefined')
+		this.loadData(data);
+	else
+		this.sectionData=new KORDS.TABSDATA.TabSection;
 
-	for (var i=0;i<tabBlockNumStrings;i++)
-	{
-		this.data['strings'][i]=new Array(tabBlockLength);
-		
-		for (var j=0;j<tabBlockLength;j++)
-		{
-			this.data['strings'][i][j]=new Array(EMPTY_NOTE,"");
-		}
-	}
-		
-	for (var i=0;i<topColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][topColumnModifiers[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][topColumnModifiers[i]]['values'][j]=null;
-	}
-	
-	for (var i=0;i<bottomColumnModifiers.length;i++)
-	{
-		this.data['colmodifiers'][bottomColumnModifiers	[i]]={"nummodifiers":0,"values":new Array(tabBlockLength)};
-		for (var j=0;j<tabBlockLength;j++)
-			this.data['colmodifiers'][bottomColumnModifiers	[i]]['values'][j]=null;
-	}
+	this.updateText();
 
 	this.div = prettyHtmlNode;
-	this.canvas=new KORDS.TABS.TabsCanvasPainter(this.div,this);
+	this.canvas=new KORDS.TABSPAINTER.CanvasPainter(this.div,this.sectionData);
 	
 	this.updateText();
 }
 
-KORDS.TABS.TabsBlock.prototype = 
+KORDS.TABSEDITOR.TabsSection.prototype = 
 {
+	loadData: function(data)
+	{
+		this.sectionData=data;
+		for (var s=0;s<tabBlockNumStrings;s++)
+		{
+			var string=this.sectionData.data['strings'][s];
+			for (var pos in string)
+			{
+				this.setStringNoteValue(pos,s,string[pos].note);
+				if (string[pos].lfinger)
+					this.setStringLFingerValue(pos,s,string[pos].lfinger);
+			}
+		}
+
+		for (var modifierGroup in this.sectionData.data['colmodifiers'])
+		{
+			var group=this.sectionData.data['colmodifiers'][modifierGroup];
+			for (var col in group)
+				this.setColModifierValue(modifierGroup,col,group[col],true);
+		}
+
+		for (var col in this.sectionData.data['barlines'])
+		{
+			this.setBarLine(col,this.sectionData.data['barlines'][col]);
+		}
+	},
+	
 	removeHtml: function()
 	{
-		console.log("removing html");
 		this.div.parentNode.removeChild(this.div);
 	},
 
 	getData: function()
 	{
-		return this.data;
+		return this.sectionData.data;
 	},
 	
-	insertSpaceAtPos: function(col,row)
+	insertSpaceAtStringPos: function(col,row)
+ 	{
+		for (var i=tabBlockLength-1;i>col;i--)
+		{
+			var value=this.getStringCellValue(i-1,row);
+			if (this.getBarLine(i))
+				this.setStringCellValue(i+1,row,value);
+			else
+				this.setStringCellValue(i,row,value);
+		}
+		delete this.sectionData.data['strings'][row][col];
+	},
+
+	removeSpaceAtCol: function(col)
 	{
-		for (var i=tabBlockLength-1;i>=col;i--)
-			this.setStringCellValue(i,row,this.getCellValue(i-1,row),TYPE_NOTE);
-		this.setStringCellValue(col,row,EMPTY_NOTE,TYPE_NOTE); //??????????? null
+		for (var i=0;i<tabBlockNumStrings;i++)
+			this.removeSpaceAt(col,i);
+
+		// Column modifiers
+		for (var groupId in this.sectionData.data.colmodifiers)
+		{
+			for (var i=col+1;i<tabBlockLength;i++)
+			{
+				var modVal=this.getColModifierValue(groupId,i);
+				if (this.getBarLine(i))
+					this.setColModifierValue(groupId,i-2,modVal,true);
+				else
+					this.setColModifierValue(groupId,i-1,modVal,true);
+			}
+			this.setColModifierValue(groupId,tabBlockLength-1,null,true);
+		}
+	},
+
+	insertSpaceAtCol: function(col)
+	{
+		// Tabs
+		for (var i=0;i<tabBlockNumStrings;i++)
+		{
+			this.insertSpaceAtStringPos(col,i);
+			this.setStringCellValue(col,i,EMPTY_NOTE);
+		}
+
+		// Column modifiers
+		for (var groupId in this.sectionData.data.colmodifiers)
+		{
+			for (var i=tabBlockLength-1;i>col;i--)
+			{
+				var modVal=this.getColModifierValue(groupId,i-1);
+				if (this.getBarLine(i))
+					this.setColModifierValue(groupId,i+1,modVal,true);
+				else
+					this.setColModifierValue(groupId,i,modVal,true);
+			}
+			this.setColModifierValue(groupId,col,null,true);
+		}
+
+		// Barlines
+		//for (var i=tabBlockLength-1;i>col;i--)
+		//	this.setBarLine(i,this.getBarLine(i-1));
 	},
 	
 	insertSpace: function(wholeColumn)
@@ -97,16 +174,12 @@ KORDS.TABS.TabsBlock.prototype =
 
 		if (wholeColumn)
 		{
-			for (var i=0;i<tabBlockNumStrings;i++)
-				this.insertSpaceAtPos(col,i);
-			
-			var curCol=$(".tabblock td[data-col="+col+"]",this.htmlNode);
-			curCol.html(EMPTY_NOTE_HTML);
+			this.insertSpaceAtCol(col);
 		}
 		else
 		{
-			this.insertSpaceAtPos(col,row);
-			curCell.html(EMPTY_NOTE_HTML);
+			this.insertSpaceAtStringPos(col,row);
+			this.setStringCellValue(col,row,EMPTY_NOTE);
 		}
 		this.updateText();
 	},
@@ -114,8 +187,17 @@ KORDS.TABS.TabsBlock.prototype =
 	removeSpaceAt: function (col,row)
 	{
 		for (var i=col+1;i<tabBlockLength;i++)
-			this.setStringCellValue(i-1,row,this.getCellValue(i,row),TYPE_NOTE);
-		this.setStringCellValue(tabBlockLength-1,row,EMPTY_NOTE,TYPE_NOTE);
+		{
+			var val=this.getStringCellValue(i,row);
+			if (this.getBarLine(i-1))
+				this.setStringCellValue(i-2,row,val);
+			else
+				this.setStringCellValue(i-1,row,val);
+		}
+		this.setStringCellValue(tabBlockLength-1,row,null);
+
+		//this.setStringNoteValue(tabBlockLength-1,row,EMPTY_NOTE);
+		//delete this.sectionData.data['strings'][row][col];
 	},
 
 	setLFingerValue: function(value,col,row)
@@ -127,13 +209,14 @@ KORDS.TABS.TabsBlock.prototype =
 			row=parseInt(curCell.attr("data-row"));
 		}
 	
-		if (this.getStringCellValue(col,row)!=EMPTY_NOTE)
+		if (cell=this.getStringCellValue(col,row) && cell.note!=EMPTY_NOTE)
 		{
-			this.setStringCellValue(col,row,value,TYPE_LFINGER);
+			this.setStringLFingerValue(col,row,value);
 			this.updateText();
-			this.updateLFingerButtons(col,row);
+			this.updateCurrentCursor(col,row);	// ¿?¿?¿?¿?¿?
 		}
 	},
+
 	removeSpace: function(wholeColumn)
 	{
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
@@ -141,8 +224,7 @@ KORDS.TABS.TabsBlock.prototype =
 		var row=parseInt(curCell.attr("data-row"));
 		if (wholeColumn)
 		{
-			for (var i=0;i<tabBlockNumStrings;i++)
-				this.removeSpaceAt(col,i);
+			this.removeSpaceAtCol(col);
 		}
 		else
 		{
@@ -154,14 +236,14 @@ KORDS.TABS.TabsBlock.prototype =
 
 	onKeyDown: function (e)
 	{
-		var keys=new KORDS.TABS.Keys(e.keyCode);
-
+		var keys=new KORDS.TABSEDITOR.Keys(e.keyCode);
+		console.log(e.keyCode);
 		if (!keys.isValidKey())
 			return true;
 
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
-		var col=curCell.attr("data-col");
-		var row=curCell.attr("data-row");
+		var col=parseInt(curCell.attr("data-col"));
+		var row=parseInt(curCell.attr("data-row"));
 	
 		if (keys.cursorMoveKey())
 		{
@@ -219,13 +301,11 @@ KORDS.TABS.TabsBlock.prototype =
 		}
 		else if (keys.keyCode==KEY_INSERT)
 		{
-			//console.log("INSERTING");
 			this.insertSpace(e.shiftKey);
 			return false;
 		}
 		else if (e.shiftKey && (e.keyCode==KEY_1 ||e.keyCode==KEY_2 ||e.keyCode==KEY_3 ||e.keyCode==KEY_4))
 		{
-			console.log("ZZZZ");
 			this.setLFingerValue(keys.getCharValue(),col,row);
 			return false;
 		}		
@@ -244,7 +324,8 @@ KORDS.TABS.TabsBlock.prototype =
 		}
 		else if (keys.isColumnModifierKey())
 		{
-			var modifiersMatch={"g":"keyboard-accents","a":"keyboard-arrows"};
+			var modifiersMatch={"g":"keyboard-accents","r":"keyboard-arrows","-":"barline_simple"};
+			console.log(keys.getCharValue());
 			this.insertColumnModifier(modifiersMatch[keys.getCharValue()]);
 			return false;
 		}
@@ -258,7 +339,13 @@ KORDS.TABS.TabsBlock.prototype =
 			var cellVal=$(".tabblock td.active_cell",this.htmlNode).html();
 			if (keys.keyCode==KEY_DELETE)
 			{
-				if (cellVal==EMPTY_NOTE_HTML)
+				if (this.getBarLine(col))
+				{
+					this.setBarLine(col,null);
+					this.updateText();
+					return false;
+				}
+				else if (cellVal==EMPTY_NOTE_HTML)
 				{
 					this.removeSpace(e.shiftKey);
 					return false;
@@ -278,9 +365,9 @@ KORDS.TABS.TabsBlock.prototype =
 				cellVal=input;
 			
 			//$(".tabblock td.active_cell",this.htmlNode).html(cellVal);
-			this.setStringCellValue(col,row,cellVal,TYPE_NOTE/*,e.shiftKey*/);
-			if (cellVal==EMPTY_NOTE)
-				this.setStringCellValue(col,row,cellVal,TYPE_LFINGER/*,e.shiftKey*/);
+			this.setStringNoteValue(col,row,cellVal);
+			//if (cellVal==EMPTY_NOTE)
+			//	this.setStringCellValue(col,row,cellVal,TYPE_LFINGER/*,e.shiftKey*/);
 			
 			if (keys.isNoteModifierKey())
 			{
@@ -294,6 +381,7 @@ KORDS.TABS.TabsBlock.prototype =
 			this.updateText();
 		}
 		return true;
+		
 	},
 	
 	showTextDialog: function()
@@ -308,7 +396,7 @@ KORDS.TABS.TabsBlock.prototype =
 			"col":col
 		};
 		
-		$("#note_text").val(this.data['colmodifiers']['text']['values'][col]);
+		$("#note_text").val(this.sectionData.data['colmodifiers']['text'][col]);
 		$this=this;
 		
 		this.tabBlockTextDialog=$("#tabblocktext_dialog").dialog({
@@ -362,98 +450,167 @@ KORDS.TABS.TabsBlock.prototype =
 			this.tabsEditorInstance.updateText();
 	},
 
-	setColModifierValue: function (group,col,value)
+	emptyStringCol: function(col)
+	{
+		for (var i=0;i<tabBlockNumStrings;i++)
+			this.setStringCellValue(col,i,null);
+	},
+
+	getBarLine: function(col)
+	{
+		var val=this.sectionData.data['barlines'][col];
+		return (typeof val == 'undefined')?null:val;
+	},
+
+	setBarLine: function(col,value)
+	{
+		var cell=$(".tabblock tr.string td[data-col='"+col+"']",this.htmlNode);
+		
+		if (value==null)
+		{
+			delete this.sectionData.data['barlines'][col];
+			//cell.remove('.barline_simple');
+			cell.empty();
+		}
+		else
+		{
+			this.emptyStringCol(col);
+			this.sectionData.data['barlines'][col]=value;
+			cell.append('<div class="barline_simple"></div>');
+			//cell.addClass("barline_simple");
+		}
+	},
+
+	// @absolute Ignore the previous value of the cell (It doesn't toggle it)
+	setColModifierValue: function (group,col,value,absolute)
 	{
 		var cell=$(".tabblock tr.extra."+group+" td[data-col='"+col+"']",this.htmlNode);
 		
 		if (group=="text")
 		{
-			cell.html(value);
+			if (typeof value=="undefined")
+				cell.html("");
+			else
+				cell.html(value);					
 		}
 		else if (group=="rfingers")
 		{
 			//value="amip";
-			cell.html(value.split('').join("<br>"));
+			if (value)
+				cell.html(value.split('').join("<br>"));
+			else
+			{
+				cell.empty();
+				value=null;//@fixme
+			}
 		}
 		else
 		{
-			if (this.data['colmodifiers'][group]['values'][col]==value)
-				value=null;
-
+			if (typeof absolute == 'undefined' || !absolute)
+				if (this.sectionData.data['colmodifiers'][group][col]==value)
+ 					value=null;
+ 			
 			cell.attr("data-value",value);
 			cell.removeClass().addClass("modifier_"+value);
 		}
 		
 		if (value==null)
-			this.data['colmodifiers'][group]['nummodifiers']--;
-		else if (this.data['colmodifiers'][group]['values'][col]==null)		
-			this.data['colmodifiers'][group]['nummodifiers']++;
-			
-		//console.log("#",this.data['colmodifiers'][group]['nummodifiers']);
-			
-		if (this.data['colmodifiers'][group]['nummodifiers']>0)
+			delete this.sectionData.data['colmodifiers'][group][col];
+		else
+			this.sectionData.data['colmodifiers'][group][col]=value;
+
+		if (objectSize(this.sectionData.data['colmodifiers'][group])>0)
 			$(".tabblock tr.extra."+group).show();
 		else
 			$(".tabblock tr.extra."+group).hide();
 
-		this.data['colmodifiers'][group]['values'][col]=value;
-		
 		if (group=="rfingers")
 			this.updateRFingerButtons(col);
 	},
 	
 	getColModifierValue: function (group,col)
 	{
-		return $(".tabblock tr.extra."+group+" td[data-col='"+col+"']",this.htmlNode).attr("data-value");
+		//return $(".tabblock tr.extra."+group+" td[data-col='"+col+"']",this.htmlNode).attr("data-value");
+		return this.sectionData.data['colmodifiers'][group][col];
 	},
 	
-	getCellValue: function (col,row)
+	getStringCellValue: function (col,row)
 	{
-		return $(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html();
+		return this.sectionData.data['strings'][row][col];
 	},
-
-	getStringCellValue: function(col,row)
+/*
+	getStringCellValue: function(col,string)
 	{
 		var type=TYPE_NOTE;
-		return this.data['strings'][row][col][type];
+		//return this.sectionData.data['strings'][string][col][type];
+		return this.sectionData.data['strings'][string][col].note;
 	},
+*/	
 	
-	setStringCellValue: function (col,row,value,type/*,shift*/)
+	setStringLFingerValue: function(col,string,value)
 	{
-	/*
-		if (typeof shift == 'undefined')
-			shift=false;
-
-		if (shift)
-		{
-			for (var i=0;i<tabBlockNumStrings;i++)
-				this.setStringCellValue(col,i,value,type,false);
-		}
-	*/	
-		col=parseInt(col);
-		row=parseInt(row);
+		$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).removeClass (function (index, css) {
+			return (css.match (/\blfinger\S+/g) || []).join(' ');
+		});
 		
-		if (type==TYPE_NOTE)
-			$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).html(value);
-		else if (type==TYPE_LFINGER)
+		if (!this.sectionData.data['strings'][string][col])
+			return;
+
+		if (this.sectionData.data['strings'][string][col].lfinger==value)
+			value=EMPTY_NOTE;
+		else if (value!=EMPTY_NOTE)
+			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).addClass("lfinger"+value);
+		
+		this.sectionData.data['strings'][string][col].lfinger=value;
+	},
+
+	setStringNoteValue: function(col,string,value)
+	{
+		if (typeof value == 'undefined')
+			value=EMPTY_NOTE;
+
+		if (value==EMPTY_NOTE)
 		{
-			$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).removeClass (function (index, css) {
-				return (css.match (/\blfinger\S+/g) || []).join(' ');
-			});
-			
-			if (this.data['strings'][row][col][type]==value)
-				value=EMPTY_NOTE;
-			else
-				$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("lfinger"+value);
+			this.setStringLFingerValue(col,string,value); // Delete LFingers
+			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).html(value);
+			delete this.sectionData.data['strings'][string][col];
 		}
-		this.data['strings'][row][col][type]=value;
+		else
+		{
+			if (!this.sectionData.data['strings'][string][col])	
+				this.sectionData.data['strings'][string][col]=new KORDS.TABSDATA.NoteCell();
+
+			if (this.sectionData.data['barlines'][col]!=null)
+				this.setBarLine(col,null);
+
+			$(".tabblock td[data-col='"+col+"'][data-row='"+string+"']",this.htmlNode).html(value);
+			this.sectionData.data['strings'][string][col].note=value;
+		}
+	},
+
+	setStringCellValue: function (col,string,value)
+	{
+		col=parseInt(col);
+		string=parseInt(string);
+
+		if (typeof value!='undefined' && value!=null)
+		{
+			this.setStringNoteValue(col,string,value.note);
+			this.setStringLFingerValue(col,string,value.lfinger);
+			//this.sectionData.data['strings'][string][col]=value;
+		}
+		else
+		{
+			this.setStringNoteValue(col,string,EMPTY_NOTE);
+			this.setStringLFingerValue(col,string,EMPTY_NOTE);
+		}
 	},
 	
 	updateASCIIText: function()
 	{
+		//@todo Change it to use the data instead of the html?
 		var textArray=new Array(tabBlockNumStrings);
 		for (var i=0;i<tabBlockNumStrings;i++)
-			//textArray=new Array();
 			textArray[i]=tabBlockNotes[i]+"|";
 
 		var lastModifier=false;
@@ -469,20 +626,25 @@ KORDS.TABS.TabsBlock.prototype =
 			
 			for (var j=0;j<tabBlockNumStrings;j++)
 			{
-				var val=$(".tabblock td[data-col='"+i+"'][data-row='"+j+"']",this.htmlNode).html();
-				if (val==EMPTY_NOTE)
-					val="-";
+				if (this.sectionData.data['barlines'][i]!=null)
+					currentCol[j]={"note":"|","two_digits":false};
 				else
 				{
-					emptyCol=false;				
-					isModifier=($.inArray(val, ['h','p','s','^','b','v','/','\\',])!==-1);
-					modifier|=isModifier;
-					if (!isModifier)
-						hasAnyNote=true;
+					var val=$(".tabblock td[data-col='"+i+"'][data-row='"+j+"']",this.htmlNode).html();
+					if (val==EMPTY_NOTE)
+						val="-";
+					else
+					{
+						emptyCol=false;				
+						isModifier=($.inArray(val, ['h','p','s','^','b','v','/','\\',])!==-1);
+						modifier|=isModifier;
+						if (!isModifier)
+							hasAnyNote=true;
+					}
+					
+					currentCol[j]={"note":val,"two_digits":val.length>1};
+					longNote|=currentCol[j].two_digits;
 				}
-				
-				currentCol[j]={"note":val,"two_digits":val.length>1};
-				longNote|=currentCol[j].two_digits;
 			}
 			
 			//if (!modifier && !lastModifier && !emptyCol)
@@ -522,25 +684,70 @@ KORDS.TABS.TabsBlock.prototype =
 		
 		$(".tabblock td[data-col='"+col+"']",this.htmlNode).addClass("active_column");
 		$(".tabblock td[data-col='"+col+"'][data-row='"+row+"']",this.htmlNode).addClass("active_cell");
-		
-		this.updateLFingerButtons(col,row);
+	
+		this.updateButtons(col,row);
+	},
+
+	updateButtons: function(col,row)
+	{
+		this.updateNoteButtons(col,row);
+		this.updateColumnModifiersButtons(col);
 		this.updateRFingerButtons(col);
 	},
-	
-	updateLFingerButtons: function(col,row)
+
+	updateColumnModifiersButtons: function(col)
 	{
-		var lfinger=this.data['strings'][row][col][TYPE_LFINGER];
+		$("#tabs-context-menu .colmodifier,#open-tabtext").removeClass("checked");
+
+		for (colmod in this.sectionData.data['colmodifiers'])
+		{
+			var val=this.sectionData.data['colmodifiers'][colmod][col];
+			if (val)
+			{
+				if (colmod=="text")
+					val="text";
+				$("#tabs-context-menu a[data-modifier='"+val+"']").addClass("checked");
+			}
+		}
+		/*
+		note=this.sectionData.data['strings'][row][col];
 		
+		$("#lfingers a[data-modifier^='lfinger']").removeClass("checked");
+		
+		if (typeof note == 'undefined' ||note==null)
+			return;
+
+		var lfinger=this.sectionData.data['strings'][row][col].lfinger;
+
 		$("#lfingers a").removeClass("checked");
-		
 		if (lfinger!=EMPTY_NOTE)
-			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");	
+			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");
+		*/
+	},
+
+	updateNoteButtons: function(col,row)
+	{
+		//@fixme get value
+		note=this.sectionData.data['strings'][row][col];
+		
+		$("#lfingers a[data-modifier^='lfinger']").removeClass("checked");
+		
+		if (typeof note == 'undefined' ||note==null)
+			return;
+
+		var lfinger=this.sectionData.data['strings'][row][col].lfinger;
+
+		$("#lfingers a").removeClass("checked");
+		if (lfinger!=EMPTY_NOTE)
+			$("#lfingers a[data-modifier='lfinger"+lfinger+"']").addClass("checked");
+
+		//@todo Update checked for note and col modifier
 	},
 
 	updateRFingerButtons: function(col)
 	{
-		var rfinger=this.data['colmodifiers']['rfingers']['values'][col];
-		
+		var rfinger=this.sectionData.data['colmodifiers']['rfingers'][col];
+
 		$("#rfingers a").removeClass("checked");
 		
 		if (rfinger!=null)
@@ -551,9 +758,9 @@ KORDS.TABS.TabsBlock.prototype =
 		}
 	},
 	
-	insertChord: function (chordId)
+	insertChord: function (chordId,mode)
 	{
-		var chordDiagram=chords[chordId];
+		var chordDiagram=chords[mode][chordId];
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
 		var col=curCell.attr("data-col");
 		
@@ -565,8 +772,7 @@ KORDS.TABS.TabsBlock.prototype =
 			else
 				fret=parseInt(fret,16);
 			
-			console.log(fret);
-			this.setStringCellValue(col,i,fret.toString(),TYPE_NOTE); //???
+			this.setStringNoteValue(col,i,fret.toString()); //???
 		}
 
 		this.updateText();
@@ -588,7 +794,7 @@ KORDS.TABS.TabsBlock.prototype =
 	
 	accumColModifierValue: function (modifierGroup,col,modifier)
 	{
-		var currentVal=this.data['colmodifiers'][modifierGroup]['values'][col];
+		var currentVal=this.sectionData.data['colmodifiers'][modifierGroup][col];
 		
 		if (currentVal==null)
 			currentVal=modifier;
@@ -601,15 +807,28 @@ KORDS.TABS.TabsBlock.prototype =
 			currentVal=this.resortFingers(currentVal);
 		this.setColModifierValue(modifierGroup,col,currentVal);
 	},
-	
+
+	toggleBarLine: function(col)
+	{
+		var lineToggles=["|",null];
+
+		var currentVal=this.getBarLine(col);
+		if (currentVal==null)
+			index=0;
+		else
+			index=(lineToggles.indexOf(currentVal)+1)%lineToggles.length;
+
+		this.setBarLine(col,lineToggles[index]);
+	},
+
 	toggleColumnModifier: function (modifierGroup,col,modifier)
 	{
 		var groupToggles={
 			"accents":["golpe","accent",null],
-			"arrows":["up_arrow","down_arrow","rasgueo",null]
+			"arrows":["up_arrow","down_arrow","rasgueo","alzapua","rasgueo3","rasgueo4",null]
 		};
 				
-		var currentVal=this.data['colmodifiers'][modifierGroup]['values'][col];
+		var currentVal=this.sectionData.data['colmodifiers'][modifierGroup][col];
 		if (currentVal==null)
 			index=0;
 		else
@@ -624,7 +843,14 @@ KORDS.TABS.TabsBlock.prototype =
 		var curCell=$(".tabblock td.active_cell",this.htmlNode);
 		var col=curCell.attr("data-col");
 		var value=curCell.attr("data-value");
-	
+
+		if (modifier=="barline_simple")
+		{
+			this.toggleBarLine(col);
+			this.updateText();
+			return;
+		}
+
 		var modifierActions=
 		{
 			"keyboard-accents":	{"type":"toggle","group":"accents"},
@@ -633,15 +859,17 @@ KORDS.TABS.TabsBlock.prototype =
 			"accent":			{"type":"set","group":"accents"},
 			"down_arrow":		{"type":"set","group":"arrows"},
 			"up_arrow":			{"type":"set","group":"arrows"},
+			"alzapua": 			{"type":"set","group":"arrows"},
+			"rasgueo3": 		{"type":"set","group":"arrows"},
+				"rasgueo4": 		{"type":"set","group":"arrows"},
 			"rasgueo":			{"type":"set","group":"arrows"},
 			"text":				{"type":"set","group":"text"},
 			"p":				{"type":"accum","group":"rfingers"},
 			"i":				{"type":"accum","group":"rfingers"},
 			"m":				{"type":"accum","group":"rfingers"},
-			"a":				{"type":"accum","group":"rfingers"}			
+			"a":				{"type":"accum","group":"rfingers"},
 		}
 		
-		console.log(modifier);
 		switch (modifierActions[modifier].type)
 		{
 			case "toggle":
@@ -669,7 +897,7 @@ KORDS.TABS.TabsBlock.prototype =
 		if (curCell.html()!=EMPTY_NOTE_HTML)
 			this.updateCurrentCursor(++col,row);
 
-		this.setStringCellValue(col,row,modifier,TYPE_NOTE/*,e.shiftKey*/);
+		this.setStringNoteValue(col,row,modifier);
 
 //		$(".tabblock td.active_cell",this.htmlNode).html(modifier);
 		this.updateCurrentCursor(++col,row);
@@ -682,9 +910,9 @@ KORDS.TABS.TabsBlock.prototype =
 	}
 }	
 
-KORDS.TABS.TabsBlock.insertTabBlock=function()
+KORDS.TABSEDITOR.TabsSection.insertTabBlock=function()
 {
-    tabBlockHtml='<table width="100%" class="tabblock">';
+    var tabBlockHtml='<table width="100%" class="tabblock">';
 
 	// top
 	for (var j=0;j<topColumnModifiers.length;j++)
@@ -722,10 +950,7 @@ KORDS.TABS.TabsBlock.insertTabBlock=function()
 		tabBlockHtml+="</tr>";
 	}
 	
-	
-	
     tabBlockHtml+="</table>";
 		
 	$("#tabblock").html(tabBlockHtml);
 }
-

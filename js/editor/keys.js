@@ -1,8 +1,4 @@
-var KORDS= KORDS || {};
-
-KORDS.TABS = KORDS.TABS || {};
-
-KORDS.TABS.Keys=function(keyCode)
+KORDS.TABSEDITOR.Keys=function(keyCode)
 {
 	if (typeof keyCode=='undefined')
 		this.keyCode=-1;
@@ -10,7 +6,7 @@ KORDS.TABS.Keys=function(keyCode)
 		this.keyCode=keyCode;
 }
 
-KORDS.TABS.Keys.prototype = 
+KORDS.TABSEDITOR.Keys.prototype = 
 {
 	getCharValue: function ()
 	{
@@ -46,9 +42,9 @@ KORDS.TABS.Keys.prototype =
 		
 		return $.inArray(keyCode, 
 			[
-				KEY_A,
 				KEY_G,
-
+				KEY_R,
+				KEY_LINE,
 			])!==-1;
 	},
 			
@@ -61,6 +57,7 @@ KORDS.TABS.Keys.prototype =
 			[
 				KEY_H,
 				KEY_P,
+				KEY_R,
 				KEY_S,
 				KEY_B,
 				KEY_V,
@@ -120,6 +117,7 @@ KORDS.TABS.Keys.prototype =
 				KEY_BARRIGHT2,
 				
 				KEY_H,
+				KEY_R,
 				KEY_S,
 				KEY_T,
 				KEY_P,
@@ -128,12 +126,15 @@ KORDS.TABS.Keys.prototype =
 				KEY_HOME,
 				KEY_END,
 				KEY_AVPAG,
-				KEY_REPAG
+				KEY_REPAG,
+
+				KEY_LINE,
 				
 			])!==-1;
 	}
 }
 
+var KEY_LINE=189;
 
 var KEY_LEFT=37;
 var KEY_UP=38;
@@ -173,8 +174,9 @@ var KEY_SPACE=32;
 var KEY_DELETE=46;
 
 var KEY_H=72;
-var KEY_T=84;
+var KEY_R=82;
 var KEY_S=83;
+var KEY_T=84;
 var KEY_P=80;
 
 

@@ -7,24 +7,38 @@
 		<!-- External libs -->
 		<script type="text/javascript" src="js/ext/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="js/ext/jquery-ui-1.9.2.custom.min.js"></script>
-		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>		
-		<script type="text/javascript" src="js/ext/raphael.js"></script>		
+		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>
+		<script type="text/javascript" src="js/ext/raphael.js"></script>
+
 		
-		<!-- KGT -->
-		<script type="text/javascript" src="js/keys.js"></script>
-		<script type="text/javascript" src="js/tabcanvaspainter.js"></script>		
-		<script type="text/javascript" src="js/tabsblock.js"></script>
-		<script type="text/javascript" src="js/textblock.js"></script>		
-		<script type="text/javascript" src="js/tabeditor.js"></script>
-		<script type="text/javascript" src="js/tabparser.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-	
+		<script type="text/javascript" src="js/ext/Blob.js"></script>
+		<script type="text/javascript" src="js/ext/FileSaver.min.js"></script>
+				
+		<!-- KGT MAIN -->
+		<script type="text/javascript" src="js/kords.js"></script>
+		<script type="text/javascript" src="js/utils.js"></script>
+
+		<script type="text/javascript" src="js/tabsdata.js"></script>
+
+		<!-- KGT EDITOR -->
+		<script type="text/javascript" src="js/editor/kords.tabseditor.js"></script>
+		<script type="text/javascript" src="js/editor/keys.js"></script>
+		<script type="text/javascript" src="js/editor/tabeditor.js"></script>
+		<script type="text/javascript" src="js/editor/tabsection.js"></script>
+		<script type="text/javascript" src="js/editor/textsection.js"></script>		
+		<script type="text/javascript" src="js/editor/tabparser.js"></script>
+		
+		<!-- KGT PAINTER -->
+		<script type="text/javascript" src="js/painter/kords.tabspainter.js"></script>
+		<script type="text/javascript" src="js/painter/tabcanvaspainter.js"></script>		
+
+		<script type="text/javascript" src="js/main.js"></script>	
 	</head>
 	<body>
 		<table>
 		<tr>
 			<td valign="top">
-				<div id="text-editor" class="tabs-editor">
+				<div id="text-editor-base">
 					<div id="block" class="menu tabsection tabs" style="display:none">
 						<div id="tabblock" class="" width="100%" style="background-color:#fff;padding:10px;"></div>
 					</div>
@@ -34,17 +48,33 @@
 					<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
 						<a id="insert-chords" class="button mini" href="#">Insert chord</a>
 						<select id="chords"></select>
+						
 						<a class="button mini modifier" data-modifier="s" href="#" title="Slide"><img src="images/s.png"/></a>
 						<a class="button mini modifier" data-modifier="^" href="#" title="HammerOf"><img src="images/h.png"/></a>
 						<a class="button mini modifier" data-modifier="v" href="#" title="Vibrato"><img src="images/v.png"/></a>
 						<!-- <a class="button mini modifier" data-modifier="b" href="#" title="Bend"><img src="images/b.png"/></a> -->
 
-						<a class="button mini colmodifier" data-modifier="accent" href="#" title="Accent"><img src="images/accent.png"/></a>
-						<a class="button mini colmodifier" data-modifier="golpe" href="#" title="Golpe"><img src="images/golpe.png"/></a>
-						<a class="button mini colmodifier" data-modifier="up_arrow" href="#" title="Golpe"><img src="images/up_arrow.png"/></a>
-						<a class="button mini colmodifier" data-modifier="down_arrow" href="#" title="Golpe"><img src="images/down_arrow.png"/></a>
-						<a class="button mini colmodifier" data-modifier="rasgueo" href="#" title="Golpe"><img src="images/rasgueo.png"/></a>						
-						<a id="open-tabtext" class="button mini" style="padding:2px" href="#" title="Add text"><img src="images/text.png"/></a>
+						<div class="checkgroup">
+							<a class="button mini colmodifier" data-modifier="accent" href="#" title="Accent"><img src="images/accent.png"/></a>
+							<a class="button mini colmodifier" data-modifier="golpe" href="#" title="Golpe"><img src="images/golpe.png"/></a>
+						</div>
+						<a id="open-tabtext" class="button mini" data-modifier="text" style="padding:2px" href="#" title="Add text"><img src="images/text.png"/></a>
+
+						<div id="barlines" class="checkgroup">
+							<a class="buttoncheck colmodifier" data-modifier="up_arrow" href="#" title="Golpe"><img src="images/up_arrow.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="down_arrow" href="#" title="Golpe"><img src="images/down_arrow.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="rasgueo" href="#" title="Golpe"><img src="images/rasgueo.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="alzapua" href="#" title="Alzapua"><img src="images/alzapua.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="rasgueo3" href="#" title="Rasgueo AII"><img src="images/rasgueo3.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="rasgueo4" href="#" title="Rasgueo AMII"><img src="images/rasgueo4.png"/></a>
+						</div>
+
+						<div id="barlines" class="checkgroup">
+							<a class="buttoncheck colmodifier" data-modifier="barline_simple" href="#" title="Barline single"><img src="images/barline_simple.png"/></a>
+<!--							<a class="buttoncheck colmodifier" data-modifier="barline_double" href="#" title="Barline double"><img src="images/barline_double.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="barline_repeat_left" href="#" title="Barline repeat left"><img src="images/barline_repeat_left.png"/></a>
+							<a class="buttoncheck colmodifier" data-modifier="barline_repeat_right" href="#" title="Barline repeat right"><img src="images/barline_repeat_right.png"/></a>
+-->						</div>
 
 						<div id="lfingers" class="checkgroup">
 							<a class="buttoncheck" data-modifier="lfinger1" href="#" title="Finger 1 (Alt+1)"><img src="images/1.png"/></a>
@@ -60,11 +90,11 @@
 						</div>
 					</div>
 					<div id="empty-context-menu" class="tabs-editor-context-menu" style="text-align:right">
-						<a id="add_text" class="button mini" href="#">Add Text</a>
-						<a id="add_tabs" class="button mini" href="#">Add Tabs</a>
-						<a id ="remove_section" style="display:none" class="button mini" href="#">Remove this section</a>
+						<a id="add_text" class="button text" href="#">Add Text</a>
+						<a id="add_tabs" class="button text" href="#">Add Tabs</a>
+						<a id ="remove_section" style="display:none" class="button text" href="#">Remove this section</a>
 					</div>
-<!--					
+<!--
 					<div id="menu-tabs-text" style="display:none">
 						<div class="tabs-editor-tools">
 							<a class="button mini format" data-format="b" href="#"><b>B</b></a>
@@ -73,16 +103,23 @@
 						</div>
 					</div>
 -->
+				<div id="text-editor" class="tabs-editor">
 				</div>
 			</td>
-			<td>
+			<td valign="top">
 				<div style="padding-left:50px">
+					<a id="new_ktb" class="button mini">New</a>
+					<a id="save_ktb" class="button mini">Save KTB</a>
+					<a id="load_ktb" class="button mini">Load KTB</a>
 					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
-					<b>ASCII TAB</b>
-					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
+					<b>KTG FILE FORMAT</b>
+					<textarea id="ktg" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px">
+[{"type":"tabs","data":{"numstrings":6,"numcolumns":51,"strings":[{"0":{"note":"1","lfinger":null},"1":{"note":"2","lfinger":null},"2":{"note":"3","lfinger":null},"3":{"note":"4","lfinger":null},"4":{"note":"5","lfinger":null},"5":{"note":"6","lfinger":null},"6":{"note":"7","lfinger":null},"7":{"note":"8","lfinger":null},"8":{"note":"9","lfinger":null},"9":{"note":"10","lfinger":null},"10":{"note":"11","lfinger":null},"11":{"note":"12","lfinger":null},"13":{"note":"1","lfinger":null},"14":{"note":"2","lfinger":null},"15":{"note":"3","lfinger":null},"16":{"note":"4","lfinger":null},"17":{"note":"5","lfinger":null},"18":{"note":"6","lfinger":null},"19":{"note":"7","lfinger":null},"20":{"note":"8","lfinger":null},"21":{"note":"9","lfinger":null},"22":{"note":"10","lfinger":null},"23":{"note":"11","lfinger":null},"24":{"note":"12","lfinger":null},"26":{"note":"1","lfinger":null},"27":{"note":"2","lfinger":null},"28":{"note":"3","lfinger":null},"29":{"note":"4","lfinger":null},"30":{"note":"5","lfinger":null},"31":{"note":"6","lfinger":null},"32":{"note":"7","lfinger":null},"33":{"note":"8","lfinger":null},"34":{"note":"9","lfinger":null},"35":{"note":"10","lfinger":null},"36":{"note":"11","lfinger":null},"37":{"note":"12","lfinger":null},"39":{"note":"1","lfinger":null},"40":{"note":"2","lfinger":null},"41":{"note":"3","lfinger":null},"42":{"note":"4","lfinger":null},"43":{"note":"5","lfinger":null},"44":{"note":"6","lfinger":null},"45":{"note":"7","lfinger":null},"46":{"note":"8","lfinger":null},"47":{"note":"9","lfinger":null},"48":{"note":"10","lfinger":null},"49":{"note":"11","lfinger":null},"50":{"note":"12","lfinger":null}},{},{},{},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}},"barlines":{"12":"|","25":"|","38":"|"}}}]
 					</textarea>
-					<div id="pretty-tab" class="pretty-tab">
-					</div>
+					<b>ASCII TAB</b>
+					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px"></textarea>
+					<b>VECTORIAL TAB</b>
+					<div id="pretty-tab" class="pretty-tab"></div>
 					<!--
 					<b>Vextab</b>
 					<textarea id="vextab" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
@@ -94,6 +131,6 @@
 	</body>
 	<div id="tabblocktext_dialog" title="Text editor" style="display:none">
 		<p>Insert text:</p>
-		<p><input id="note_text" size="50"/></p>
+		<p><input id="note_text" size="40"/></p>
 	</div>
 </html>
