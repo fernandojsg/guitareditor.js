@@ -461,7 +461,9 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 					var cy=j*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
 					
 					this.ctx.font = "12px sans-serif";
-					var w=this.ctx.measureText(note).width;
+					//var w=this.ctx.measureText(note).width;
+					var w=this.ctx.measureText(0).width;
+					
 					this.ctx.clearRect(cx-w/2,cy-this.linesOffset,w,this.linesOffset);
 					this.ctx.textAlign = 'center';
 					this.ctx.fillText(note, cx, cy);
@@ -470,7 +472,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 					if (isNumber(number))
 					{
 						this.ctx.font = "8px sans-serif";
-						this.ctx.fillText(number, cx+w, cy-w/1.1);
+						this.ctx.fillText(number, cx+w, cy-w/1.05);
 					}
 					prevNotePos=i;
 					onBinaryModifier=false;

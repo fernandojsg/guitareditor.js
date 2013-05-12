@@ -42,8 +42,8 @@ KORDS.TABSEDITOR.Keys.prototype =
 		
 		return $.inArray(keyCode, 
 			[
-				KEY_A,
 				KEY_G,
+				KEY_R,
 				KEY_LINE,
 			])!==-1;
 	},
@@ -57,6 +57,7 @@ KORDS.TABSEDITOR.Keys.prototype =
 			[
 				KEY_H,
 				KEY_P,
+				KEY_R,
 				KEY_S,
 				KEY_B,
 				KEY_V,
@@ -116,6 +117,7 @@ KORDS.TABSEDITOR.Keys.prototype =
 				KEY_BARRIGHT2,
 				
 				KEY_H,
+				KEY_R,
 				KEY_S,
 				KEY_T,
 				KEY_P,
@@ -172,8 +174,9 @@ var KEY_SPACE=32;
 var KEY_DELETE=46;
 
 var KEY_H=72;
-var KEY_T=84;
+var KEY_R=82;
 var KEY_S=83;
+var KEY_T=84;
 var KEY_P=80;
 
 

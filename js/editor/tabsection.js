@@ -324,7 +324,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 		else if (keys.isColumnModifierKey())
 		{
-			var modifiersMatch={"g":"keyboard-accents","a":"keyboard-arrows","-":"barline_simple"};
+			var modifiersMatch={"g":"keyboard-accents","r":"keyboard-arrows","-":"barline_simple"};
 			console.log(keys.getCharValue());
 			this.insertColumnModifier(modifiersMatch[keys.getCharValue()]);
 			return false;
@@ -954,4 +954,3 @@ KORDS.TABSEDITOR.TabsSection.insertTabBlock=function()
 		
 	$("#tabblock").html(tabBlockHtml);
 }
-

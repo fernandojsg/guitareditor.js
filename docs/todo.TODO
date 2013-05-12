@@ -6,14 +6,6 @@ BUGS:
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
  ☐ Update buttons while entering column modifiers
- ☐ Left finger number with 2 digits fret render
- ☐ Select tabs
-   ☐ Select a region in the table
-   ☐ Delete the selected region
-   ☐ Cut/Copy the selection
-   ☐ Paste the selection
-     ☐ Overwrite
-     ☐ Move it
 
 TODO:
   GENERAL:
@@ -22,16 +14,24 @@ TODO:
   ☐ Default barlines
   ☐ Custom block size per tabsection
   ☐ If lfinger = null -> not appear in JSON 
+  ☐ Select tabs
+   ☐ Select a region in the table
+   ☐ Delete the selected region
+   ☐ Cut/Copy the selection
+   ☐ Paste the selection
+     ☐ Overwrite
+     ☐ Move it
   SHORTCUTS:
-  ☐ Up arrow
-  ☐ Down arrow
-  ☐ Rasgueo
-  ☐ Alzapua
-  ☐ Rasgueo3
-  ☐ Rasgueo4
   ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Left finger number with 2 digits fret render @done (13-05-13 00:53)
+ ✔ Up arrow @done (13-05-13 00:36)
+ ✔ Down arrow @done (13-05-13 00:36)
+ ✔ Rasgueo @done (13-05-13 00:36)
+ ✔ Alzapua @done (13-05-13 00:36)
+ ✔ Rasgueo3 @done (13-05-13 00:36)
+ ✔ Rasgueo4 @done (13-05-13 00:36)
  ✔ Del over barline @done (13-05-07 23:35)
  ✔ Shift+Insert colmodifier @done (13-05-07 00:10)
  ✔ Shift+Del colmodifier @done (13-05-07 00:37)
