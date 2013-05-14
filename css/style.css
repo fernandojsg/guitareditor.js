@@ -54,15 +54,16 @@
 
 body
 {
-	background-color:#eee;
-	font-family:verdana;
+	background:none repeat scroll 0 0 #EFEDE9;
+	font-family: 'Open Sans','HelveticaNeue','Helvetica Neue',Helvetica,Arial,"Lucida Grande",sans-serif;
+	color: #6A6359;
 }
 
 .tabblock
 {
 	table-layout: fixed;
-	font-family:verdana;
 	font-size:10px;
+	color:#000;
 }
 
 table { 
@@ -152,15 +153,27 @@ table {
 }
 
 
-.tabsection.hover
-{
-	background-color:#ffe;
+#tabblock {
+	background-color:#fff;
+	padding:10px;
+}	
+
+.tabsection.active #tabblock {
+	border-right: 4px solid #ffaa6b;
 }
 
+.tabsection.hover
+{
+/*	background-color:#ffe;*/
+}
+
+/*
 .tabsection.active
 {
 	background-color:#ff9;
 }
+*/
+
 
 textarea.tabtext
 {
@@ -271,10 +284,29 @@ textarea.tabtext
 	font-size:12px;
 }
 
-.pretty-tab
+
+section
 {
-	margin-bottom:15px;
-	padding-top:5px;
+	display: block;
+	position: relative;
+	background: #fff;
+	/*padding: 80px 50px;*/
+	padding: 30px 15px;
+	width: auto;
+	max-width: 860px;
+	margin: 0 auto;
+	margin-bottom: 40px;
+	border-radius: 5px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2), inset 0 -1px 3px #f6f4ee;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+section#pretty
+{
+	padding: 60px 30px;
 }
 
 .pretty-tab div
@@ -297,5 +329,175 @@ textarea.tabtext
 {
 	background-color:#fff;
 	width:800px;
-	height:200px;
 }
+
+#ascii-text
+{
+	font-family:courier new;
+	width:100%;
+	font-size:12px;
+	border:none;
+	outline: none;
+}
+
+#ktg 
+{
+	 font-family:courier new;
+	 width:100%;
+	 font-size:13px;
+	 outline:none;
+}
+
+
+
+
+
+
+
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+.json-string { color: green; }
+.json-number { color: darkorange; }
+.json-boolean { color: blue; }
+.json-null { color: magenta; }
+.json-key { color: red; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tabs {
+    width: auto;
+    /*max-width: 860px;*/
+/*    margin: 0 auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    */
+    /*padding: 0 40px;*/
+    position: relative;
+    text-align:right;
+  /*  -webkit-box-sizing: border-box;     /* Safari/Chrome, other WebKit */
+       -moz-box-sizing: border-box;     /* Firefox, other Gecko */
+            box-sizing: border-box;     /* Opera/IE 8+ */
+*/
+}
+
+
+
+/* --------------------------------------------------------------
+Header
+-------------------------------------------------------------- */
+header {
+    width: auto;
+    max-width: 860px;
+    margin: 0 auto;
+    margin-top: 60px;
+    /*margin-bottom: 60px;*/
+    /*padding: 0 80px;*/
+    padding: 0 40px;
+    position: relative;
+    -webkit-box-sizing: border-box;     /* Safari/Chrome, other WebKit */
+       -moz-box-sizing: border-box;     /* Firefox, other Gecko */
+            box-sizing: border-box;     /* Opera/IE 8+ */
+}
+
+
+
+
+.tab.active {
+	background-color: #EE7E2A;
+}
+
+.tab {
+	font-size: 15px;
+	margin: 0px;
+	padding: 10px 20px 10px 20px;
+	vertical-align: middle;
+	background: none repeat scroll 0 0 rgb(255, 187, 137);
+	border: medium none;
+	cursor: pointer;
+	display: inline-block;
+	margin-left: 8px;
+	text-shadow: none !important;
+	text-decoration: none;
+	color: #fff;
+}
+
+.tab:hover {
+    background: none repeat scroll 0 0 #ffaa6b;
+}
+
+
+
+
+
+h1, h2, h3, h4, h5, h6 {
+	text-align:center;
+	font-family: 'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: bold;
+	color: #000;
+	position: relative;
+	/*margin-bottom: 14px;*/
+	margin: 0px 0px 15px 0px;
+	line-height: 1;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 14px;
+	color:#333;
+}
+
+
+.nodisplay{
+	display:none;
+}
+
+#songdata {
+	font-size:12px;
+	width:260px;
+	text-align:right;
+}
+
+#songdata input {
+	border: 1px solid #eee;
+	padding:2px;
+}
+

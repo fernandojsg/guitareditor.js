@@ -52,6 +52,7 @@ KORDS.TABSDATA.AudioSection=function()
 KORDS.TABSDATA.Song=function()
 {
 	//this.sections={};
+	this.info={"title":null, "artist":null, "transcriber":null};
 	this.sections=[];
 }
 

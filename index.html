@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="js/ext/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="js/ext/jquery-ui-1.9.2.custom.min.js"></script>
 		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>
+
 		<script type="text/javascript" src="js/ext/raphael.js"></script>
 
 		
@@ -33,101 +34,102 @@
 		<script type="text/javascript" src="js/painter/tabcanvaspainter.js"></script>		
 
 		<script type="text/javascript" src="js/main.js"></script>	
+
 	</head>
 	<body>
-		<table>
-		<tr>
-			<td valign="top">
-				<div id="text-editor-base">
-					<div id="block" class="menu tabsection tabs" style="display:none">
-						<div id="tabblock" class="" width="100%" style="background-color:#fff;padding:10px;"></div>
+		<header>
+			<div class="tabs">
+				<a data-tab="pretty" class="tab active">Pretty</a>
+				<a data-tab="ascii" class="tab">ASCII</a>
+				<a data-tab="editor" class="tab">Editor</a>
+			</div>			
+		</header>
+	
+		<section id="editor" class="nodisplay">
+			<div id="songdata">
+				<span>Song:</span> <input type="text" id="song"><br/>
+				<span>Artist:</span> <input type="text" id="artist"><br/>
+				<span>Transcribed by:</span> <input type="text" id="transcriber"><br/>
+			</div>
+
+			<div align="right">
+				<a id="new_ktb" class="button mini">Clear</a>
+				<a id="save_ktb" class="button mini">Save KTB</a>
+				<a id="load_ktb" class="button mini">Load KTB</a>
+			</div>
+			<div id="text-editor-base">
+				<div id="block" class="menu tabsection tabs" style="display:none">
+					<div id="tabblock" class="" width="100%"></div>
+				</div>
+				<div id="block" class="menu tabsection text" style="display:none">
+					<textarea class="tabtext" cols="80" rows="2" style="border:none" readonly="readonly"></textarea>
+				</div>
+				<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
+					<a id="insert-chords" class="button mini" href="#">Insert chord</a>
+					<select id="chords"></select>
+					
+					<a class="button mini modifier" data-modifier="s" href="#" title="Slide"><img src="images/s.png"/></a>
+					<a class="button mini modifier" data-modifier="^" href="#" title="HammerOf"><img src="images/h.png"/></a>
+					<a class="button mini modifier" data-modifier="v" href="#" title="Vibrato"><img src="images/v.png"/></a>
+					<!-- <a class="button mini modifier" data-modifier="b" href="#" title="Bend"><img src="images/b.png"/></a> -->
+
+					<div class="checkgroup">
+						<a class="button mini colmodifier" data-modifier="accent" href="#" title="Accent"><img src="images/accent.png"/></a>
+						<a class="button mini colmodifier" data-modifier="golpe" href="#" title="Golpe"><img src="images/golpe.png"/></a>
 					</div>
-					<div id="block" class="menu tabsection text" style="display:none">
-						<textarea class="tabtext" cols="80" rows="2" style="border:none"></textarea>
+					<a id="open-tabtext" class="button mini" data-modifier="text" style="padding:2px" href="#" title="Add text"><img src="images/text.png"/></a>
+
+					<div id="barlines" class="checkgroup">
+						<a class="buttoncheck colmodifier" data-modifier="up_arrow" href="#" title="Golpe"><img src="images/up_arrow.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="down_arrow" href="#" title="Golpe"><img src="images/down_arrow.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="rasgueo" href="#" title="Golpe"><img src="images/rasgueo.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="alzapua" href="#" title="Alzapua"><img src="images/alzapua.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="rasgueo3" href="#" title="Rasgueo AII"><img src="images/rasgueo3.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="rasgueo4" href="#" title="Rasgueo AMII"><img src="images/rasgueo4.png"/></a>
 					</div>
-					<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
-						<a id="insert-chords" class="button mini" href="#">Insert chord</a>
-						<select id="chords"></select>
-						
-						<a class="button mini modifier" data-modifier="s" href="#" title="Slide"><img src="images/s.png"/></a>
-						<a class="button mini modifier" data-modifier="^" href="#" title="HammerOf"><img src="images/h.png"/></a>
-						<a class="button mini modifier" data-modifier="v" href="#" title="Vibrato"><img src="images/v.png"/></a>
-						<!-- <a class="button mini modifier" data-modifier="b" href="#" title="Bend"><img src="images/b.png"/></a> -->
 
-						<div class="checkgroup">
-							<a class="button mini colmodifier" data-modifier="accent" href="#" title="Accent"><img src="images/accent.png"/></a>
-							<a class="button mini colmodifier" data-modifier="golpe" href="#" title="Golpe"><img src="images/golpe.png"/></a>
-						</div>
-						<a id="open-tabtext" class="button mini" data-modifier="text" style="padding:2px" href="#" title="Add text"><img src="images/text.png"/></a>
-
-						<div id="barlines" class="checkgroup">
-							<a class="buttoncheck colmodifier" data-modifier="up_arrow" href="#" title="Golpe"><img src="images/up_arrow.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="down_arrow" href="#" title="Golpe"><img src="images/down_arrow.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="rasgueo" href="#" title="Golpe"><img src="images/rasgueo.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="alzapua" href="#" title="Alzapua"><img src="images/alzapua.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="rasgueo3" href="#" title="Rasgueo AII"><img src="images/rasgueo3.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="rasgueo4" href="#" title="Rasgueo AMII"><img src="images/rasgueo4.png"/></a>
-						</div>
-
-						<div id="barlines" class="checkgroup">
-							<a class="buttoncheck colmodifier" data-modifier="barline_simple" href="#" title="Barline single"><img src="images/barline_simple.png"/></a>
+					<div id="barlines" class="checkgroup">
+						<a class="buttoncheck colmodifier" data-modifier="barline_simple" href="#" title="Barline single"><img src="images/barline_simple.png"/></a>
 <!--							<a class="buttoncheck colmodifier" data-modifier="barline_double" href="#" title="Barline double"><img src="images/barline_double.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="barline_repeat_left" href="#" title="Barline repeat left"><img src="images/barline_repeat_left.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="barline_repeat_right" href="#" title="Barline repeat right"><img src="images/barline_repeat_right.png"/></a>
--->						</div>
+						<a class="buttoncheck colmodifier" data-modifier="barline_repeat_left" href="#" title="Barline repeat left"><img src="images/barline_repeat_left.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="barline_repeat_right" href="#" title="Barline repeat right"><img src="images/barline_repeat_right.png"/></a>-->						
+					</div>
 
-						<div id="lfingers" class="checkgroup">
-							<a class="buttoncheck" data-modifier="lfinger1" href="#" title="Finger 1 (Alt+1)"><img src="images/1.png"/></a>
-							<a class="buttoncheck" data-modifier="lfinger2" href="#" title="Finger 2 (Alt+2)"><img src="images/2.png"/></a>
-							<a class="buttoncheck" data-modifier="lfinger3" href="#" title="Finger 3 (Alt+3)"><img src="images/3.png"/></a>
-							<a class="buttoncheck" data-modifier="lfinger4" href="#" title="Finger 4 (Alt+4)"><img src="images/4.png"/></a>
-						</div>
-						<div id="rfingers" class="checkgroup">
-							<a class="buttoncheck colmodifier" data-modifier="p" href="#" title="Finger (p)"><img src="images/p.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="i" href="#" title="Finger (i)"><img src="images/i.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="m" href="#" title="Finger (m)"><img src="images/m.png"/></a>
-							<a class="buttoncheck colmodifier" data-modifier="a" href="#" title="Finger (a)"><img src="images/a.png"/></a>
-						</div>
+					<div id="lfingers" class="checkgroup">
+						<a class="buttoncheck" data-modifier="lfinger1" href="#" title="Finger 1 (Alt+1)"><img src="images/1.png"/></a>
+						<a class="buttoncheck" data-modifier="lfinger2" href="#" title="Finger 2 (Alt+2)"><img src="images/2.png"/></a>
+						<a class="buttoncheck" data-modifier="lfinger3" href="#" title="Finger 3 (Alt+3)"><img src="images/3.png"/></a>
+						<a class="buttoncheck" data-modifier="lfinger4" href="#" title="Finger 4 (Alt+4)"><img src="images/4.png"/></a>
 					</div>
-					<div id="empty-context-menu" class="tabs-editor-context-menu" style="text-align:right">
-						<a id="add_text" class="button text" href="#">Add Text</a>
-						<a id="add_tabs" class="button text" href="#">Add Tabs</a>
-						<a id ="remove_section" style="display:none" class="button text" href="#">Remove this section</a>
+					<div id="rfingers" class="checkgroup">
+						<a class="buttoncheck colmodifier" data-modifier="p" href="#" title="Finger (p)"><img src="images/p.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="i" href="#" title="Finger (i)"><img src="images/i.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="m" href="#" title="Finger (m)"><img src="images/m.png"/></a>
+						<a class="buttoncheck colmodifier" data-modifier="a" href="#" title="Finger (a)"><img src="images/a.png"/></a>
 					</div>
-<!--
-					<div id="menu-tabs-text" style="display:none">
-						<div class="tabs-editor-tools">
-							<a class="button mini format" data-format="b" href="#"><b>B</b></a>
-							<a class="button mini format" data-format="i" href="#"><i>I</i></a>
-							<a class="button mini format" data-format="u" href="#"><u>U</u></a>
-						</div>
-					</div>
--->
-				<div id="text-editor" class="tabs-editor">
 				</div>
-			</td>
-			<td valign="top">
-				<div style="padding-left:50px">
-					<a id="new_ktb" class="button mini">New</a>
-					<a id="save_ktb" class="button mini">Save KTB</a>
-					<a id="load_ktb" class="button mini">Load KTB</a>
-					<a id="parse_tab" class="button mini">Parse TAB</a><br/>
-					<b>KTG FILE FORMAT</b>
-					<textarea id="ktg" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px">
-[{"type":"tabs","data":{"numstrings":6,"numcolumns":51,"strings":[{"0":{"note":"1","lfinger":null},"1":{"note":"2","lfinger":null},"2":{"note":"3","lfinger":null},"3":{"note":"4","lfinger":null},"4":{"note":"5","lfinger":null},"5":{"note":"6","lfinger":null},"6":{"note":"7","lfinger":null},"7":{"note":"8","lfinger":null},"8":{"note":"9","lfinger":null},"9":{"note":"10","lfinger":null},"10":{"note":"11","lfinger":null},"11":{"note":"12","lfinger":null},"13":{"note":"1","lfinger":null},"14":{"note":"2","lfinger":null},"15":{"note":"3","lfinger":null},"16":{"note":"4","lfinger":null},"17":{"note":"5","lfinger":null},"18":{"note":"6","lfinger":null},"19":{"note":"7","lfinger":null},"20":{"note":"8","lfinger":null},"21":{"note":"9","lfinger":null},"22":{"note":"10","lfinger":null},"23":{"note":"11","lfinger":null},"24":{"note":"12","lfinger":null},"26":{"note":"1","lfinger":null},"27":{"note":"2","lfinger":null},"28":{"note":"3","lfinger":null},"29":{"note":"4","lfinger":null},"30":{"note":"5","lfinger":null},"31":{"note":"6","lfinger":null},"32":{"note":"7","lfinger":null},"33":{"note":"8","lfinger":null},"34":{"note":"9","lfinger":null},"35":{"note":"10","lfinger":null},"36":{"note":"11","lfinger":null},"37":{"note":"12","lfinger":null},"39":{"note":"1","lfinger":null},"40":{"note":"2","lfinger":null},"41":{"note":"3","lfinger":null},"42":{"note":"4","lfinger":null},"43":{"note":"5","lfinger":null},"44":{"note":"6","lfinger":null},"45":{"note":"7","lfinger":null},"46":{"note":"8","lfinger":null},"47":{"note":"9","lfinger":null},"48":{"note":"10","lfinger":null},"49":{"note":"11","lfinger":null},"50":{"note":"12","lfinger":null}},{},{},{},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}},"barlines":{"12":"|","25":"|","38":"|"}}}]
-					</textarea>
-					<b>ASCII TAB</b>
-					<textarea id="text" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:13px"></textarea>
-					<b>VECTORIAL TAB</b>
-					<div id="pretty-tab" class="pretty-tab"></div>
-					<!--
-					<b>Vextab</b>
-					<textarea id="vextab" cols="85" rows="10" style="font-family:courier new;width:100%;font-size:9px">
-					</textarea> -->
+				<div id="empty-context-menu" class="tabs-editor-context-menu" style="text-align:right">
+					<a id="add_text" class="button text" href="#">Add Text</a>
+					<a id="add_tabs" class="button text" href="#">Add Tabs</a>
+					<a id ="remove_section" style="display:none" class="button text" href="#">Remove this section</a>
 				</div>
-			</td>
-		</tr>
-		</table>
+			<div id="text-editor" class="tabs-editor">
+			</div>
+		</section>
+		<section id="pretty">
+			<h1 id="title_song"></h1>
+			<h2 id="title_artist"></h2>
+			<div style="font-weight:bold;font-size:12px;text-align:right;margin-right:20px;margin-bottom:10px"><span id="title_transcriber"></span></div>
+			<div id="pretty-tab" class="pretty-tab"></div>
+		</section>
+		<section id="ascii" class="nodisplay">
+			<textarea id="ascii-text" cols="82" readonly="readonly"></textarea>
+		</section>
+		<section id="file" class="nodisplay">
+			<textarea id="ktg" cols="85" rows="10" readonly="readonly">
+				[{"type":"tabs","data":{"numstrings":6,"numcolumns":51,"strings":[{"0":{"note":"1","lfinger":null},"1":{"note":"2","lfinger":null},"2":{"note":"3","lfinger":null},"3":{"note":"4","lfinger":null},"4":{"note":"5","lfinger":null},"5":{"note":"6","lfinger":null},"6":{"note":"7","lfinger":null},"7":{"note":"8","lfinger":null},"8":{"note":"9","lfinger":null},"9":{"note":"10","lfinger":null},"10":{"note":"11","lfinger":null},"11":{"note":"12","lfinger":null},"13":{"note":"1","lfinger":null},"14":{"note":"2","lfinger":null},"15":{"note":"3","lfinger":null},"16":{"note":"4","lfinger":null},"17":{"note":"5","lfinger":null},"18":{"note":"6","lfinger":null},"19":{"note":"7","lfinger":null},"20":{"note":"8","lfinger":null},"21":{"note":"9","lfinger":null},"22":{"note":"10","lfinger":null},"23":{"note":"11","lfinger":null},"24":{"note":"12","lfinger":null},"26":{"note":"1","lfinger":null},"27":{"note":"2","lfinger":null},"28":{"note":"3","lfinger":null},"29":{"note":"4","lfinger":null},"30":{"note":"5","lfinger":null},"31":{"note":"6","lfinger":null},"32":{"note":"7","lfinger":null},"33":{"note":"8","lfinger":null},"34":{"note":"9","lfinger":null},"35":{"note":"10","lfinger":null},"36":{"note":"11","lfinger":null},"37":{"note":"12","lfinger":null},"39":{"note":"1","lfinger":null},"40":{"note":"2","lfinger":null},"41":{"note":"3","lfinger":null},"42":{"note":"4","lfinger":null},"43":{"note":"5","lfinger":null},"44":{"note":"6","lfinger":null},"45":{"note":"7","lfinger":null},"46":{"note":"8","lfinger":null},"47":{"note":"9","lfinger":null},"48":{"note":"10","lfinger":null},"49":{"note":"11","lfinger":null},"50":{"note":"12","lfinger":null}},{},{},{},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}},"barlines":{"12":"|","25":"|","38":"|"}}}]
+			</textarea>
+		</section>
 	</body>
 	<div id="tabblocktext_dialog" title="Text editor" style="display:none">
 		<p>Insert text:</p>

@@ -6,16 +6,31 @@ $(document).ready(function(){
 //	$("#tabs").tabs();
 
 	$("#text").val("");
+	$("#ascii-text").autosize();
 
 	$(document).keydown(function(e){
 		//console.log(e);
 		return tabsInstance.tabsEditor.onKeyDown(e);
 	});
-
+/*
 	$(document).keydown(function(e){
 		//console.log(e);
 		//return tabsInstance.tabsEditor.onKeyUp(e);
 	});
+*/
+
+	$("#songdata #song").change(function(){
+		tabsInstance.tabsEditor.changeSongTitle($(this).val());
+	});
+	
+	$("#songdata #artist").change(function(){
+		tabsInstance.tabsEditor.changeSongArtist($(this).val());
+	});
+
+	$("#songdata #transcriber").change(function(){
+		tabsInstance.tabsEditor.changeSongTranscriber($(this).val());
+	});
+
 	
 	// Insert chords
 	html="";
@@ -41,11 +56,13 @@ $(document).ready(function(){
 		saveAs(blob, fileName+".ktg");
 */
 		$("#ktg").val(ktg);
+		return false;
 	});
 
 	$("#load_ktb").click(function(){
 		//tabsInstance.song.load($("#ktg").val());
 		tabsInstance.load($("#ktg").val());
+		return false;
 	});
 
 	$("#insert-chords").click(function(){
@@ -53,6 +70,7 @@ $(document).ready(function(){
 		var selected=$("#chords").find(":selected");
 		//tabsInstance.tabsEditor.htmlSections[id].insertChord($("#chords").val());
 		tabsInstance.tabsEditor.htmlSections[id].insertChord(selected.attr("value"),selected.attr("mode"));
+		return false;
 	});
 	
 	$(".modifier").click(function(){
@@ -65,11 +83,25 @@ $(document).ready(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		var finger=$(this).attr("data-modifier").replace("lfinger","");
 		tabsInstance.tabsEditor.htmlSections[id].setLFingerValue(finger);
+		return false;
 	});
 	
 	$("#open-tabtext").click(function(){
 		var id=parseInt($(".tabsection.active").attr("data-id"));
 		tabsInstance.tabsEditor.htmlSections[id].showTextDialog();
+		return false;
+	});
+
+	$(".tab").click(function(){
+		var id=$(this).attr("data-tab");
+		$(".tab.active").removeClass("active");
+		$("section").removeClass("nodisplay").addClass("nodisplay");
+		$("section#"+id).removeClass("nodisplay");
+		$(this).addClass("active");
+
+		$("#ascii-text").trigger('autosize');
+
+		return false;
 	});
 	
 	$(".colmodifier").click(function(){
@@ -81,5 +113,6 @@ $(document).ready(function(){
 	$("#parse_tab").click(function(){
 		var parser=new KORDS.TABS.TabParser($("#text").val());
 		tabsInstance.tabsEditor.loadFromParser(parser.parse());
+		return false;
 	});
 });

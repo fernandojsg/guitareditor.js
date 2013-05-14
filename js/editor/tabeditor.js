@@ -36,10 +36,12 @@ KORDS.TABSEDITOR.Editor=function(song)
     
 	$("#add_text").live("click",function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'text');
+		return false;
 	});
 
 	$("#add_tabs").live("click",function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'tabs');
+		return false;
 	});
 	
 	$(".tabblock tr.string td").live('click',function(){
@@ -290,13 +292,47 @@ KORDS.TABSEDITOR.Editor.prototype =
 			tabsInstance.tabsEditor.htmlSections[s].paint();
 	},
 
+	changeSongTitle: function(value)
+	{
+		if (value=="") value=null;
+		this.song.info.title=value;
+		$("#title_song").html(value);
+		this.updateText();
+	},
+
+	changeSongArtist: function(value)
+	{
+		if (value=="") value=null;
+		this.song.info.artist=value;
+		$("#title_artist").html(value);
+		this.updateText();
+	},
+
+	changeSongTranscriber: function(value)
+	{
+		if (value=="") value=null;
+		this.song.info.transcriber=value;
+		$("#title_transcriber").html(value);
+		this.updateText();
+	},
+
 	updateText: function()
 	{
 		text="";
+		if (this.song.info.title!=null)
+			text+="SONG: "+this.song.info.title+"\n";
+
+		if (this.song.info.artist!=null)
+			text+="ARTIST: "+this.song.info.artist+"\n";
+
+		if (this.song.info.artist!=null)
+			text+="TRANSCRIBED BY: "+this.song.info.transcriber+"\n";
+		text+="\n";
+
 		for (var i in tabsInstance.tabsEditor.htmlSections)
 			text+=tabsInstance.tabsEditor.htmlSections[i].getText()+"\n";
-		$("#text").val(text);
-
+		
+		$("#ascii-text").val(text);
 		this.paint();
 	},
 
