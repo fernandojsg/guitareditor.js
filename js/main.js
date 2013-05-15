@@ -6,12 +6,21 @@ $(document).ready(function(){
 //	$("#tabs").tabs();
 
 	$("#text").val("");
-	$("#ascii-text").autosize();
-
+	$("#ascii-text,#ktg").autosize();
+/*
 	$(document).keydown(function(e){
 		//console.log(e);
 		return tabsInstance.tabsEditor.onKeyDown(e);
 	});
+*/
+
+
+	$(document).on("keydown", ".tabblock,.tabtext", function(e){
+		return tabsInstance.tabsEditor.onKeyDown(e);
+      //$(this).addClass('active');
+    });
+
+
 /*
 	$(document).keydown(function(e){
 		//console.log(e);
@@ -55,7 +64,7 @@ $(document).ready(function(){
 		var blob = new Blob([ktg], {type: "text/plain;charset=utf-8"});
 		saveAs(blob, fileName+".ktg");
 */
-		$("#ktg").val(ktg);
+		$("#ktg").val(ktg).trigger("autosize");
 		return false;
 	});
 
@@ -100,6 +109,10 @@ $(document).ready(function(){
 		$(this).addClass("active");
 
 		$("#ascii-text").trigger('autosize');
+		$("#ktg").trigger("autosize");
+
+		if (id=="editor")
+			$(".active .tabblock").focus();
 
 		return false;
 	});

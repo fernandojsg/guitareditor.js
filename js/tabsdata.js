@@ -48,14 +48,11 @@ KORDS.TABSDATA.AudioSection=function()
 	this.type="audio";
 }
 
-
 KORDS.TABSDATA.Song=function()
 {
-	//this.sections={};
 	this.info={"title":null, "artist":null, "transcriber":null};
 	this.sections=[];
 }
-
 
 KORDS.TABSDATA.Song.prototype = 
 {
@@ -71,6 +68,7 @@ KORDS.TABSDATA.Song.prototype =
 
 	save: function ()
 	{
-		return JSON.stringify(this.sections);
+		return JSON.stringify(this.sections, undefined, 2);
+		//return JSON.stringify(this.sections);
 	}
 }

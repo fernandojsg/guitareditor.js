@@ -19,10 +19,9 @@
 	vertical-align:middle;
 }
 
-
 .button.text {
     /* font-size: 11px;*/
-	font-size: 9px;
+	font-size: 12px;
     margin: 5px 5px 5px 0;
     padding: 5px;
 	vertical-align:middle;
@@ -64,6 +63,14 @@ body
 	table-layout: fixed;
 	font-size:10px;
 	color:#000;
+	outline: none;
+}
+
+.tabblock:focus
+{
+	/*.tabsection.active #tabblock */
+	padding:10px;
+	border-left: 4px solid #ffaa6b;
 }
 
 table { 
@@ -158,10 +165,6 @@ table {
 	padding:10px;
 }	
 
-.tabsection.active #tabblock {
-	border-right: 4px solid #ffaa6b;
-}
-
 .tabsection.hover
 {
 /*	background-color:#ffe;*/
@@ -178,8 +181,7 @@ table {
 textarea.tabtext
 {
 	font-family:Courier new;
-	width:100%;
-	
+	width:100%;	
 }
 
 .menu-tabs-text
@@ -345,6 +347,7 @@ section#pretty
 	 font-family:courier new;
 	 width:100%;
 	 font-size:13px;
+	 border:none;
 	 outline:none;
 }
 
@@ -425,7 +428,7 @@ header {
     width: auto;
     max-width: 860px;
     margin: 0 auto;
-    margin-top: 60px;
+    margin-top: 40px;
     /*margin-bottom: 60px;*/
     /*padding: 0 80px;*/
     padding: 0 40px;
@@ -501,3 +504,27 @@ h2 {
 	padding:2px;
 }
 
+
+
+
+.title {
+	margin: 10px 5px;
+	color: #666;
+	font-size: 1.2em;
+	font-style: bold;
+}
+
+h3 {
+	display: block;
+	font-size: 1.17em;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.submenu {
+	margin-bottom:15px;
+}

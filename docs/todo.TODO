@@ -3,18 +3,23 @@ BUGS:
  ☐ Shift Ins/Del with barline
  ☐ Barline last col and del
 
+FILE FORMAT:
+ ☐ Include song info
+ ☐ If lfinger = null -> not appear in JSON 
+
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
  ☐ Update buttons while entering column modifiers
 
 TODO:
   GENERAL:
+  ☐ Include help button
+  ☐ Print version
   ☐ Better UI
   ☐ Chords
   ☐ Center per barline
   ☐ Default barlines
   ☐ Custom block size per tabsection
-  ☐ If lfinger = null -> not appear in JSON 
   ☐ Select tabs
    ☐ Select a region in the table
    ☐ Delete the selected region
@@ -26,6 +31,7 @@ TODO:
   ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Keydown just on table @done (13-05-15 16:29)
  ✔ Left finger number with 2 digits fret render @done (13-05-13 00:53)
  ✔ Up arrow @done (13-05-13 00:36)
  ✔ Down arrow @done (13-05-13 00:36)

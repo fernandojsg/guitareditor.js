@@ -5,7 +5,9 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" media="screen, projection" />
 
 		<!-- External libs -->
-		<script type="text/javascript" src="js/ext/jquery-1.8.3.js"></script>
+		<!-- <script type="text/javascript" src="js/ext/jquery-1.8.3.js"></script>-->
+		<script type="text/javascript" src="js/ext/jquery-1.9.1.min.js"></script>
+		
 		<script type="text/javascript" src="js/ext/jquery-ui-1.9.2.custom.min.js"></script>
 		<script type="text/javascript" src="js/ext/jquery.autosize-min.js"></script>
 
@@ -38,10 +40,12 @@
 	</head>
 	<body>
 		<header>
+			<h3 class="title" style="text-align:left">GUITAR<span style="color: #EE7E2A;">EDITOR</span>.JS</h3>
 			<div class="tabs">
 				<a data-tab="pretty" class="tab active">Pretty</a>
 				<a data-tab="ascii" class="tab">ASCII</a>
 				<a data-tab="editor" class="tab">Editor</a>
+				<a data-tab="file" class="tab">File</a>
 			</div>			
 		</header>
 	
@@ -51,18 +55,12 @@
 				<span>Artist:</span> <input type="text" id="artist"><br/>
 				<span>Transcribed by:</span> <input type="text" id="transcriber"><br/>
 			</div>
-
-			<div align="right">
-				<a id="new_ktb" class="button mini">Clear</a>
-				<a id="save_ktb" class="button mini">Save KTB</a>
-				<a id="load_ktb" class="button mini">Load KTB</a>
-			</div>
 			<div id="text-editor-base">
 				<div id="block" class="menu tabsection tabs" style="display:none">
 					<div id="tabblock" class="" width="100%"></div>
 				</div>
 				<div id="block" class="menu tabsection text" style="display:none">
-					<textarea class="tabtext" cols="80" rows="2" style="border:none" readonly="readonly"></textarea>
+					<textarea class="tabtext" cols="80" rows="2" style="border:none"></textarea>
 				</div>
 				<div id="tabs-context-menu" class="tabs-editor-tools" style="display:none">
 					<a id="insert-chords" class="button mini" href="#">Insert chord</a>
@@ -123,12 +121,15 @@
 			<div id="pretty-tab" class="pretty-tab"></div>
 		</section>
 		<section id="ascii" class="nodisplay">
-			<textarea id="ascii-text" cols="82" readonly="readonly"></textarea>
+			<textarea id="ascii-text" cols="80" readonly="readonly"></textarea>
 		</section>
 		<section id="file" class="nodisplay">
-			<textarea id="ktg" cols="85" rows="10" readonly="readonly">
-				[{"type":"tabs","data":{"numstrings":6,"numcolumns":51,"strings":[{"0":{"note":"1","lfinger":null},"1":{"note":"2","lfinger":null},"2":{"note":"3","lfinger":null},"3":{"note":"4","lfinger":null},"4":{"note":"5","lfinger":null},"5":{"note":"6","lfinger":null},"6":{"note":"7","lfinger":null},"7":{"note":"8","lfinger":null},"8":{"note":"9","lfinger":null},"9":{"note":"10","lfinger":null},"10":{"note":"11","lfinger":null},"11":{"note":"12","lfinger":null},"13":{"note":"1","lfinger":null},"14":{"note":"2","lfinger":null},"15":{"note":"3","lfinger":null},"16":{"note":"4","lfinger":null},"17":{"note":"5","lfinger":null},"18":{"note":"6","lfinger":null},"19":{"note":"7","lfinger":null},"20":{"note":"8","lfinger":null},"21":{"note":"9","lfinger":null},"22":{"note":"10","lfinger":null},"23":{"note":"11","lfinger":null},"24":{"note":"12","lfinger":null},"26":{"note":"1","lfinger":null},"27":{"note":"2","lfinger":null},"28":{"note":"3","lfinger":null},"29":{"note":"4","lfinger":null},"30":{"note":"5","lfinger":null},"31":{"note":"6","lfinger":null},"32":{"note":"7","lfinger":null},"33":{"note":"8","lfinger":null},"34":{"note":"9","lfinger":null},"35":{"note":"10","lfinger":null},"36":{"note":"11","lfinger":null},"37":{"note":"12","lfinger":null},"39":{"note":"1","lfinger":null},"40":{"note":"2","lfinger":null},"41":{"note":"3","lfinger":null},"42":{"note":"4","lfinger":null},"43":{"note":"5","lfinger":null},"44":{"note":"6","lfinger":null},"45":{"note":"7","lfinger":null},"46":{"note":"8","lfinger":null},"47":{"note":"9","lfinger":null},"48":{"note":"10","lfinger":null},"49":{"note":"11","lfinger":null},"50":{"note":"12","lfinger":null}},{},{},{},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}},"barlines":{"12":"|","25":"|","38":"|"}}}]
-			</textarea>
+			<div class="submenu" align="right">
+				<a id="new_ktb" class="button text">Clear</a>
+				<a id="save_ktb" class="button text">Save KTB</a>
+				<a id="load_ktb" class="button text">Load KTB</a>
+			</div>
+			<textarea id="ktg" readonly="readonly">[{"type":"tabs","data":{"numstrings":6,"numcolumns":51,"strings":[{"0":{"note":"1","lfinger":null},"1":{"note":"2","lfinger":null},"2":{"note":"3","lfinger":null},"3":{"note":"4","lfinger":null},"4":{"note":"5","lfinger":null},"5":{"note":"6","lfinger":null},"6":{"note":"7","lfinger":null},"7":{"note":"8","lfinger":null},"8":{"note":"9","lfinger":null},"9":{"note":"10","lfinger":null},"10":{"note":"11","lfinger":null},"11":{"note":"12","lfinger":null},"13":{"note":"1","lfinger":null},"14":{"note":"2","lfinger":null},"15":{"note":"3","lfinger":null},"16":{"note":"4","lfinger":null},"17":{"note":"5","lfinger":null},"18":{"note":"6","lfinger":null},"19":{"note":"7","lfinger":null},"20":{"note":"8","lfinger":null},"21":{"note":"9","lfinger":null},"22":{"note":"10","lfinger":null},"23":{"note":"11","lfinger":null},"24":{"note":"12","lfinger":null},"26":{"note":"1","lfinger":null},"27":{"note":"2","lfinger":null},"28":{"note":"3","lfinger":null},"29":{"note":"4","lfinger":null},"30":{"note":"5","lfinger":null},"31":{"note":"6","lfinger":null},"32":{"note":"7","lfinger":null},"33":{"note":"8","lfinger":null},"34":{"note":"9","lfinger":null},"35":{"note":"10","lfinger":null},"36":{"note":"11","lfinger":null},"37":{"note":"12","lfinger":null},"39":{"note":"1","lfinger":null},"40":{"note":"2","lfinger":null},"41":{"note":"3","lfinger":null},"42":{"note":"4","lfinger":null},"43":{"note":"5","lfinger":null},"44":{"note":"6","lfinger":null},"45":{"note":"7","lfinger":null},"46":{"note":"8","lfinger":null},"47":{"note":"9","lfinger":null},"48":{"note":"10","lfinger":null},"49":{"note":"11","lfinger":null},"50":{"note":"12","lfinger":null}},{},{},{},{},{}],"colmodifiers":{"text":{},"accents":{},"arrows":{},"rfingers":{}},"barlines":{"12":"|","25":"|","38":"|"}}}]</textarea>
 		</section>
 	</body>
 	<div id="tabblocktext_dialog" title="Text editor" style="display:none">

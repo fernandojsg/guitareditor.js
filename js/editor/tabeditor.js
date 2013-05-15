@@ -34,30 +34,51 @@ KORDS.TABSEDITOR.Editor=function(song)
 	
 	KORDS.TABSEDITOR.TabsSection.insertTabBlock();
     
-	$("#add_text").live("click",function(){
+    $(document).on("click", "#add_text", function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'text');
 		return false;
 	});
 
-	$("#add_tabs").live("click",function(){
+	$(document).on("click", "#add_tabs", function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'tabs');
+		$(".active .tabblock").focus();
 		return false;
 	});
 	
-	$(".tabblock tr.string td").live('click',function(){
+	$(document).on("click", ".tabblock tr.string td", function(){
 		tabsInstance.tabsEditor.setActiveSection($(this).parents(".tabsection"),$(this));
 	});
 	
-	$(".tabtext").live("focus",function(){
+	$(document).on("focus", ".tabtext", function(){
 		tabsInstance.tabsEditor.setActiveSection($(this).parents(".tabsection"));
 	});
 	
-	$(".tabtext").live("blur",function(){
+	$(document).on("blur", ".tabtext", function(){
 		//$(this).parents(".tabsection").removeClass("active");
 		//$("#context-menu").hide();
 	});
 
-	$("div.tabsection").live({
+	$(document).on("mouseenter", "div.tabsection", function(){
+			$(this).removeClass("hover").addClass("hover");
+			$(this).find(".tabs-editor-context-menu").show();
+			$(this).append($("#context-menu").show());
+			if ($(this).hasClass("text"))
+				contextMenu.find("#add_text").hide();
+			else
+				contextMenu.find("#add_text").show();
+		});
+
+
+	$(document).on("mouseleave", "div.tabsection", function(){
+			$(this).removeClass("hover");	
+			$("#context-menu").hide();
+			//$(this).find(".tabs-editor-context-menu").hide();
+		});
+
+
+		/*	
+
+	$("div.tabsection").on({
 		mouseenter: function() {
 			$(this).removeClass("hover").addClass("hover");
 			$(this).find(".tabs-editor-context-menu").show();
@@ -73,8 +94,9 @@ KORDS.TABSEDITOR.Editor=function(song)
 			//$(this).find(".tabs-editor-context-menu").hide();
 		}
 	});	
-	
-	$("#remove_section").live("click",function(){
+	*/
+
+	$(document).on("click", "#remove_section", function(){
 		tabsInstance.tabsEditor.removeSection($(this).parents(".tabsection"));
 	});
 }
@@ -289,7 +311,10 @@ KORDS.TABSEDITOR.Editor.prototype =
 	paint: function()
 	{
 		for (var s in tabsInstance.tabsEditor.htmlSections)
+		{
+			console.log(">>>>>>>>",s);
 			tabsInstance.tabsEditor.htmlSections[s].paint();
+		}
 	},
 
 	changeSongTitle: function(value)

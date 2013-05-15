@@ -912,7 +912,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 
 KORDS.TABSEDITOR.TabsSection.insertTabBlock=function()
 {
-    var tabBlockHtml='<table width="100%" class="tabblock">';
+    var tabBlockHtml='<table width="100%" tabindex="0" class="tabblock">';
 
 	// top
 	for (var j=0;j<topColumnModifiers.length;j++)
