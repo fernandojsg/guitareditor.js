@@ -1,14 +1,14 @@
 KORDS.TABSPAINTER.CanvasPainter=function(parentDiv,tabBlock)
 {
 	this.debug=false;
-			
+
 	this.canvas = document.createElement('canvas');
 	this.canvas.setAttribute('width', 800);
 	this.canvas.setAttribute('height', 10);
 	this.canvas.setAttribute('style', "background-color:#fff");
-		
+
 	parentDiv.appendChild(this.canvas);
-	
+
 	this.staveHeight=66;
 
 	this.modifierHeight=16;
@@ -18,7 +18,7 @@ KORDS.TABSPAINTER.CanvasPainter=function(parentDiv,tabBlock)
 	this.numStrings=6;
 	this.margin=10;
 	this.noteMargin=20;
-	
+
 	this.tabBlock=tabBlock;
 
 	if (this.canvas.getContext)
@@ -30,21 +30,21 @@ KORDS.TABSPAINTER.CanvasPainter=function(parentDiv,tabBlock)
 		alert("Can't create Canvas Context!");
 }
 
-KORDS.TABSPAINTER.CanvasPainter.prototype = 
+KORDS.TABSPAINTER.CanvasPainter.prototype =
 {
 	resize: function()
 	{
 		this.numTopModifiers=0;
 		this.nonEmptyTopModifiers=[];
-		for (var i=0;i<topColumnModifiers.length;i++)		
+		for (var i=0;i<topColumnModifiers.length;i++)
 		{
 			if (objectSize(this.tabBlock.data['colmodifiers'][topColumnModifiers[i]])>0)
 			{
 				this.numTopModifiers++;
 				this.nonEmptyTopModifiers.push(i);
 			}
-		}	
-		
+		}
+
 		this.numBottomLines=0;
 		var maxNumFingers=0;
 		for (var i=0;i<bottomColumnModifiers.length;i++)
@@ -60,33 +60,33 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			}
 		}
 		this.numBottomLines=maxNumFingers;
-		
+
 		var topModifiersHeight=(this.modifierHeight+this.modifierMargin)*this.numTopModifiers+this.columnsModifiersMargin;
 		//var bottomModifiersHeight=(this.modifierHeight+this.modifierMargin)*this.numBottomLines+this.columnsModifiersMargin;
 		var bottomModifiersHeight=10*this.numBottomLines+this.columnsModifiersMargin;
-		
+
 		this.canvas.height=this.staveHeight+topModifiersHeight+bottomModifiersHeight;
-		
+
 		this.canvasW=this.canvas.width;
 		this.canvasH=this.canvas.height;
 		//this.staveOffsetY=(this.canvasH-this.staveHeight)/2+(this.staveHeight/this.numStrings/2)+this.columnsModifiersMargin;
 		//this.staveOffsetY=(this.canvasH-this.staveHeight)/2+(this.staveHeight/this.numStrings/2)+this.columnsModifiersMargin;
-		
+
 		this.stepX=(this.canvasW-this.noteMargin*2)/tabBlockLength;
 		this.stepY=this.canvasH/6;
-		
+
 		this.linesOffset=this.staveHeight/this.numStrings;
-	
+
 		this.staveOffsetY=topModifiersHeight+this.linesOffset/2+0.5;
 
 		//this.canvas.height=this.staveHeight+(this.modifierHeight+this.modifierMargin)*numTopModifiers*2+this.columnsModifiersMargin*2;
 	},
-	
+
 	drawNoteModifier: function(modifier,cx0,cx1,cy,val0,val1)
 	{
 		cx0+=this.ctx.measureText(val0).width/2;
 		cx1-=this.ctx.measureText(val0).width/2;
-		
+
 		if (["s","/","\\"].indexOf(modifier)!=-1)
 		{
 			cy-=this.linesOffset/2;
@@ -97,7 +97,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			this.ctx.moveTo(cx0, cy + (3 * direction));
 			this.ctx.lineTo(cx1, cy - (3 * direction));
 			this.ctx.closePath();
-			this.ctx.stroke();		
+			this.ctx.stroke();
 		}
 		else if (["^","h","p"].indexOf(modifier)!=-1)
 		{
@@ -106,7 +106,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 //			cx0+=this.ctx.measureText(val0).width;
 			cp_x=cx0+(cx1-cx0)/2;
 			cy-=this.linesOffset/2;
-			
+
 			this.ctx.beginPath();
 				this.ctx.moveTo(cx0, cy);
 				this.ctx.quadraticCurveTo(cp_x, top_cp_y,	cx1, cy);
@@ -123,18 +123,18 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			var num_waves = vibrato_width / wave_width;
 
 			var w=this.ctx.measureText("v").width;
-			
+
 			this.ctx.beginPath();
 			var x=cx0-w;
 			var y=cy-this.linesOffset/2;
-			
+
 			this.harsh=false;
-			
+
 			if (this.harsh)
 			{
 				x+=w*2;
 				this.ctx.moveTo(x, y + wave_girth);
-				for (var i = 0; i < num_waves / 2; ++i) 
+				for (var i = 0; i < num_waves / 2; ++i)
 				{
 					this.ctx.quadraticCurveTo(x + (wave_width / 2), y - (wave_height / 2),
 						x + wave_width, y);
@@ -173,7 +173,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 				  }
 				  this.ctx.fill();
 			}
-		}	
+		}
 	},
 
 	paintArrow: function(cx,cy,w,h,dir)
@@ -184,7 +184,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 				this.ctx.moveTo(cx,cy-h);
 				this.ctx.lineTo(cx,cy+h);
 			this.ctx.stroke();
-			
+
 			this.ctx.beginPath();
 				this.ctx.moveTo(cx-w,cy-h/2);
 				this.ctx.lineTo(cx+w,cy-h/2);
@@ -210,7 +210,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 	drawColumnModifier: function(group,modifier,cx0,cx1,cy,val0,val1)
 	{
 		var w=this.stepX;
-		
+
 		if (group=="rfingers")
 		{
 			cy=this.staveOffsetY+this.staveHeight+this.columnsModifiersMargin;
@@ -237,7 +237,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		{
 //			var cx=i*this.stepX+this.margin;
 //			var cy=j*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
-			
+
 			this.ctx.font = "10px sans-serif";
 //			w=this.ctx.measureText(note).width;
 //			this.ctx.clearRect(cx-w/2,cy-this.linesOffset,w,this.linesOffset);
@@ -308,7 +308,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			var h=this.modifierHeight/2;
 			w=this.stepX/8;
 			var dist=this.stepX/4;
-			
+
 			var cx0=cx0-1.5*dist;
 
 			this.paintArrow(cx0,cy,w,h,"up");
@@ -325,13 +325,13 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		else if (modifier=="rasgueo")
 		{
 			var h=this.modifierHeight/2;
-			
+
 			this.ctx.beginPath();
 			var numTwists=3;
 			w=w/4;
-			
+
 			this.ctx.moveTo(cx0,cy-h/2);
-			
+
 			cyTwist=cy-h/2;
 			wTwist=w/2;
 			for (var i=0;i<numTwists*2;i++)
@@ -341,18 +341,18 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 				wTwist*=-1;
 			}
 			this.ctx.stroke();
-			
+
 			this.ctx.beginPath();
 				this.ctx.moveTo(cx0-w,cy-h/2);
 				this.ctx.lineTo(cx0+w,cy-h/2);
 				this.ctx.lineTo(cx0, cy-h);
 				this.ctx.lineTo(cx0-w,cy-h/2);
 			this.ctx.fill();
-			
+
 		}
-		
+
 	},
-	
+
 	drawModifier: function(modifier,fromPos,toPos,string)
 	{
 		var cx0=fromPos*this.stepX+this.noteMargin;
@@ -362,7 +362,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		{
 			var val0=this.tabArray[string][fromPos]?this.tabArray[string][fromPos].note:0;
 			var val1=this.tabArray[string][toPos]?this.tabArray[string][toPos].note:0;
-			
+
 			var cy=string*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
 			this.drawNoteModifier(modifier,cx0,cx1,cy,val0,val1);
 		}
@@ -371,7 +371,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			var val0=this.modifiers[string][fromPos];
 			var val1=val0;
 			var line=20;
-			var cy=line*this.linesOffset+this.staveOffsetY+this.linesOffset/2;			
+			var cy=line*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
 			this.drawColumnModifier(string,modifier,cx0,cx1,cy,val0,val1);
 		}
 	},
@@ -386,7 +386,7 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		this.ctx.clearRect(0,0,this.canvasW,this.canvasH);
 //		this.ctx.fillRect(0,0,this.canvasW,this.canvasH);
 		this.ctx.fillStyle="#000";
-		
+
 		// debug
 		if (this.debug)
 		{
@@ -410,10 +410,10 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			}
 			this.ctx.closePath();
 			this.ctx.stroke();
-		}		
-		
+		}
+
 		this.ctx.strokeStyle="#000";
-		
+
 		this.ctx.beginPath();
 		for (var y = 0; y < this.numStrings; y++)
 		{
@@ -425,11 +425,11 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		this.ctx.moveTo(this.canvasW-this.margin, this.staveOffsetY);
 		this.ctx.lineTo(this.canvasW-this.margin, 5*this.linesOffset+this.staveOffsetY);
 		this.ctx.closePath();
-		
+
 		this.ctx.stroke();
-		
+
 	},
-	
+
 	paintNotes: function()
 	{
 		var binaryNoteModifiers=['^','h','s','p','b'];
@@ -459,15 +459,15 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 					}
 					var cx=i*this.stepX+this.noteMargin;
 					var cy=j*this.linesOffset+this.staveOffsetY+this.linesOffset/2;
-					
+
 					this.ctx.font = "12px sans-serif";
 					//var w=this.ctx.measureText(note).width;
 					var w=this.ctx.measureText(0).width;
-					
+
 					this.ctx.clearRect(cx-w/2,cy-this.linesOffset,w,this.linesOffset);
 					this.ctx.textAlign = 'center';
 					this.ctx.fillText(note, cx, cy);
-					
+
 					var number=parseInt(this.tabArray[j][i].lfinger);
 					if (isNumber(number))
 					{
@@ -480,11 +480,11 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 			}
 		}
 	},
-	
+
 	paint: function ()
 	{
 		this.resize();//!!!!!!!!!
-		
+
 		var data=this.tabBlock.data;
 
 		this.tabArray=data.strings;
@@ -497,10 +497,10 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 		this.paintColumnModifiers();
 		this.paintBarLines();
 		this.ctx.restore();
-	},	
+	},
 
-	
-	drawBarLine:function (column,type)	
+
+	drawBarLine:function (column,type)
 	{
 		if (type=="|")
 		{
@@ -539,10 +539,10 @@ KORDS.TABSPAINTER.CanvasPainter.prototype =
 	{
 		this.linesOffset=this.staveHeight/this.numStrings;
 		this.ctx.strokeStyle="#000";
-		
+
 		var stepX=this.canvasW/tabBlockLength;
 		var stepY=this.canvasH/(this.numStrings+1);
-		
+
 		for (var group in this.modifiers)
 		{
 			for (var i in this.modifiers[group])

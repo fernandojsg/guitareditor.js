@@ -4,7 +4,7 @@ KORDS.TABS.TabsInstance=function()
 	this.tabsEditor=new KORDS.TABSEDITOR.Editor(this.song);
 }
 
-KORDS.TABS.TabsInstance.prototype = 
+KORDS.TABS.TabsInstance.prototype =
 {
 	load: function(data)
 	{
@@ -25,15 +25,15 @@ KORDS.TABS.TabsInstance.prototype =
 KORDS.TABSEDITOR.Editor=function(song)
 {
 	this.song=song;
-	this.numSections=0;	
+	this.numSections=0;
 	this.htmlSections=[];
-	
+
 	// create element !!!!!!!!!!!!
 	this.prettyDivId="pretty-tab";
 	this.prettyTabsDiv=document.getElementById(this.prettyDivId);
-	
+
 	KORDS.TABSEDITOR.TabsSection.insertTabBlock();
-    
+
     $(document).on("click", "#add_text", function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'text');
 		return false;
@@ -44,15 +44,15 @@ KORDS.TABSEDITOR.Editor=function(song)
 		$(".active .tabblock").focus();
 		return false;
 	});
-	
+
 	$(document).on("click", ".tabblock tr.string td", function(){
 		tabsInstance.tabsEditor.setActiveSection($(this).parents(".tabsection"),$(this));
 	});
-	
+
 	$(document).on("focus", ".tabtext", function(){
 		tabsInstance.tabsEditor.setActiveSection($(this).parents(".tabsection"));
 	});
-	
+
 	$(document).on("blur", ".tabtext", function(){
 		//$(this).parents(".tabsection").removeClass("active");
 		//$("#context-menu").hide();
@@ -70,13 +70,13 @@ KORDS.TABSEDITOR.Editor=function(song)
 
 
 	$(document).on("mouseleave", "div.tabsection", function(){
-			$(this).removeClass("hover");	
+			$(this).removeClass("hover");
 			$("#context-menu").hide();
 			//$(this).find(".tabs-editor-context-menu").hide();
 		});
 
 
-		/*	
+		/*
 
 	$("div.tabsection").on({
 		mouseenter: function() {
@@ -89,11 +89,11 @@ KORDS.TABSEDITOR.Editor=function(song)
 				contextMenu.find("#add_text").show();
 		},
 		mouseleave: function() {
-			$(this).removeClass("hover");	
+			$(this).removeClass("hover");
 			$("#context-menu").hide();
 			//$(this).find(".tabs-editor-context-menu").hide();
 		}
-	});	
+	});
 	*/
 
 	$(document).on("click", "#remove_section", function(){
@@ -105,18 +105,18 @@ function getOffsetFromId(id)
 {
 	var matches = id.match(/\[(.*?)\]/);
 
-	if (matches) 
+	if (matches)
 		return parseInt(matches[1]);
 	return -1;
 }
 
-KORDS.TABSEDITOR.Editor.prototype = 
+KORDS.TABSEDITOR.Editor.prototype =
 {
 	reset: function()
 	{
-		this.numSections=0;	
+		this.numSections=0;
 		this.htmlSections=[];
-		
+
 		$("#text-editor-base").append($("#tabs-context-menu").hide());
 		$("#text-editor-base").append($("#empty-context-menu").show());
 
@@ -131,7 +131,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 		var typeNode=$("[id='block']."+type);
 		var newNode=typeNode.clone();
-		
+
 		var newPrettyNode;
 		if (this.numSections==0)
 		{
@@ -146,24 +146,24 @@ KORDS.TABSEDITOR.Editor.prototype =
 			var obj=$("[id='block["+prevId+"]']");
 			newNode.insertAfter(obj);
 		}
-		
+
 		newPrettyNode=newPrettyNode[0];
-		
+
 		newNode.attr("id","block["+this.numSections+"]");
 		newNode.attr("data-id",this.numSections);
 		newNode.show();
-		
+
 		if ($("#empty-context-menu").is(":visible"))
 		{
 			contextMenu=$("#empty-context-menu").clone();
 			contextMenu.attr("id","context-menu");
 			contextMenu.show();
-			$("#empty-context-menu").hide();				
+			$("#empty-context-menu").hide();
 			contextMenu.find("#remove_section").show();
 		}
 		else
 			contextMenu=$("#context-menu");
-		
+
 		var td=null;
 		var newSection=null;
 
@@ -182,7 +182,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 		{
 			alert("NO TYPE");
 		}
-		
+
 		//this.song.addSection(newId,newSection.sectionData);
 		this.htmlSections.splice(newId,0,newSection);
 //		console.log(type,newId,this.htmlSections);
@@ -191,7 +191,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 		this.reOrderIds();
 		this.setActiveSection(newNode,td);
 		this.updateText();
-		
+
 		this.numSections++;
 	},
 
@@ -200,10 +200,15 @@ KORDS.TABSEDITOR.Editor.prototype =
 		this.reset();
 
 		this.song=song;
-		var len=this.song.sections.length;
+
+		$("#songdata #song").val(this.song.data.info.title).change();
+		$("#songdata #artist").val(this.song.data.info.artist).change();
+		$("#songdata #transcriber").val(this.song.data.info.transcriber).change();
+
+		var len=this.song.data.sections.length;
 		for (var i=0;i<len;i++)
 		{
-			var section=this.song.sections[i];
+			var section=this.song.data.sections[i];
 			this.appendLoadedSection(i,section.type,section);
 		}
 	},
@@ -216,28 +221,28 @@ KORDS.TABSEDITOR.Editor.prototype =
 			contextMenu=$("#empty-context-menu").clone();
 			contextMenu.attr("id","context-menu");
 			contextMenu.show();
-			$("#empty-context-menu").hide();				
+			$("#empty-context-menu").hide();
 			contextMenu.find("#remove_section").show();
 		}
-		
+
 		for (var i=0;i<sections.length;i++)
 		{
-			console.log(sections[i]);
+			//console.log(sections[i]);
 			var typeNode=$("[id='block']."+sections[i].type);
 			var newNode=typeNode.clone();
-			
+
 			if (this.numSections==0)
-				$("#text-editor").append(newNode);	
+				$("#text-editor").append(newNode);
 			else
 				newNode.insertAfter(prevNode);
-			
+
 			newNode.attr("id","block["+this.numSections+"]");
 			newNode.attr("data-id",this.numSections);
 			//newNode.find(".id").html(this.numSections);
 			newNode.show();
 			newNode.append(contextMenu);
 			prevNode=newNode;
-			
+
 			if (sections[i].type=="text")
 			{
 				newNode.find("textarea").val(sections[i].val).autosize();
@@ -259,45 +264,45 @@ KORDS.TABSEDITOR.Editor.prototype =
 							if (modifiers.indexOf(line[k])==-1)
 							{
 								val=parseInt(line[k],25);
-								console.log("NO Está",line[k]);
+								//console.log("NO Está",line[k]);
 							}
 							else
 							{
-								console.log("Está",line[k]);
+								//console.log("Está",line[k]);
 							}
 							rowHtml.find("td:eq("+(k+1)+")").html(val);
 						}
-					}					
+					}
 				}
 				this.htmlSections.push(new KORDS.TABSEDITOR.TabsSection(newNode,this));
 			}
 			this.numSections++;
 		}
 	},
-	
+
 	setActiveSection: function(sectionHtml,td)
 	{
 		$(".tabsection.active").find(".active_cell").removeClass("active_cell");
 		$(".tabsection.active").find(".active_column").removeClass("active_column");
 		$(".tabsection.active").removeClass("active");
-		
+
 		sectionHtml.addClass("active");
-		
+
 		$("#menu-tabs-text").insertBefore(sectionHtml);
-		$("#menu-tabs-text").show();	
-				
+		$("#menu-tabs-text").show();
+
 		if (td)
 		{
 			var id=sectionHtml.attr("data-id");
 			tabsInstance.tabsEditor.htmlSections[id].updateCurrentCursor(td.attr("data-col"),td.attr("data-row"));
 		}
-		
+
 		if (sectionHtml.hasClass("tabs"))
 			$("#tabs-context-menu").show().insertBefore(sectionHtml);
 		else
 			$("#tabs-context-menu").hide();
 	},
-	
+
 	onKeyDown: function (e)
 	{
 		var active=$(".tabsection.active");
@@ -307,12 +312,12 @@ KORDS.TABSEDITOR.Editor.prototype =
 		}
 		return true;
 	},
-	
+
 	paint: function()
 	{
 		for (var s in tabsInstance.tabsEditor.htmlSections)
 		{
-			console.log(">>>>>>>>",s);
+			//console.log(">>>>>>>>",s);
 			tabsInstance.tabsEditor.htmlSections[s].paint();
 		}
 	},
@@ -320,7 +325,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 	changeSongTitle: function(value)
 	{
 		if (value=="") value=null;
-		this.song.info.title=value;
+		this.song.data.info.title=value;
 		$("#title_song").html(value);
 		this.updateText();
 	},
@@ -328,7 +333,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 	changeSongArtist: function(value)
 	{
 		if (value=="") value=null;
-		this.song.info.artist=value;
+		this.song.data.info.artist=value;
 		$("#title_artist").html(value);
 		this.updateText();
 	},
@@ -336,7 +341,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 	changeSongTranscriber: function(value)
 	{
 		if (value=="") value=null;
-		this.song.info.transcriber=value;
+		this.song.data.info.transcriber=value;
 		$("#title_transcriber").html(value);
 		this.updateText();
 	},
@@ -344,19 +349,19 @@ KORDS.TABSEDITOR.Editor.prototype =
 	updateText: function()
 	{
 		text="";
-		if (this.song.info.title!=null)
-			text+="SONG: "+this.song.info.title+"\n";
+		if (this.song.data.info.title!=null)
+			text+="SONG: "+this.song.data.info.title+"\n";
 
-		if (this.song.info.artist!=null)
-			text+="ARTIST: "+this.song.info.artist+"\n";
+		if (this.song.data.info.artist!=null)
+			text+="ARTIST: "+this.song.data.info.artist+"\n";
 
-		if (this.song.info.artist!=null)
-			text+="TRANSCRIBED BY: "+this.song.info.transcriber+"\n";
+		if (this.song.data.info.artist!=null)
+			text+="TRANSCRIBED BY: "+this.song.data.info.transcriber+"\n";
 		text+="\n";
 
 		for (var i in tabsInstance.tabsEditor.htmlSections)
 			text+=tabsInstance.tabsEditor.htmlSections[i].getText()+"\n";
-		
+
 		$("#ascii-text").val(text);
 		this.paint();
 	},
@@ -368,7 +373,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 		var typeNode=$("[id='block']."+type);
 		var newNode=typeNode.clone();
-		
+
 		var newPrettyNode;
 		if (this.numSections==0)
 		{
@@ -382,24 +387,24 @@ KORDS.TABSEDITOR.Editor.prototype =
 			newPrettyNode.insertAfter($("#pretty-tab div[data-id='"+parentId+"']"));
 			newNode.insertAfter(obj);
 		}
-		
+
 		newPrettyNode=newPrettyNode[0];
-		
+
 		newNode.attr("id","block["+this.numSections+"]");
 		newNode.attr("data-id",this.numSections);
 		newNode.show();
-		
+
 		if ($("#empty-context-menu").is(":visible"))
 		{
 			contextMenu=$("#empty-context-menu").clone();
 			contextMenu.attr("id","context-menu");
 			contextMenu.show();
-			$("#empty-context-menu").hide();				
+			$("#empty-context-menu").hide();
 			contextMenu.find("#remove_section").show();
 		}
 		else
 			contextMenu=$("#context-menu");
-		
+
 		var td=null;
 		var newSection=null;
 
@@ -418,10 +423,10 @@ KORDS.TABSEDITOR.Editor.prototype =
 		{
 			alert("NO TYPE");
 		}
-		
+
 		this.song.addSection(newId,newSection.sectionData);
 		this.htmlSections.splice(newId,0,newSection);
-		console.log(type,newId,this.htmlSections);
+		//console.log(type,newId,this.htmlSections);
 
 		newNode.append(contextMenu);
 		this.reOrderIds();
@@ -434,16 +439,16 @@ KORDS.TABSEDITOR.Editor.prototype =
 		$(".hover").removeClass("hover");
 		this.numSections++;
 	},
-	
+
 	removeSection: function(obj)
 	{
 		var sectionId=obj.attr("data-id");
-		
+
 		this.htmlSections[sectionId].removeHtml();
 		this.htmlSections.splice(sectionId,1);
-		
+
 		this.numSections--;
-		
+
 		var next=obj.next();
 		if (obj.hasClass("hover"))
 		{
@@ -465,7 +470,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 			else
 				this.setActiveSection(obj.prev());
 		}
-		
+
 		obj.remove();
 		this.reOrderIds();
 		this.updateText();
@@ -473,7 +478,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 		if (this.numSections==0)
 			$("#empty-context-menu").show();
 	},
-	
+
 	reOrderIds: function ()
 	{
 		$(".tabsection:visible").each(function(index,element){

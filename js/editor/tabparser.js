@@ -188,7 +188,7 @@ KORDS.TABSEDITOR.TabParser.prototype =
 			}
 			i++;
 		}		
-		console.log(this.sections);
+//		console.log(this.sections);
 		return this.sections;
 	}
 }	

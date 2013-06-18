@@ -3,7 +3,7 @@ KORDS.TABSDATA = KORDS.TABSDATA || {};
 KORDS.TABSDATA.NoteCell=function()
 {
 	this.note=EMPTY_NOTE;
-	this.lfinger=null;
+	//this.lfinger=null;
 }
 
 KORDS.TABSDATA.EmptySection=function()
@@ -30,10 +30,10 @@ KORDS.TABSDATA.TabSection=function()
 
 	for (var i=0;i<tabBlockNumStrings;i++)
 		this.data['strings'][i]={};
-		
+
 	for (var i=0;i<topColumnModifiers.length;i++)
 		this.data['colmodifiers'][topColumnModifiers[i]]={};
-	
+
 	for (var i=0;i<bottomColumnModifiers.length;i++)
 		this.data['colmodifiers'][bottomColumnModifiers	[i]]={};
 }
@@ -50,25 +50,27 @@ KORDS.TABSDATA.AudioSection=function()
 
 KORDS.TABSDATA.Song=function()
 {
-	this.info={"title":null, "artist":null, "transcriber":null};
-	this.sections=[];
+	this.data={
+				"info": {"title":null, "artist":null, "transcriber":null}, 
+				"sections":[]
+			  };
 }
 
-KORDS.TABSDATA.Song.prototype = 
+KORDS.TABSDATA.Song.prototype =
 {
 	addSection: function(id,newSection)
 	{
-		this.sections.splice(id,0,newSection);
+		this.data.sections.splice(id,0,newSection);
 	},
 
 	load: function (data)
 	{
-		this.sections=JSON.parse(data);
+		this.data=JSON.parse(data);
 	},
 
 	save: function ()
 	{
-		return JSON.stringify(this.sections, undefined, 2);
+		return JSON.stringify(this.data, undefined, 2);
 		//return JSON.stringify(this.sections);
 	}
 }

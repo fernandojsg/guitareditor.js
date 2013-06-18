@@ -1,23 +1,15 @@
 BUGS:
- ☐ Ins/Del with barline
- ☐ Shift Ins/Del with barline
- ☐ Barline last col and del
-
+ ☐ Delete current section  (Remove add text/tabs buttons)
 FILE FORMAT:
- ☐ Include song info
- ☐ If lfinger = null -> not appear in JSON 
 
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
- ☐ Update buttons while entering column modifiers
+ ☐ Update buttons while entering note modifiers
 
 TODO:
-  GENERAL:
-  ☐ Include help button
-  ☐ Print version
-  ☐ Better UI
+  TABEDITOR:
+  ☐ Style for focused tab (Blinking while pressing options)
   ☐ Chords
-  ☐ Center per barline
   ☐ Default barlines
   ☐ Custom block size per tabsection
   ☐ Select tabs
@@ -27,10 +19,22 @@ TODO:
    ☐ Paste the selection
      ☐ Overwrite
      ☐ Move it
+  ☐ Center per barline
+  GENERAL:
+  ☐ Include help button
+  ☐ Print version
+  ☐ Better UI
   SHORTCUTS:
   ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Include song info @done (13-06-18 21:32)
+ ✔ If lfinger = null -> not appear in JSON v1 @done (13-06-18 19:08)
+ ✔ Ins/Del with barline @done (13-06-18 03:50)
+ ✔ Shift Ins/Del with barline @done (13-06-18 03:50)
+ ✔ Barline last col and del @done (13-06-18 03:50)
+ ✔ Focus tab after pressing button @done (13-06-18 12:32)
+ ✔ Update buttons while entering column modifiers @done (13-06-18 18:28)
  ✔ Keydown just on table @done (13-05-15 16:29)
  ✔ Left finger number with 2 digits fret render @done (13-05-13 00:53)
  ✔ Up arrow @done (13-05-13 00:36)
