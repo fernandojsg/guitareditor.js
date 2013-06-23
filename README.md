@@ -3,4 +3,4 @@ guitareditor.js
 
 Guitar Tablature Editor in Javascript
 
-Still in alpha release
+You can try it at www.guitk.com/editor

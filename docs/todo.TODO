@@ -1,6 +1,15 @@
 BUGS:
  ☐ Delete current section  (Remove add text/tabs buttons)
+ ☐ On load autosize textarea
 FILE FORMAT:
+API:
+ ✔ Call params for editor @done (13-06-21 20:09)
+ ✔ get-tabs -> @done (13-06-21 20:09)
+ ✔ send-tabs <- @done (13-06-21 20:09)
+ ✔ load-tabs -> @done (13-06-21 20:09)
+ ✔ show-tabs -> @done (13-06-21 20:46)
+ ☐ view-mode css
+ ☐ on-resize <-
 
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
@@ -10,6 +19,8 @@ TODO:
   TABEDITOR:
   ☐ Style for focused tab (Blinking while pressing options)
   ☐ Chords
+  ☐ Insert chord -> Focus
+  ☐ Clear button
   ☐ Default barlines
   ☐ Custom block size per tabsection
   ☐ Select tabs

@@ -1,29 +1,7 @@
-KORDS.TABS.TabsInstance=function()
-{
-	this.song=new KORDS.TABSDATA.Song;
-	this.tabsEditor=new KORDS.TABSEDITOR.Editor(this.song);
-}
-
-KORDS.TABS.TabsInstance.prototype =
-{
-	load: function(data)
-	{
-		this.song.load(data);
-		if (this.tabsEditor)
-		{
-			this.tabsEditor.load(this.song);
-		}
-	},
-
-	reset: function()
-	{
-		this.song=new KORDS.TABSDATA.Song;
-		this.tabsEditor.reset();
-	}
-}
-
 KORDS.TABSEDITOR.Editor=function(song)
 {
+	this.showSongInfo=true;
+
 	this.song=song;
 	this.numSections=0;
 	this.htmlSections=[];
@@ -112,6 +90,20 @@ function getOffsetFromId(id)
 
 KORDS.TABSEDITOR.Editor.prototype =
 {
+	setEditorMode: function(editorMode,showSongInfo)
+	{
+		
+		if (editorMode)
+		{
+			if (!showSongInfo)
+				$("#songdata").hide();
+
+			$("a[data-tab='file']").hide();
+			$("#header-title").hide();
+			$("#footer-title").show();
+		}
+	},
+
 	reset: function()
 	{
 		this.numSections=0;
@@ -122,6 +114,12 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 		$("#text-editor").html("");
 		$("#pretty-tab").html("");
+
+		$("#songdata #song").val("").change();
+		$("#songdata #artist").val("").change();
+		$("#songdata #transcriber").val("").change();
+
+		this.updateText();
 	},
 
 	appendLoadedSection: function(id,type,data)
