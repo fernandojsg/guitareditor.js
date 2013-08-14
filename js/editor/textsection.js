@@ -19,15 +19,15 @@ KORDS.TABSEDITOR.TextSection.prototype =
 	{
 		this.sectionData=data;
 		this.htmlNode.find("textarea").val(data.text);
-		console.log("loadinggg",data);
+//		console.log("loadinggg",data);
 	},
 
 	onKeyDown: function (keyCode)
 	{
 		if (typeof this.tabsEditorInstance.updateText!='undefined')
 		{
-			this.tabsEditorInstance.updateText();
 			this.sectionData.text=this.htmlNode.find("textarea").val()+"\n";
+			this.tabsEditorInstance.updateText();
 		}
 	},
 
@@ -44,7 +44,7 @@ KORDS.TABSEDITOR.TextSection.prototype =
 	
 	paint: function()
 	{
-		this.div.innerHTML=this.getText().replace(/\n/g,"<br>");
+		this.div.innerHTML="<pre>"+this.getText().replace(/\n/g,"<br>")+"</pre>";
 	},
 	
 	removeHtml: function()
