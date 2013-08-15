@@ -327,6 +327,14 @@ section#pretty
 	padding: 0px 10px 0px 10px;
 }
 
+.pretty-text-block pre
+{
+	padding:0px;
+	margin:0px;
+	outline:none;
+	color:#333;
+}
+
 .pretty-tab
 {
 	background-color:#fff;

@@ -32,7 +32,7 @@ $(document).ready(function(){
 	tabsInstance=new KORDS.TABS.TabsInstance();
 
     params=getUrlParams();
-    console.log(params);
+    //console.log(params);
 
     if (params['api-mode']=="editor")
     {
@@ -64,10 +64,19 @@ $(document).ready(function(){
 	});
 */
 
-
+/*
 	$(document).on("keydown", ".tabblock,.tabtext", function(e){
 		return tabsInstance.tabsEditor.onKeyDown(e);
-      //$(this).addClass('active');
+    });
+*/
+	
+	//@fixme
+	$(document).on("keydown", ".tabblock", function(e){
+		return tabsInstance.tabsEditor.onKeyDown(e);
+    });
+
+	$(document).on("keyup", ".tabtext", function(e){
+		return tabsInstance.tabsEditor.onKeyDown(e);
     });
 
 
@@ -108,7 +117,7 @@ $(document).ready(function(){
 
 	$("#save_ktb").click(function(){
 		var ktg=tabsInstance.song.save();
-		console.log(ktg);
+		//console.log(ktg);
 
 /*		var fileName="test";
 		var blob = new Blob([ktg], {type: "text/plain;charset=utf-8"});
@@ -188,5 +197,5 @@ function receiveMessage(event)
   	{
   		tabsInstance.load(event.data.tabs);
   	}
-	console.log(event);
+	//console.log(event);
 }

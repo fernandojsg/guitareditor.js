@@ -34,7 +34,7 @@ KORDS.TABSEDITOR.TabParser.prototype =
 	{
 		if (type=="tab")
 		{
-			console.log("NEW TAB",start,end);
+			//console.log("NEW TAB",start,end);
 			var tab=new Array();
 			for (var k=start;k<=end;k++)
 			{
@@ -105,7 +105,6 @@ KORDS.TABSEDITOR.TabParser.prototype =
 				{
 					if (currDistance!=0)
 					{
-						console.log(currDistance,k);
 						blocks.push(k-currDistance);
 						currDistance=0;
 					}
@@ -119,17 +118,15 @@ KORDS.TABSEDITOR.TabParser.prototype =
 			}			
 			for (var i=0;i<tab.length;i++)
 				tab[i]=tab[i].replace(/\*/g,'');
-				
+/*				
 			for (var i=0;i<tab.length;i++)
 				console.log(tab[i]);
-
-
-				
+*/				
 			this.sections.push({"type":"tabs","val":tab});
 		}
 		else
 		{
-			console.log("NEW TEXT",start,end);
+//			console.log("NEW TEXT",start,end);
 			var text="";
 			for (var k=start;k<=end;k++)
 			{
