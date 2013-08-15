@@ -3,13 +3,9 @@ BUGS:
  ☐ On load autosize textarea
 FILE FORMAT:
 API:
- ✔ Call params for editor @done (13-06-21 20:09)
- ✔ get-tabs -> @done (13-06-21 20:09)
- ✔ send-tabs <- @done (13-06-21 20:09)
- ✔ load-tabs -> @done (13-06-21 20:09)
- ✔ show-tabs -> @done (13-06-21 20:46)
  ☐ view-mode css
  ☐ on-resize <-
+ ☐ resize stave width
 
 MINORBUGS:
  ☐ Refactoring => tabsection.js setStringLFingerValue / setLFingerValue
@@ -39,6 +35,11 @@ TODO:
   ☐ BarLine simple
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Call params for editor @done (13-06-21 20:09) @project(API)
+ ✔ get-tabs -> @done (13-06-21 20:09) @project(API)
+ ✔ send-tabs <- @done (13-06-21 20:09) @project(API)
+ ✔ load-tabs -> @done (13-06-21 20:09) @project(API)
+ ✔ show-tabs -> @done (13-06-21 20:46) @project(API)
  ✔ Include song info @done (13-06-18 21:32)
  ✔ If lfinger = null -> not appear in JSON v1 @done (13-06-18 19:08)
  ✔ Ins/Del with barline @done (13-06-18 03:50)

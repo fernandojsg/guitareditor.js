@@ -26,7 +26,7 @@ function selectActiveTab(tabId)
 		$(".active .tabblock").focus();
 }
 
-
+var staveWidth=800;
 $(document).ready(function(){
 
 	tabsInstance=new KORDS.TABS.TabsInstance();
@@ -41,8 +41,11 @@ $(document).ready(function(){
     }
     else if (params['api-mode']=="viewer")
     {
+    	staveWidth=params['stave-width'];
+    	$("body").addClass("viewer");
     	tabsInstance.tabsEditor.setEditorMode(true,params['show-song-info']!="false");
     	$("header").hide();
+    	$(".pretty-tab").attr("style","width:"+params['stave-width']+"px");
     }
 
 	$("body").resize(function(){

@@ -306,7 +306,6 @@ section
 	box-sizing: border-box;
 }
 
-
 section#pretty
 {
 	padding: 60px 30px;
@@ -444,7 +443,7 @@ footer {
 	color: #666;
 	font-style: bold;
 	display: block;
-	font-size: 1.0em;
+	font-size: 0.8em;
 	-webkit-margin-before: 1em;
 	-webkit-margin-after: 1em;
 	-webkit-margin-start: 0px;
@@ -567,4 +566,27 @@ h3 {
 
 .submenu {
 	margin-bottom:15px;
+}
+
+
+body.viewer section#pretty
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+body.viewer
+{
+	padding: 0px;
+	margin: 0px;
+	background-color:#fff;
+}
+
+body.viewer section
+{
+	border-radius: 0px;
+	box-shadow: none;
+	-webkit-box-sizing: none;
+	-moz-box-sizing: none;
+	box-sizing: none;
 }
