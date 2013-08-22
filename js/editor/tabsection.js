@@ -1,6 +1,7 @@
 //var tabBlockLength=40;
 var defaultNumMeasuresPerStave=4;
 var defaultNumNotesPerMeasure=12;
+var maxFrets=24;
 var tabBlockLength=defaultNumNotesPerMeasure*defaultNumMeasuresPerStave+defaultNumMeasuresPerStave-1; // Num notes per stave + barlines$.parseXML('XML');
 var tabBlockText="";
 var tabBlockNotes=["E","B","G","D","A","E"];
@@ -360,7 +361,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 			if (isNumber(input) && parseInt(cellVal)<10 && parseInt(cellVal)!=0)
 			{
 				cellVal+=input;
-				if (parseInt(cellVal)>19)
+				if (parseInt(cellVal)>maxFrets)
 					cellVal=input;
 			}
 			else
