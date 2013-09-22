@@ -12,6 +12,12 @@ KORDS.TABSEDITOR.Editor=function(song)
 
 	KORDS.TABSEDITOR.TabsSection.insertTabBlock();
 
+	//@fixme put everything together
+    $(document).on("click", "#add_youtube", function(){
+		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'youtube');
+		return false;
+	});
+
     $(document).on("click", "#add_text", function(){
 		tabsInstance.tabsEditor.addSection($(this).parents(".tabsection"),'text');
 		return false;
@@ -176,6 +182,11 @@ KORDS.TABSEDITOR.Editor.prototype =
 			newSection=new KORDS.TABSEDITOR.TabsSection(newNode,newPrettyNode,this,data);
 			td=newNode.find("td[data-col='0'][data-row='0']");
 		}
+		else if (type=="youtube")
+		{
+			contextMenu.find("#add_text").show();
+			newSection=new KORDS.TABSEDITOR.YoutubeSection(newNode,newPrettyNode,this,data);
+		}
 		else
 		{
 			alert("NO TYPE");
@@ -301,6 +312,17 @@ KORDS.TABSEDITOR.Editor.prototype =
 			$("#tabs-context-menu").hide();
 	},
 
+	getCurrentSection: function ()
+	{
+		var active=$(".tabsection.active");
+		if (active.length > 0){
+			var id=getOffsetFromId(active.attr("id"));
+			return this.htmlSections[id];
+		}
+		return null;
+	},
+
+	//@fixme Use current section
 	onKeyDown: function (e)
 	{
 		var active=$(".tabsection.active");
@@ -417,6 +439,11 @@ KORDS.TABSEDITOR.Editor.prototype =
 			newSection=new KORDS.TABSEDITOR.TabsSection(newNode,newPrettyNode,this);
 			td=newNode.find("td[data-col='0'][data-row='0']");
 		}
+		else if (type=="youtube")
+		{
+			contextMenu.find("#add_text").show();
+			newSection=new KORDS.TABSEDITOR.YoutubeSection(newNode,newPrettyNode,this);
+		}
 		else
 		{
 			alert("NO TYPE");
@@ -485,4 +512,3 @@ KORDS.TABSEDITOR.Editor.prototype =
 		});
 	}
 }
-

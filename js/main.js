@@ -79,6 +79,18 @@ $(document).ready(function(){
 		return tabsInstance.tabsEditor.onKeyDown(e);
     });
 
+	$(document).on('click','.youtube_edit',function(){
+		var parent=$(this).parents(".tabsection");
+		$(".youtube_edit_data",parent).show();
+		$(".youtube_title",parent).hide();
+		return false;
+	});
+
+    $(document).on('click','.loadyoutube',function() {
+
+    	tabsInstance.tabsEditor.getCurrentSection().loadYoutubeLink();
+	    return false;
+    });
 
 /*
 	$(document).keydown(function(e){
@@ -128,7 +140,6 @@ $(document).ready(function(){
 	});
 
 	$("#load_ktb").click(function(){
-		//tabsInstance.song.load($("#ktg").val());
 		tabsInstance.load($("#ktg").val());
 		return false;
 	});
@@ -180,6 +191,7 @@ $(document).ready(function(){
 
 	window.addEventListener("message", receiveMessage, false);
 	//tabsInstance.load($("#ktg").val());
+
 });
 
 function receiveMessage(event)

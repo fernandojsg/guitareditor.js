@@ -11,6 +11,13 @@ KORDS.TABSDATA.EmptySection=function()
 	this.type=null;
 }
 
+KORDS.TABSDATA.YoutubeSection=function()
+{
+	this.youtubeId="";
+	this.videoTitle="";
+	this.type="youtube";
+}
+
 KORDS.TABSDATA.TextSection=function()
 {
 	this.type="text";
@@ -23,6 +30,7 @@ KORDS.TABSDATA.TabSection=function()
 	this.data={
 				"numstrings":tabBlockNumStrings,
 				"numcolumns":tabBlockLength,
+				"tuning": tabBlockNotes,
 				"strings":new Array(tabBlockNumStrings),
 				"colmodifiers":{},
 				"barlines":{},

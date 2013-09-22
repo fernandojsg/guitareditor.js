@@ -31,6 +31,7 @@
 		<script type="text/javascript" src="js/editor/tabeditor.js"></script>
 		<script type="text/javascript" src="js/editor/tabsection.js"></script>
 		<script type="text/javascript" src="js/editor/textsection.js"></script>
+		<script type="text/javascript" src="js/editor/youtubesection.js"></script>
 		<script type="text/javascript" src="js/editor/tabparser.js"></script>
 
 		<!-- KGT PAINTER -->
@@ -60,6 +61,13 @@
 			<div id="text-editor-base">
 				<div id="block" class="menu tabsection tabs" style="display:none">
 					<div id="tabblock" class="" width="100%"></div>
+				</div>
+				<div id="block" class="menu tabsection youtube" style="display:none">
+					<div class="youtube_edit_data">
+						Youtube URL: <input class="youtube_url" type="text" size="50"/><a href="#" class="loadyoutube button color mini">load</a>
+						<input class="youtube_id" type="text" style="background-color:#ff9"/>
+					</div>					
+		            <span class="youtube_title" style="display:none"></span>
 				</div>
 				<div id="block" class="menu tabsection text" style="display:none">
 					<textarea class="tabtext" cols="80" rows="2" style="border:none"></textarea>
@@ -111,6 +119,7 @@
 				<div id="empty-context-menu" class="tabs-editor-context-menu" style="text-align:right">
 					<a id="add_text" class="button text" href="#">Add Text</a>
 					<a id="add_tabs" class="button text" href="#">Add Tabs</a>
+					<a id="add_youtube" class="button text" href="#">Add Youtube</a>
 					<a id ="remove_section" style="display:none" class="button text" href="#">Remove this section</a>
 				</div>
 			<div id="text-editor" class="tabs-editor">
@@ -131,7 +140,26 @@
 				<a id="save_ktb" class="button text">Save KTB</a>
 				<a id="load_ktb" class="button text">Load KTB</a>
 			</div>
-			<textarea id="ktg" readonly="readonly"></textarea>
+			<textarea id="ktg" readonly="readonly">
+				{
+  "info": {
+    "title": "testt",
+    "artist": "as",
+    "transcriber": "werwer"
+  },
+  "sections": [
+    {
+      "type": "text",
+      "text": "asdfasdfasdf\nwe\nr\nwer\n"
+    },
+    {
+      "youtubeId": "WQVDwRLaJBA",
+      "videoTitle": "ANABEL COLLADO-\"Que no daria yo\" GRANADA.",
+      "type": "youtube"
+    }
+  ]
+}				
+			</textarea>
 		</section>
     <footer>
       <span id="footer-title" style="display:none">powered by <a target="_blank" href="http://www.guitk.com/editor">GUITK editor</a></span>

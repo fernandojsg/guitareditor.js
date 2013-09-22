@@ -540,13 +540,22 @@ h2 {
 	display:none;
 }
 
-#songdata {
+#songdata
+{
 	font-size:12px;
 	width:260px;
 	text-align:right;
 }
 
-#songdata input {
+.tabsection.youtube
+{
+	font-size:12px;
+}
+
+
+#songdata input,
+.tabsection.youtube input,
+{
 	border: 1px solid #eee;
 	padding:2px;
 }
@@ -597,4 +606,15 @@ body.viewer section
 	-webkit-box-sizing: none;
 	-moz-box-sizing: none;
 	box-sizing: none;
+}
+
+
+.youtube_id_error
+{
+	font-weight:bold;
+	color:#f00;
+}
+
+.youtube_title {
+	color:#EE7E2A
 }
