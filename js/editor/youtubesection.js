@@ -58,13 +58,15 @@ KORDS.TABSEDITOR.YoutubeSection.prototype =
 	
 	getText: function()
 	{
-		//return this.htmlNode.find("textarea").val()+"\n";
 		return "YOUTUBE: "+this.sectionData.videoTitle+" (www.youtube.com/watch?v="+this.sectionData.youtubeId+")\n";
 	},
 	
 	paint: function()
 	{
-		var video='<div align="center" style="text-align:center"><iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/'+this.sectionData.youtubeId+'" frameborder="0"></iframe></div>';
+		if (this.sectionData.youtubeId=="")
+			video='<div></div>';
+		else
+			video='<div align="center" style="text-align:center"><iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/'+this.sectionData.youtubeId+'" frameborder="0"></iframe></div>';
 		this.div.innerHTML=video;
 	},
 	
