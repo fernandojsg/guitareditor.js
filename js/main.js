@@ -36,6 +36,7 @@ $(document).ready(function(){
 
     if (params['api-mode']=="editor")
     {
+    	$("body").attr("style","background:none")
     	tabsInstance.tabsEditor.setEditorMode(true,params['show-song-info']!="false");
     	selectActiveTab("editor");
     }
@@ -204,6 +205,10 @@ function receiveMessage(event)
 		var ktg=tabsInstance.song.save();
 		event.source.postMessage({action:'return-tabs',tabs:ktg}, '*');
   		//window.parent.postMessage('Hello Parent Frame!', '*');
+  	}
+  	else if (event.data.action=="on-width-resize")
+  	{
+  		console.log(">>>>>>>>>>>>>>>>> ASDFASDFASDF");
   	}
   	else if (event.data.action=="load-tabs")
   	{
