@@ -415,6 +415,7 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 					text: "Ok",
 					click: function() {
 						$this.closeTabBlockTextDialog($("#note_text").val());
+						prevActiveTabBlock.focus();
 					}
 				},
 				{
@@ -442,7 +443,8 @@ KORDS.TABSEDITOR.TabsSection.prototype =
 		}
 
 		this.tabBlockTextDialog.dialog( "close" );
-		this.prevSelection.section.addClass("active");
+		//this.prevSelection.section.addClass("active");
+		prevActiveTabBlock.focus();
 	},
 
 	updateText: function ()

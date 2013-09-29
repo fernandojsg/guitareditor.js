@@ -1,3 +1,7 @@
+$.fn.exists = function () {
+    return this.length !== 0;
+}
+
 function sortObj(arr){
 	// Setup Arrays
 	var sortedKeys = new Array();

@@ -27,6 +27,8 @@ function selectActiveTab(tabId)
 }
 
 var staveWidth=800;
+var prevActiveTabBlock=null;
+
 $(document).ready(function(){
 
 	tabsInstance=new KORDS.TABS.TabsInstance();
@@ -71,6 +73,11 @@ $(document).ready(function(){
     });
 */
 	
+	$(document).on("blur",".tabblock", function(e){
+	//$(".active .tabblock").on("blur",function(e){
+		prevActiveTabBlock=$(this);
+	});
+
 	//@fixme
 	$(document).on("keydown", ".tabblock", function(e){
 		return tabsInstance.tabsEditor.onKeyDown(e);
@@ -113,6 +120,7 @@ $(document).ready(function(){
 	});
 
 
+	
 	// Insert chords
 	html="";
 	for (var mode in chords)
@@ -150,6 +158,7 @@ $(document).ready(function(){
 		var selected=$("#chords").find(":selected");
 		//tabsInstance.tabsEditor.htmlSections[id].insertChord($("#chords").val());
 		tabsInstance.tabsEditor.htmlSections[id].insertChord(selected.attr("value"),selected.attr("mode"));
+		prevActiveTabBlock.focus();
 		return false;
 	});
 

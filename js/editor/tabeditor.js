@@ -474,7 +474,10 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 		this.numSections--;
 
-		var next=obj.next();
+		var next=obj.next(".tabsection");
+		if (!next.exists())
+			next=obj.prevAll(".tabsection:first");
+
 		if (obj.hasClass("hover"))
 		{
 			if (next)
