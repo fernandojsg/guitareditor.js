@@ -137,29 +137,11 @@
 		<section id="file" class="nodisplay">
 			<div class="submenu" align="right">
 				<a id="new_ktb" class="button text">Clear</a>
+				<a id="generate_ktb" class="button text">Generate KTB</a>
 				<a id="save_ktb" class="button text">Save KTB</a>
 				<a id="load_ktb" class="button text">Load KTB</a>
 			</div>
-			<textarea id="ktg" readonly="readonly">
-				{
-  "info": {
-    "title": "testt",
-    "artist": "as",
-    "transcriber": "werwer"
-  },
-  "sections": [
-    {
-      "type": "text",
-      "text": "asdfasdfasdf\nwe\nr\nwer\n"
-    },
-    {
-      "youtubeId": "WQVDwRLaJBA",
-      "videoTitle": "ANABEL COLLADO-\"Que no daria yo\" GRANADA.",
-      "type": "youtube"
-    }
-  ]
-}				
-			</textarea>
+			<textarea id="ktg" readonly="readonly"></textarea>
 		</section>
     <footer>
       <span id="footer-title" style="display:none">powered by <a target="_blank" href="http://www.guitk.com/editor">GUITK editor</a></span>
@@ -169,6 +151,7 @@
 		<p>Insert text:</p>
 		<p><input id="note_text" size="40"/></p>
 	</div>
+	<input type="file" id="input-file-ktg" accept=".ktg" style="display:none" onchange="handleFilesLoad(this.files)">
 </html>
 
 
@@ -180,5 +163,4 @@
 
   ga('create', 'UA-1752824-13', 'guitk.com');
   ga('send', 'pageview');
-
 </script>

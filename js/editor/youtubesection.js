@@ -100,7 +100,7 @@ function getYouTubeInfo(youtubeId,youtubeTitleField,section) {
         url: "http://gdata.youtube.com/feeds/api/videos/"+youtubeId+"?v=2&alt=json",
         dataType: "jsonp",
         success: function (data) {
-            //parseresults(data);
+        	//parseresults(data);
             var title = data.entry.title.$t;
             var description = data.entry.media$group.media$description.$t;
             var author = data.entry.author[0].name.$t;

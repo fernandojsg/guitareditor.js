@@ -29,6 +29,18 @@ function selectActiveTab(tabId)
 var staveWidth=800;
 var prevActiveTabBlock=null;
 
+function handleFilesLoad(file)
+{
+   	var reader = new FileReader();
+	reader.onload = function(e) { 
+		console.log(e);
+		var contents = e.target.result;
+		$("#ktg").val(contents).trigger("autosize");		
+		tabsInstance.load($("#ktg").val());
+	}
+	reader.readAsText(file[0]);
+}
+
 $(document).ready(function(){
 
 	tabsInstance=new KORDS.TABS.TabsInstance();
@@ -138,6 +150,20 @@ $(document).ready(function(){
 
 	$("#save_ktb").click(function(){
 		var ktg=tabsInstance.song.save();
+		
+		var filaname=nvl(tabsInstance.song.data.info.title,"noname")+"-"+nvl(tabsInstance.song.data.info.artist,"noauthor");
+		filename=sluggify(filaname);
+
+		var blob = new Blob([ktg], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, filename+".ktg");
+
+		$("#ktg").val(ktg).trigger("autosize");
+		return false;
+	});
+
+
+	$("#generate_ktb").click(function(){
+		var ktg=tabsInstance.song.save();
 		//console.log(ktg);
 
 /*		var fileName="test";
@@ -148,8 +174,11 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$("#load_ktb").click(function(){
-		tabsInstance.load($("#ktg").val());
+	$("#load_ktb").click(function()	{
+  		if (window.File && window.FileReader && window.FileList && window.Blob) 
+	  		$("#input-file-ktg").click();
+		else 
+  			alert('The File APIs are not fully supported by your browser.');
 		return false;
 	});
 

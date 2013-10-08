@@ -1,3 +1,13 @@
+function nvl(value1,value2) 
+{
+    return value1?value1:value2;
+}
+
+function sluggify(text)
+{
+    return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+}
+
 $.fn.exists = function () {
     return this.length !== 0;
 }
