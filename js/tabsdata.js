@@ -58,10 +58,12 @@ KORDS.TABSDATA.AudioSection=function()
 
 KORDS.TABSDATA.Song=function()
 {
+/*
 	this.data={
 				"info": {"title":null, "artist":null, "transcriber":null}, 
 				"sections":[]
 			  };
+*/			  
 }
 
 KORDS.TABSDATA.Song.prototype =

@@ -110,8 +110,10 @@ KORDS.TABSEDITOR.Editor.prototype =
 		}
 	},
 
-	reset: function()
+	reset: function(deleteInfo)
 	{
+		if(typeof(deleteInfo)==='undefined') deleteInfo=true;
+
 		this.numSections=0;
 		this.htmlSections=[];
 
@@ -121,9 +123,10 @@ KORDS.TABSEDITOR.Editor.prototype =
 		$("#text-editor").html("");
 		$("#pretty-tab").html("");
 
-		$("#songdata #song").val("").change();
-		$("#songdata #artist").val("").change();
-		$("#songdata #transcriber").val("").change();
+		if (deleteInfo)
+			$("#songdata #song,#songdata #artist,#songdata #transcriber").val("").change();
+		else
+			$("#songdata #song,#songdata #artist,#songdata #transcriber").val("");
 
 		this.updateText();
 	},
@@ -206,7 +209,7 @@ KORDS.TABSEDITOR.Editor.prototype =
 
 	load: function(song)
 	{
-		this.reset();
+		this.reset(false);
 
 		this.song=song;
 

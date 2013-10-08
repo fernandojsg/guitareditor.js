@@ -33,10 +33,10 @@ function handleFilesLoad(file)
 {
    	var reader = new FileReader();
 	reader.onload = function(e) { 
-		console.log(e);
 		var contents = e.target.result;
 		$("#ktg").val(contents).trigger("autosize");		
 		tabsInstance.load($("#ktg").val());
+	   	$("#input-file-ktg").val("");
 	}
 	reader.readAsText(file[0]);
 }
@@ -146,6 +146,7 @@ $(document).ready(function(){
 
 	$("#new_ktb").click(function(){
 		tabsInstance.reset();
+		$("#ktg").val("").trigger("autosize");
 	});
 
 	$("#save_ktb").click(function(){
