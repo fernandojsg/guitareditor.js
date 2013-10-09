@@ -16,6 +16,9 @@ You can try it at www.guitk.com/editor
 * Full of keyboard shortcuts
 * Easy to integrate on your own webapp using an iframe
 
+##Tutorial##
+* [Example of use (youtube)](http://www.youtube.com/watch?v=gqs-jm9423M&hd=1)
+
 ##Shortcuts for TAB section##
 * **cursors**: Move cursor
 * **[0..9]**: Insert fret number at cursor
