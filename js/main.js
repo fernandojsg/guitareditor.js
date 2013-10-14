@@ -107,7 +107,7 @@ $(document).ready(function(){
 	});
 
     $(document).on('click','.loadyoutube',function() {
-
+		tabsInstance.tabsEditor.setActiveSection($(this).parents(".tabsection"));
     	tabsInstance.tabsEditor.getCurrentSection().loadYoutubeLink();
 	    return false;
     });
