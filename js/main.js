@@ -63,9 +63,13 @@ $(document).ready(function(){
     	$(".pretty-tab").attr("style","width:"+params['stave-width']+"px");
     }
 
-	$("body").resize(function(){
+/*
+	$(body).resize(function(){
+		console.log("LOL");
 		window.parent.postMessage({action:"on-resize",height:$(this).height()}, '*');
 	});
+*/
+
 
     //if (params['song-info']=false)
 //	$("#tabs").tabs();
@@ -232,6 +236,17 @@ $(document).ready(function(){
 	window.addEventListener("message", receiveMessage, false);
 	//tabsInstance.load($("#ktg").val());
 
+//	window.parent.postMessage({action:"on-resize",height:$(window).height()}, '*');
+/*
+    console.log(">>>>>>>>>>");
+	$(body).resize(function () {
+		//console.log($(window).width()+" "+$(window).height());
+		//console.log($(window).height());
+		window.parent.postMessage({action:"on-resize",height:$(this).height()}, '*');
+    });
+*/
+    console.log($("body").height());
+    window.parent.postMessage({action:"on-resize",height:$("body").height()}, '*');
 });
 
 function receiveMessage(event)
@@ -252,6 +267,7 @@ function receiveMessage(event)
   	else if (event.data.action=="load-tabs")
   	{
   		tabsInstance.load(event.data.tabs);
+  		window.parent.postMessage({action:"on-resize",height:$("body").height()}, '*');
   	}
 	//console.log(event);
 }
