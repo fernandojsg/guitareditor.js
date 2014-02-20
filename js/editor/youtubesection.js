@@ -1,5 +1,6 @@
 KORDS.TABSEDITOR.YoutubeSection=function(htmlNode,prettyHtmlNode,tabsEditorInstance,data)
 {
+
 	this.tabsEditorInstance=tabsEditorInstance;
 	this.htmlNode=htmlNode;
 	this.type="youtube";
@@ -8,7 +9,6 @@ KORDS.TABSEDITOR.YoutubeSection=function(htmlNode,prettyHtmlNode,tabsEditorInsta
 	this.div.setAttribute("class","pretty-youtube-block");
 
 	//@todo Bind here the events
-
 	if (typeof data != 'undefined')
 		this.loadData(data);
 	else
@@ -100,8 +100,7 @@ function getYouTubeInfo(youtubeId,youtubeTitleField,section) {
         url: "http://gdata.youtube.com/feeds/api/videos/"+youtubeId+"?v=2&alt=json",
         dataType: "jsonp",
         success: function (data) {
-        	//parseresults(data);
-            var title = data.entry.title.$t;
+        	var title = data.entry.title.$t;
             var description = data.entry.media$group.media$description.$t;
             var author = data.entry.author[0].name.$t;
 
