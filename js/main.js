@@ -245,7 +245,6 @@ $(document).ready(function(){
 		window.parent.postMessage({action:"on-resize",height:$(this).height()}, '*');
     });
 */
-    console.log($("body").height());
     window.parent.postMessage({action:"on-resize",height:$("body").height()}, '*');
 });
 
@@ -258,7 +257,6 @@ function receiveMessage(event)
   	{
 		var ktg=tabsInstance.song.save();
 		event.source.postMessage({action:'return-tabs',tabs:ktg}, '*');
-  		//window.parent.postMessage('Hello Parent Frame!', '*');
   	}
   	else if (event.data.action=="on-width-resize")
   	{
