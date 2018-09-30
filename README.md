@@ -6,7 +6,7 @@ You can try it at www.guitk.com/editor
 
 ![Screenshot](http://www.guitk.com/editor/gh/screenshot.png)
 
-##Main features##
+# Main features
 * Import/Export from custom JSON file format
 * Two rendering modes:
  * Traditional text (ASCII) (http://en.wikipedia.org/wiki/ASCII_tab)
@@ -16,10 +16,10 @@ You can try it at www.guitk.com/editor
 * Full of keyboard shortcuts
 * Easy to integrate on your own webapp using an iframe
 
-##Tutorial##
+# Tutorial
 * [Example of use (youtube)](http://www.youtube.com/watch?v=gqs-jm9423M&hd=1)
 
-##Shortcuts for TAB section##
+# Shortcuts for TAB section
 * **cursors**: Move cursor
 * **[0..9]**: Insert fret number at cursor
 * **ins**: Insert empty cell
@@ -34,7 +34,7 @@ You can try it at www.guitk.com/editor
 * **p,m,i,a**: Select right hand finger
 * **shift+[1,2,3,4]**: Select left hand finger
 
-##API##
+# API
 
 You can easy integrate this editor in your website using an iframe:
 
@@ -59,7 +59,7 @@ Once you have the iframe working, you need to communicate with the editor using 
  * *return-tabs*: It's the answer from the editor to the ```get-tabs``` message
  * *on-resize*: It's called everytime that the editor height is modified, in case that we want to modify the iframe size too.
 
-###Load tabs in editor
+## Load tabs in editor
 To load a tablature in the editor we just need to send the JSON structure using the ```load-tabs``` message:
 
 `````javascript
@@ -78,7 +78,7 @@ It's a good practise to wait until the editor is already loaded before send this
   };
 `````
 
-###Retrieve tabs from the editor
+## Retrieve tabs from the editor
 Once we're done editing a tablature we would like to save it in our application. So in that case we could query the editor to send us the tablature in JSON format to do whatever we want in our webapp.
 To do this we should send a ```get-tabs``` message:
 
@@ -101,7 +101,7 @@ Now we can ask for the tablature and wait for the answer to the previous callbac
   win.postMessage({action:"get-tabs"}, "www.guitk.com/editor" );
 `````
 
-###Editor resize
+## Editor resize
 
 Everytime the editor changes its height a message is sent to your web, so you could change the size of the iframe for example, or just ignored it.
 We just need add a new handler to our ```receiveMessage``` function:
@@ -120,5 +120,5 @@ function receiveMessage( event )
 }
 `````
 
-##Used in##
+# Used in
 * www.flamencochords.com
