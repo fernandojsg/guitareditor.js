@@ -4,7 +4,7 @@ GUITK Editor
 GUITK Editor is a Guitar Tablature Editor written in Javascript.
 You can try it at http://fernandojsg.github.io/guitareditor.js/
 
-![Screenshot](http://www.guitk.com/editor/gh/screenshot.png)
+![Screenshot](http://fernandojsg.github.io/guitareditor.js/gh/screenshot.png)
 
 # Main features
 * Import/Export from custom JSON file format
